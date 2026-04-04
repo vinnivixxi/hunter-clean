@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hunter</title>
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="hunter.css">
+</head>
+<body>
+<div class="phone" id="phone">
+
+  <div class="loading-screen" id="loadingScreen">
+    <div class="bow-container">
+      <img class="bow-img" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="Bow">
+      <img class="arrow" src="hunter.arrows/arrow.testing.png" alt="Arrow">
+      <div class="bowstring-pull"></div>
+      <div class="shockwave"></div>
+      <div class="shockwave s2"></div>
+      <div class="shockwave s3"></div>
+    </div>
+    <div class="loading-title">HUNTER</div>
+    <div class="loading-sub">Find Your Prey</div>
+    <div class="loading-dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <div class="screen" id="screen-browse">
+    <div class="status-bar">
+      <span class="status-time"></span>
+      <div class="status-right">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="8" width="2.5" height="4" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="5.5" width="2.5" height="6.5" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="7" y="3" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="12" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="rgba(255,255,255,0.5)"/><path d="M4.5 8C5.3 7.2 6.3 6.7 7.5 6.7c1.2 0 2.2.5 3 1.3" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2 5.2c1.5-1.4 3.4-2.2 5.5-2.2s4 .8 5.5 2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M0 2.5C2 .8 4.6 0 7.5 0S13 .8 15 2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
+        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
+      </div>
+    </div>
+    <div class="matches-header">
+      <div class="matches-title-group">
+        <img class="matches-bow" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
+        <span class="matches-title">HUNTER</span>
+      </div>
+      <span class="matches-subtitle" id="browseSubtitle">4 in range</span>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" data-panel="panel-hunt">HUNT</div>
+      <div class="tab" data-panel="panel-browse">BROWSE</div>
+      <div class="tab" data-panel="panel-track">TRACK</div>
+    </div>
+
+    <!-- HUNT PANEL -->
+    <div class="browse-panel panel-active" id="panel-hunt">
+
+      <div class="hunt-intake" id="huntIntake">
+        <div class="intake-logo">
+          <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
+          <span>HUNTER</span>
+        </div>
+        <div class="intake-progress">
+          <div class="intake-dot active"></div>
+          <div class="intake-dot"></div>
+          <div class="intake-dot"></div>
+        </div>
+        <div class="intake-steps-container">
+          <div class="intake-step active" data-step="0">
+            <div class="intake-question">What are you hunting?</div>
+            <div class="intake-options">
+              <div class="intake-option" data-val="top">Top</div>
+              <div class="intake-option" data-val="bottom">Bottom</div>
+              <div class="intake-option" data-val="vers">Vers</div>
+              <div class="intake-option" data-val="side">Side</div>
+              <div class="intake-option" data-val="other">Other</div>
+            </div>
+          </div>
+          <div class="intake-step" data-step="1">
+            <div class="intake-question">What's the vibe?</div>
+            <div class="intake-options">
+              <div class="intake-option" data-val="kink">Kink</div>
+              <div class="intake-option" data-val="netflix">Netflix &amp; Chill</div>
+              <div class="intake-option" data-val="gymbro">Gym Bro</div>
+              <div class="intake-option" data-val="adventure">Adventure</div>
+              <div class="intake-option" data-val="other">Other</div>
+            </div>
+          </div>
+          <!-- Q3: populated by initHuntIntake() from HUNT_Q3_POOL. Do not hardcode. -->
+          <div class="intake-step" data-step="2">
+            <div class="intake-question" id="intakeQ3Text"></div>
+            <div class="intake-options" id="intakeQ3Options"></div>
+          </div>
+        </div>
+      </div><!-- /hunt-intake -->
+
+      <div class="hunt-stack-container" id="huntStackContainer"></div>
+
+      <div class="stack-hints" id="stackHints">
+        <span>swipe &uarr;&darr; to pass</span>
+        <span class="stack-hint-sep">&middot;</span>
+        <span>tap to mark &middot; double-tap to open</span>
+      </div>
+
+    </div><!-- /panel-hunt -->
+
+    <!-- BROWSE PANEL (fan layout — unchanged) -->
+    <div class="browse-panel" id="panel-browse">
+      <div class="grid">
+        <div class="grid-card" id="card-j">
+          <img src="profile.images/phalanx.potens.png" alt="Phalanx Potens">
+          <div class="grid-dot online"></div>
+          <div class="grid-info"><div class="grid-name">Phalanx Potens</div><div class="grid-meta">2 mi &middot; 40 &middot; 6'4"</div></div>
+        </div>
+        <div class="grid-card" id="card-b">
+          <img src="profile.images/tarab.jpg" alt="Tarab">
+          <div class="grid-dot online"></div>
+          <div class="grid-info"><div class="grid-name">Tarab</div><div class="grid-meta">2 mi &middot; 20 &middot; 5'6"</div></div>
+        </div>
+        <div class="grid-card" id="card-runnerboy">
+          <img src="profile.images/runnerboy.png" alt="RunnerBoy">
+          <div class="grid-dot offline"></div>
+          <div class="grid-info"><div class="grid-name">RunnerBoy</div><div class="grid-meta">5 mi &middot; 19 &middot; 5'8"</div></div>
+        </div>
+        <div class="grid-card" id="card-nightowl">
+          <img src="profile.images/nightowl.png" alt="Nightowl">
+          <div class="grid-dot offline"></div>
+          <div class="grid-info"><div class="grid-name">Nightowl</div><div class="grid-meta">3 mi &middot; 22 &middot; 5'10"</div></div>
+        </div>
+      </div>
+    </div><!-- /panel-browse -->
+
+    <!-- TRACK PANEL (Leaflet.js map — Phase 3 pending) -->
+    <div class="browse-panel" id="panel-track">
+      <div class="track-placeholder">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="20" stroke="rgba(59,107,74,0.25)" stroke-width="1.5"/>
+          <circle cx="26" cy="26" r="11" stroke="rgba(59,107,74,0.4)" stroke-width="1.5"/>
+          <circle cx="26" cy="26" r="3.5" fill="#3B6B4A"/>
+          <path d="M26 6V13M26 39V46M6 26H13M39 26H46" stroke="rgba(59,107,74,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="track-placeholder-label">Stalking mode incoming.</div>
+        <div class="track-placeholder-sub">Select a target to begin tracking.</div>
+      </div>
+    </div><!-- /panel-track -->
+
+    <div class="bottom-nav">
+      <div class="nav-item active">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 9L12 2L21 9V20C21 20.6 20.6 21 20 21H4C3.4 21 3 20.6 3 20V9Z" stroke="#3B6B4A" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 21V12H15V21" stroke="#3B6B4A" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span class="nav-label">Browse</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M20 21V19C20 17.3 18.7 16 17 16H7C5.3 16 4 17.3 4 19V21" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="8" r="4" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/></svg>
+        <span class="nav-label">Profile</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M21 15C21 15.5 20.8 16 20.4 16.4C20 16.8 19.5 17 19 17H7L3 21V5C3 4.5 3.2 4 3.6 3.6C4 3.2 4.5 3 5 3H19C19.5 3 20 3.2 20.4 3.6C20.8 4 21 4.5 21 5V15Z" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span class="nav-label">Chats</span>
+      </div>
+      <div class="nav-item">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="rgba(255,255,255,0.4)" stroke-width="1.5"/><path d="M16 16L21 21" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span class="nav-label">Search</span>
+      </div>
+    </div>
+  </div><!-- /screen-browse -->
+
+  <!-- PROFILE SCREEN -->
+  <div class="screen" id="screen-profile">
+    <div class="header-band"></div>
+    <div class="status-bar">
+      <span class="status-time"></span>
+      <div class="status-right">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="8" width="2.5" height="4" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="5.5" width="2.5" height="6.5" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="7" y="3" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="12" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="rgba(255,255,255,0.5)"/><path d="M4.5 8C5.3 7.2 6.3 6.7 7.5 6.7c1.2 0 2.2.5 3 1.3" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2 5.2c1.5-1.4 3.4-2.2 5.5-2.2s4 .8 5.5 2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M0 2.5C2 .8 4.6 0 7.5 0S13 .8 15 2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
+        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
+      </div>
+    </div>
+    <div class="app-header">
+      <svg class="hamburger profile-back" width="20" height="14" viewBox="0 0 20 14" fill="none" style="cursor:pointer;"><path d="M2 2H18M2 7H18M2 12H18" stroke="#3B6B4A" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div class="app-title-group">
+        <img class="bow-logo" src="hunter.arrows/hunter.testing.logo.png" alt="">
+        <span class="app-title">HUNTER</span>
+      </div>
+      <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><path d="M13 13L16 16" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </div>
+    <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
+    <div class="username" id="profileName"></div>
+    <div class="profile-bottom">
+      <div class="profile-bottom-left">
+        <div class="stats-row" style="position:relative;bottom:auto;left:auto;">
+          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2C6.5 2 4.5 4 4.5 6.5C4.5 10 9 16 9 16C9 16 13.5 10 13.5 6.5C13.5 4 11.5 2 9 2Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><circle cx="9" cy="6.5" r="2" stroke="#3B6B4A" stroke-width="1.1" fill="none"/></svg></div><span class="stat-val" id="statDistance"></span></div>
+          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="4" rx="1" stroke="#3B6B4A" stroke-width="1.2" fill="none"/><rect x="4.5" y="12" width="9" height="3.5" rx="1" stroke="#3B6B4A" stroke-width="1.2" fill="none"/><path d="M6.5 8V6.5M9 8V6.5M11.5 8V6.5" stroke="#3B6B4A" stroke-width="1" stroke-linecap="round"/><circle cx="6.5" cy="5.5" r="0.7" fill="#3B6B4A"/><circle cx="9" cy="5.5" r="0.7" fill="#3B6B4A"/><circle cx="11.5" cy="5.5" r="0.7" fill="#3B6B4A"/></svg></div><span class="stat-val" id="statAge"></span></div>
+          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2L7 4.5M9 2L11 4.5M9 2V16M9 16L7 13.5M9 16L11 13.5" stroke="#3B6B4A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="stat-val" id="statHeight"></span></div>
+          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 15C6 15 3.5 12.5 4 9.5C4.3 7.5 5.5 5 6.5 4.5C7.5 4 8.5 4.5 9 5C9.5 4.5 10.5 4 11.5 4.5C12.5 5 13.7 7.5 14 9.5C14.5 12.5 12 15 9 15Z" stroke="#3B6B4A" stroke-width="1.2" fill="none"/></svg></div><span class="stat-val" id="statRole"></span></div>
+        </div>
+        <div class="last-active" style="position:relative;bottom:auto;left:auto;">
+          <div class="online-dot" id="profileOnlineDot"></div><span class="last-active-text" id="profileLastActive"></span>
+        </div>
+        <div class="about-panel">
+          <div class="about-label">About</div>
+          <div class="about-text" id="profileBio"></div>
+        </div>
+        <div class="carousel-bar" style="position:relative;bottom:auto;left:auto;right:auto;"></div>
+      </div>
+      <div class="profile-bottom-right">
+        <div class="action-btn" data-action="up"><svg viewBox="0 0 22 22" fill="none"><path d="M7 10V18H5C4.4 18 4 17.6 4 17V11C4 10.4 4.4 10 5 10H7ZM7 10L10 4C10 4 11 3 12 4C12 4 12.5 5 12 7H16.5C17.3 7 18 7.8 17.8 8.6L16 17C15.9 17.6 15.3 18 14.7 18H7" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="action-btn" data-action="down"><svg viewBox="0 0 22 22" fill="none"><path d="M15 12V4H17C17.6 4 18 4.4 18 5V11C18 11.6 17.6 12 17 12H15ZM15 12L12 18C12 18 11 19 10 18C10 18 9.5 17 10 15H5.5C4.7 15 4 14.2 4.2 13.4L6 5C6.1 4.4 6.7 4 7.3 4H15" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="action-btn" data-action="msg"><svg viewBox="0 0 22 22" fill="none"><path d="M4 5H18V15H7L4 18V5Z" stroke="#3B6B4A" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+  </div><!-- /screen-profile -->
+
+  <!-- CHAT SCREEN -->
+  <div class="screen" id="screen-chat">
+    <div class="status-bar">
+      <span class="status-time"></span>
+      <div class="status-right">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="8" width="2.5" height="4" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="5.5" width="2.5" height="6.5" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="7" y="3" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="12" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
+        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="rgba(255,255,255,0.5)"/><path d="M4.5 8C5.3 7.2 6.3 6.7 7.5 6.7c1.2 0 2.2.5 3 1.3" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2 5.2c1.5-1.4 3.4-2.2 5.5-2.2s4 .8 5.5 2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M0 2.5C2 .8 4.6 0 7.5 0S13 .8 15 2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
+        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
+      </div>
+    </div>
+    <div class="chat-header">
+      <div class="back-btn" id="chatBackBtn">&#8249;</div>
+      <div class="chat-av" id="chatAvatarLink" style="cursor:pointer;">
+        <img id="chatAvatar" src="" alt="">
+      </div>
+      <div class="chat-info">
+        <div class="chat-name" id="chatName">Character</div>
+        <div class="chat-status" id="chatSubtitle">Online · 2 mi away</div>
+      </div>
+      <img class="bow-logo" src="hunter.arrows/hunter.testing.logo.png" alt="" style="width:20px;height:20px;object-fit:contain;opacity:0.7;">
+    </div>
+    <div class="messages" id="messageList">
+      <div class="spacer"></div>
+    </div>
+    <div class="input-bar">
+      <input class="input-field" type="text" placeholder="Message..." autocomplete="off">
+      <button class="send-btn">
+        <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="send">
+      </button>
+    </div>
+    <div class="lightbox" id="lightbox">
+      <span class="lightbox-close">&#x2715;</span>
+      <img id="lightboxImg" src="" alt="">
+    </div>
+  </div><!-- /screen-chat -->
+
+</div><!-- /phone -->
+
+<script>
+// ── Placeholder pool ──────────────────────────────────────────────────────────
+var PLACEHOLDER_POOL = [
+  'profile.images/placeholder.bear.png',
+  'profile.images/placeholder.daddy.png',
+  'profile.images/placeholder.frat.png',
+  'profile.images/placeholder.twink.png',
+  'profile.images/placeholder.png'
+];
+
+function shuffled(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var tmp = a[i]; a[i] = a[j]; a[j] = tmp;
+  }
+  return a;
+}
+
+function buildPhotoArray(realPhotos, count) {
+  count = count || 5;
+  var real   = realPhotos.slice(0, count);
+  var needed = count - real.length;
+  if (needed <= 0) return real;
+  var fills  = shuffled(PLACEHOLDER_POOL)
+    .filter(function(p) { return real.indexOf(p) === -1; })
+    .slice(0, needed);
+  return real.concat(fills);
+}
+
+// ── Q3 question pool ──────────────────────────────────────────────────────────
+// One question is randomly selected on each new intake session.
+// Format: { question: 'string', options: ['a', 'b', 'c', 'd'] }
+// Options: 2-5 items, keep labels short (1-3 words).
+// ── PASTE YOUR 20+ QUESTIONS BELOW ───────────────────────────────────────────
+var HUNT_Q3_POOL = [
+  // PLACEHOLDER — Vinn writes the pool before ship
+  { question: 'When do you usually hunt?', options: ['Late night', 'Afternoon', 'Daytime', 'Whenever'] }
+];
+// ─────────────────────────────────────────────────────────────────────────────
+
+// ── Character data ────────────────────────────────────────────────────────────
+var CHARS = {
+  j: {
+    key: 'j',
+    name: 'Phalanx Potens',
+    subtitle: 'Online · 2 mi away',
+    avatar: 'profile.images/phalanx.potens.png',
+    myAvatar: 'profile.images/phalanx.potens.png',
+    realPhotos: [],
+    bio: "Looking for a good boy, that knows how to take orders and dick. If you're a really good boy you might earn the privilege of coming over. Open to breaking in the right boy.",
+    stats: { distance: '2 mi', age: '40', height: "6'5\"", role: 'Top' },
+    online: true,
+    lastActive: 'Online now',
+    canMessage: false,
+    hasProfile: true,
+    messages: []
+  },
+  b: {
+    key: 'b',
+    name: 'Tarab',
+    subtitle: 'Online · 2 mi away',
+    avatar: 'profile.images/tarab.jpg',
+    myAvatar: 'profile.images/phalanx.potens.png',
+    realPhotos: ['profile.images/tarab.jpg'],
+    bio: "Down to try new things with someone who knows what they're doing.",
+    stats: { distance: '4 mi', age: '20', height: "5'10\"", role: 'Bottom' },
+    online: true,
+    lastActive: 'Online now',
+    canMessage: true,
+    hasProfile: true,
+    messages: [
+      { time: 'Today 9:47 PM' },
+      { from: 'them', text: 'hey' },
+      { from: 'me',   text: 'hey' },
+      { from: 'them', text: "it's arabic. it's what happens when music moves through you and you can't not move" }
+    ]
+  },
+  // ── Stubs — set hasProfile: true and fill all fields when profiles are built ─
+  runnerboy: {
+    key: 'runnerboy',
+    name: 'RunnerBoy',
+    subtitle: '5 mi away',
+    avatar: 'profile.images/runnerboy.png',
+    myAvatar: 'profile.images/phalanx.potens.png',
+    realPhotos: ['profile.images/runnerboy.png'],
+    bio: '',
+    stats: { distance: '5 mi', age: '19', height: "5'8\"", role: '' },
+    online: false,
+    lastActive: 'Active recently',
+    canMessage: false,
+    hasProfile: false,
+    messages: []
+  },
+  nightowl: {
+    key: 'nightowl',
+    name: 'Nightowl',
+    subtitle: '3 mi away',
+    avatar: 'profile.images/nightowl.png',
+    myAvatar: 'profile.images/phalanx.potens.png',
+    realPhotos: ['profile.images/nightowl.png'],
+    bio: '',
+    stats: { distance: '3 mi', age: '22', height: "5'10\"", role: '' },
+    online: false,
+    lastActive: 'Active recently',
+    canMessage: false,
+    hasProfile: false,
+    messages: []
+  }
+};
+
+// ── Router ────────────────────────────────────────────────────────────────────
+var Hunter = {
+  currentChar: null,
+  selectedCard: null,
+
+  navigate: function(screenId) {
+    document.getElementById('phone').classList.remove('immersive');
+    if (Hunter.selectedCard) {
+      Hunter.selectedCard.classList.remove('selected');
+      Hunter.selectedCard = null;
+    }
+    document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+    var next = document.getElementById('screen-' + screenId);
+    if (next) next.classList.add('active');
+  },
+
+  goToProfile: function(charKey) {
+    var char = CHARS[charKey];
+    if (!char) return;
+    Hunter.currentChar = charKey;
+    Hunter.renderProfile(char);
+    Hunter.navigate('profile');
+  },
+
+  renderProfile: function(char) {
+    document.getElementById('profileName').textContent = char.name;
+    document.getElementById('statDistance').textContent = char.stats.distance;
+    document.getElementById('statAge').textContent = char.stats.age;
+    document.getElementById('statHeight').textContent = char.stats.height;
+    document.getElementById('statRole').textContent = char.stats.role;
+    document.getElementById('profileLastActive').textContent = char.lastActive;
+    document.getElementById('profileOnlineDot').className = 'online-dot' + (char.online ? '' : ' offline');
+
+    var bioEl = document.getElementById('profileBio');
+    bioEl.textContent = char.bio;
+    bioEl.classList.remove('expanded');
+    delete bioEl.dataset.rmInit;
+    var oldToggle = bioEl.parentNode.querySelector('.read-more');
+    if (oldToggle) oldToggle.parentNode.removeChild(oldToggle);
+
+    var actMsg = document.querySelector('#screen-profile [data-action="msg"]');
+    actMsg.style.opacity = char.canMessage ? '1' : '0.3';
+    actMsg.style.pointerEvents = char.canMessage ? 'auto' : 'none';
+
+    var heroArea = document.getElementById('heroArea');
+    var freshHero = heroArea.cloneNode(true);
+    heroArea.parentNode.replaceChild(freshHero, heroArea);
+
+    initCarousel('screen-profile', buildPhotoArray(char.realPhotos));
+    initReadMore();
+    initActionButtons('screen-profile', char.key);
+  },
+
+  goToChat: function(charKey) {
+    var char = CHARS[charKey];
+    if (!char) return;
+    Hunter.currentChar = charKey;
+    Hunter.renderChat(char);
+    Hunter.navigate('chat');
+  },
+
+  renderChat: function(char) {
+    document.getElementById('chatName').textContent = char.name;
+    document.getElementById('chatSubtitle').textContent = char.subtitle;
+    document.getElementById('chatAvatar').src = char.avatar;
+    document.getElementById('chatAvatarLink').dataset.char = char.key;
+
+    var list = document.getElementById('messageList');
+    list.innerHTML = '<div class="spacer"></div>';
+
+    char.messages.forEach(function(m) {
+      if (m.time) {
+        var t = document.createElement('div');
+        t.className = 'msg-time';
+        t.textContent = m.time;
+        list.appendChild(t);
+        return;
+      }
+      var row = document.createElement('div');
+      row.className = 'msg-row ' + m.from;
+      var avDiv = document.createElement('div');
+      avDiv.className = 'msg-av-sm';
+      var avImg = document.createElement('img');
+      avImg.src = m.from === 'them' ? char.avatar : char.myAvatar;
+      avDiv.appendChild(avImg);
+      row.appendChild(avDiv);
+      if (m.img) {
+        var imgWrap = document.createElement('div');
+        imgWrap.className = 'bubble-img';
+        imgWrap.dataset.img = m.img;
+        imgWrap.innerHTML = '<img src="' + m.img + '" alt="">';
+        row.appendChild(imgWrap);
+      } else {
+        var b = document.createElement('div');
+        b.className = 'bubble ' + m.from;
+        b.textContent = m.text;
+        row.appendChild(b);
+      }
+      list.appendChild(row);
+    });
+
+    list.scrollTop = list.scrollHeight;
+    initLightboxItems();
+  }
+};
+
+// ── Hunt stack ────────────────────────────────────────────────────────────────
+// B surfaces first — narrative priority.
+// Add char keys here as new profiles are built. All keys must exist in CHARS.
+var huntStack    = ['b', 'j', 'nightowl', 'runnerboy'];
+var huntFront    = 0;   // index of current front card
+var huntStackCards = []; // DOM elements, index-parallel to huntStack
+
+// Position configs, index 0 = front card.
+// Tune y/rot/scale/opacity here to adjust the look.
+var STACK_POSITIONS = [
+  { y: 0,  rot: 0,   scale: 1,    opacity: 1,    z: 10, events: true  },
+  { y: 14, rot: 2.5, scale: 0.97, opacity: 0.80, z: 9,  events: false },
+  { y: 26, rot: -2,  scale: 0.94, opacity: 0.60, z: 8,  events: false },
+  { y: 36, rot: 3,   scale: 0.91, opacity: 0.42, z: 7,  events: false }
+];
+
+function applyStackPositions() {
+  var n = huntStack.length;
+  huntStackCards.forEach(function(card, i) {
+    var relPos = (i - huntFront + n) % n;
+    var p = STACK_POSITIONS[relPos];
+    if (!p) {
+      card.style.opacity = '0';
+      card.style.zIndex = '1';
+      card.style.transform = 'translateY(36px) scale(0.91)';
+      card.style.pointerEvents = 'none';
+      return;
+    }
+    card.style.transform = 'translateY(' + p.y + 'px) rotate(' + p.rot + 'deg) scale(' + p.scale + ')';
+    card.style.opacity = String(p.opacity);
+    card.style.zIndex  = String(p.z);
+    card.style.pointerEvents = p.events ? 'auto' : 'none';
+  });
+}
+
+function dismissFront(direction) {
+  var n = huntStack.length;
+  var card = huntStackCards[huntFront];
+  if (!card) return;
+
+  card.style.pointerEvents = 'none';
+
+  // Animate front card off screen
+  var offY   = direction === 'up' ? -700 : 700;
+  var offRot = direction === 'up' ? -14 : 14;
+  card.style.transition = 'transform 0.3s ease-in, opacity 0.26s ease-in';
+  card.style.transform  = 'translateY(' + offY + 'px) rotate(' + offRot + 'deg) scale(0.88)';
+  card.style.opacity    = '0';
+
+  setTimeout(function() {
+    huntFront = (huntFront + 1) % n;
+
+    // Teleport dismissed card to back position — invisible, no transition
+    // It's behind everything so the user can't see the jump
+    card.style.transition = 'none';
+    card.style.transform  = 'translateY(36px) scale(0.91)';
+    card.style.opacity    = '0';
+    card.style.zIndex     = '1';
+
+    // Double rAF: commits the transition:none frame before re-enabling
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        huntStackCards.forEach(function(c) { c.style.transition = ''; });
+        applyStackPositions();
+      });
+    });
+  }, 330);
+}
+
+function showInterestPulse() {
+  var card = huntStackCards[huntFront];
+  if (!card) return;
+  card.classList.remove('stack-interest');
+  void card.offsetWidth; // force reflow so re-adding class re-triggers animation
+  card.classList.add('stack-interest');
+  setTimeout(function() { card.classList.remove('stack-interest'); }, 620);
+}
+
+function initHuntStack() {
+  var container = document.getElementById('huntStackContainer');
+  container.innerHTML = '';
+  huntStackCards = [];
+
+  huntStack.forEach(function(charKey) {
+    var char = CHARS[charKey];
+    if (!char) return;
+
+    var card = document.createElement('div');
+    card.className    = 'stack-card';
+    card.dataset.char = charKey;
+
+    // Photo — first real image or first placeholder
+    var photos = buildPhotoArray(char.realPhotos, 1);
+    var img = document.createElement('img');
+    img.src = photos[0];
+    img.alt = char.name;
+    card.appendChild(img);
+
+    // Online status dot
+    var dot = document.createElement('div');
+    dot.className = 'stack-online-dot' + (char.online ? '' : ' offline');
+    card.appendChild(dot);
+
+    // Name + meta overlay
+    var info = document.createElement('div');
+    info.className = 'stack-card-info';
+    var metaParts = [char.stats.distance];
+    if (char.stats.age)  metaParts.push(char.stats.age);
+    if (char.stats.role) metaParts.push(char.stats.role);
+    info.innerHTML =
+      '<div class="stack-card-name">' + char.name + '</div>' +
+      '<div class="stack-card-meta">' + metaParts.join(' &middot; ') + '</div>';
+    card.appendChild(info);
+
+    container.appendChild(card);
+    huntStackCards.push(card);
+  });
+
+  applyStackPositions();
+
+  // ── Gesture handling ───────────────────────────────────────────────────────
+  var touchStartY = 0, touchStartX = 0, touchStartTime = 0;
+  var lastTapTime  = 0;
+  var SWIPE_MIN    = 40;  // px vertical movement to count as swipe
+  var TAP_MAX_MOVE = 14;  // px max movement to still count as tap
+  var DBL_TAP_MS   = 300; // ms window for double-tap
+  var dismissLocked = false;
+
+  function tryDismiss(direction) {
+    if (dismissLocked) return;
+    dismissLocked = true;
+    dismissFront(direction);
+    setTimeout(function() { dismissLocked = false; }, 460);
+  }
+
+  // Touch
+  container.addEventListener('touchstart', function(e) {
+    touchStartY    = e.touches[0].clientY;
+    touchStartX    = e.touches[0].clientX;
+    touchStartTime = Date.now();
+  }, { passive: true });
+
+  container.addEventListener('touchend', function(e) {
+    var dy      = touchStartY - e.changedTouches[0].clientY;
+    var dx      = touchStartX - e.changedTouches[0].clientX;
+    var absDy   = Math.abs(dy);
+    var absDx   = Math.abs(dx);
+    var elapsed = Date.now() - touchStartTime;
+
+    if (absDy > SWIPE_MIN && absDy > absDx) {
+      tryDismiss(dy > 0 ? 'up' : 'down');
+      return;
+    }
+
+    if (absDy < TAP_MAX_MOVE && absDx < TAP_MAX_MOVE && elapsed < 300) {
+      var now = Date.now();
+      if (now - lastTapTime < DBL_TAP_MS && lastTapTime !== 0) {
+        var charKey = huntStack[huntFront];
+        var char    = CHARS[charKey];
+        if (char && char.hasProfile) {
+          Hunter.goToProfile(charKey);
+        } else {
+          showInterestPulse(); // no profile yet — fall back to interest
+        }
+        lastTapTime = 0;
+      } else {
+        showInterestPulse();
+        lastTapTime = now;
+      }
+    }
+  });
+
+  // Mouse (desktop)
+  var mouseStartY = 0, mouseIsDown = false;
+
+  container.addEventListener('mousedown', function(e) {
+    mouseStartY = e.clientY;
+    mouseIsDown = true;
+  });
+
+  document.addEventListener('mouseup', function(e) {
+    if (!mouseIsDown) return;
+    mouseIsDown = false;
+    var dy = mouseStartY - e.clientY;
+    if (Math.abs(dy) > SWIPE_MIN) tryDismiss(dy > 0 ? 'up' : 'down');
+  });
+
+  // Arrow keys
+  document.addEventListener('keydown', function(e) {
+    var huntPanel    = document.getElementById('panel-hunt');
+    var browseScreen = document.getElementById('screen-browse');
+    if (!huntPanel    || !huntPanel.classList.contains('panel-active'))   return;
+    if (!browseScreen || !browseScreen.classList.contains('active'))      return;
+    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      tryDismiss(e.key === 'ArrowUp' ? 'up' : 'down');
+    }
+  });
+}
+
+// ── Hunt intake ───────────────────────────────────────────────────────────────
+var huntIntakeAnswers = {};
+
+function initHuntIntake() {
+  var intake = document.getElementById('huntIntake');
+
+  if (localStorage.getItem('hunter.hunt.intake') === 'done') {
+    intake.style.display = 'none';
+    return;
+  }
+
+  // Pick a random Q3
+  var q3 = HUNT_Q3_POOL[Math.floor(Math.random() * HUNT_Q3_POOL.length)];
+  document.getElementById('intakeQ3Text').textContent = q3.question;
+  var q3opts = document.getElementById('intakeQ3Options');
+  q3opts.innerHTML = '';
+  q3.options.forEach(function(opt) {
+    var el = document.createElement('div');
+    el.className   = 'intake-option';
+    el.textContent = opt;
+    el.dataset.val = opt.toLowerCase().replace(/[\s&]+/g, '-');
+    q3opts.appendChild(el);
+  });
+
+  // Wire option clicks for all three steps
+  document.querySelectorAll('.intake-step').forEach(function(step, stepIdx) {
+    step.querySelectorAll('.intake-option').forEach(function(opt) {
+      opt.addEventListener('click', function() {
+        if (step.dataset.answered) return; // prevent double-fire
+
+        step.querySelectorAll('.intake-option').forEach(function(o) {
+          o.classList.remove('selected');
+        });
+        opt.classList.add('selected');
+        huntIntakeAnswers['q' + (stepIdx + 1)] = opt.dataset.val;
+        step.dataset.answered = 'true';
+
+        setTimeout(function() { advanceIntakeStep(stepIdx); }, 380);
+      });
+    });
+  });
+}
+
+function advanceIntakeStep(currentStep) {
+  var steps = document.querySelectorAll('.intake-step');
+  var dots  = document.querySelectorAll('.intake-dot');
+
+  steps[currentStep].classList.remove('active');
+  steps[currentStep].classList.add('exit');
+  dots[currentStep].classList.remove('active');
+
+  var nextStep = currentStep + 1;
+
+  setTimeout(function() {
+    steps[currentStep].classList.remove('exit');
+
+    if (nextStep < steps.length) {
+      steps[nextStep].classList.add('active');
+      if (dots[nextStep]) dots[nextStep].classList.add('active');
+    } else {
+      // All three answered — save and fade out
+      localStorage.setItem('hunter.hunt.intake', 'done');
+      var intake = document.getElementById('huntIntake');
+      intake.style.pointerEvents = 'none';
+      intake.style.transition    = 'opacity 0.5s ease';
+      intake.style.opacity       = '0';
+      setTimeout(function() { intake.style.display = 'none'; }, 540);
+    }
+  }, 260);
+}
+
+// ── Tab switching ─────────────────────────────────────────────────────────────
+function initBrowseTabs() {
+  var tabs     = document.querySelectorAll('#screen-browse .tab');
+  var panels   = document.querySelectorAll('#screen-browse .browse-panel');
+  var subtitle = document.getElementById('browseSubtitle');
+
+  var subtitleMap = {
+    'panel-hunt':   '4 in range',
+    'panel-browse': '4 nearby',
+    'panel-track':  'select target'
+  };
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var panelId = tab.dataset.panel;
+      tabs.forEach(function(t)   { t.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('panel-active'); });
+      tab.classList.add('active');
+      var panel = document.getElementById(panelId);
+      if (panel) panel.classList.add('panel-active');
+      if (subtitle && subtitleMap[panelId]) subtitle.textContent = subtitleMap[panelId];
+    });
+  });
+}
+
+// ── Carousel ──────────────────────────────────────────────────────────────────
+function initCarousel(screenId, photos) {
+  var screen  = document.getElementById(screenId);
+  var heroImg = screen.querySelector('.hero-full img');
+  var bar     = screen.querySelector('.carousel-bar');
+  var current = 0;
+
+  heroImg.src = photos[0];
+  bar.innerHTML = '';
+  if (photos.length <= 1) {
+    bar.style.display = 'none';
+  } else {
+    photos.forEach(function(src, i) {
+      var thumb = document.createElement('div');
+      thumb.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
+      thumb.dataset.idx = i;
+      var img = document.createElement('img');
+      img.src = src; img.alt = String(i + 1);
+      thumb.appendChild(img);
+      bar.appendChild(thumb);
+    });
+  }
+
+  var thumbs = bar.querySelectorAll('.carousel-thumb');
+
+  function setPhoto(i) {
+    current = i;
+    heroImg.src = photos[i];
+    thumbs.forEach(function(t, j) { t.classList.toggle('active', j === i); });
+  }
+
+  thumbs.forEach(function(t) {
+    t.addEventListener('click', function(e) {
+      e.stopPropagation();
+      setPhoto(+t.dataset.idx);
+    });
+  });
+
+  var sx = 0;
+  var heroArea = screen.querySelector('.hero-full');
+  heroArea.addEventListener('touchstart', function(e) { sx = e.touches[0].clientX; });
+  heroArea.addEventListener('touchend', function(e) {
+    var d = sx - e.changedTouches[0].clientX;
+    if (Math.abs(d) > 40) {
+      if (d > 0 && current < photos.length - 1) setPhoto(current + 1);
+      if (d < 0 && current > 0) setPhoto(current - 1);
+      e.preventDefault();
+    }
+  });
+
+  heroArea.addEventListener('click', function() {
+    document.getElementById('phone').classList.toggle('immersive');
+  });
+}
+
+// ── Read more ─────────────────────────────────────────────────────────────────
+function initReadMore() {
+  document.querySelectorAll('.about-text').forEach(function(el) {
+    if (el.dataset.rmInit) return;
+    el.dataset.rmInit = 'true';
+    var toggle = document.createElement('span');
+    toggle.className  = 'read-more';
+    toggle.textContent = 'read more';
+    el.parentNode.insertBefore(toggle, el.nextSibling);
+    toggle.addEventListener('click', function(e) {
+      e.stopPropagation();
+      el.classList.toggle('expanded');
+      toggle.textContent = el.classList.contains('expanded') ? 'read less' : 'read more';
+    });
+  });
+}
+
+// ── Action buttons ────────────────────────────────────────────────────────────
+function initActionButtons(screenId, charKey) {
+  var screen  = document.getElementById(screenId);
+  var actUp   = screen.querySelector('[data-action="up"]');
+  var actDown = screen.querySelector('[data-action="down"]');
+  var actMsg  = screen.querySelector('[data-action="msg"]');
+
+  actUp.onclick = function(e) {
+    e.stopPropagation();
+    actDown.classList.remove('active');
+    actUp.classList.toggle('active');
+  };
+  actDown.onclick = function(e) {
+    e.stopPropagation();
+    actUp.classList.remove('active');
+    actDown.classList.toggle('active');
+  };
+  actMsg.onclick = function(e) {
+    e.stopPropagation();
+    if (!CHARS[charKey] || !CHARS[charKey].canMessage) return;
+    Hunter.goToChat(charKey);
+  };
+}
+
+// ── Browse cards ──────────────────────────────────────────────────────────────
+function initBrowseCards() {
+  ['j', 'b'].forEach(function(charKey) {
+    var card = document.getElementById('card-' + charKey);
+    if (!card) return;
+    card.addEventListener('click', function() {
+      if (Hunter.selectedCard === card) {
+        Hunter.goToProfile(charKey);
+      } else {
+        if (Hunter.selectedCard) Hunter.selectedCard.classList.remove('selected');
+        Hunter.selectedCard = card;
+        card.classList.add('selected');
+      }
+    });
+  });
+}
+
+// ── Back buttons ──────────────────────────────────────────────────────────────
+function initBackButtons() {
+  document.querySelectorAll('.profile-back').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      Hunter.navigate('browse');
+    });
+  });
+  document.getElementById('chatBackBtn').addEventListener('click', function() {
+    Hunter.currentChar ? Hunter.navigate('profile') : Hunter.navigate('browse');
+  });
+}
+
+// ── Chat avatar tap ───────────────────────────────────────────────────────────
+function initChatAvatarTap() {
+  document.getElementById('chatAvatarLink').addEventListener('click', function() {
+    var charKey = this.dataset.char;
+    if (charKey) Hunter.goToProfile(charKey);
+  });
+}
+
+// ── Lightbox ──────────────────────────────────────────────────────────────────
+function initLightboxItems() {
+  document.querySelectorAll('.bubble-img').forEach(function(el) {
+    if (el.dataset.lbInit) return;
+    el.dataset.lbInit = 'true';
+    el.addEventListener('click', function() {
+      document.getElementById('lightboxImg').src = el.dataset.img || el.querySelector('img').src;
+      document.getElementById('lightbox').classList.add('open');
+    });
+  });
+}
+
+// ── Clock ─────────────────────────────────────────────────────────────────────
+function updateClock() {
+  var now = new Date();
+  var h = now.getHours(), m = now.getMinutes(), ap = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  m = m < 10 ? '0' + m : m;
+  document.querySelectorAll('.status-time').forEach(function(el) {
+    el.textContent = h + ':' + m + ' ' + ap;
+  });
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  updateClock();
+  setInterval(updateClock, 10000);
+
+  setTimeout(function() {
+    document.getElementById('loadingScreen').classList.add('done');
+  }, 3600);
+
+  initBrowseCards();
+  initBackButtons();
+  initChatAvatarTap();
+  initBrowseTabs();
+  initHuntStack();
+  initHuntIntake();
+
+  document.getElementById('lightbox').addEventListener('click', function() {
+    document.getElementById('lightbox').classList.remove('open');
+  });
+
+  Hunter.navigate('browse');
+});
+</script>
+</body>
+</html>
