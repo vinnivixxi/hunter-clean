@@ -33,6 +33,7 @@
         <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
       </div>
     </div>
+
     <div class="matches-header">
       <div class="matches-title-group">
         <img class="matches-bow" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
@@ -41,15 +42,15 @@
       <span class="matches-subtitle" id="browseSubtitle">4 in range</span>
     </div>
 
+    <!-- FIX 2: Tab order corrected — Hunt, Track, Browse -->
     <div class="tabs">
       <div class="tab active" data-panel="panel-hunt">HUNT</div>
-      <div class="tab" data-panel="panel-browse">BROWSE</div>
       <div class="tab" data-panel="panel-track">TRACK</div>
+      <div class="tab" data-panel="panel-browse">BROWSE</div>
     </div>
 
     <!-- HUNT PANEL -->
     <div class="browse-panel panel-active" id="panel-hunt">
-
       <div class="hunt-intake" id="huntIntake">
         <div class="intake-logo">
           <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
@@ -90,14 +91,27 @@
       </div><!-- /hunt-intake -->
 
       <div class="hunt-stack-container" id="huntStackContainer"></div>
-
       <div class="stack-hints" id="stackHints">
         <span>swipe &uarr;&darr; to pass</span>
         <span class="stack-hint-sep">&middot;</span>
         <span>tap to mark &middot; double-tap to open</span>
       </div>
-
     </div><!-- /panel-hunt -->
+
+    <!-- TRACK PANEL -->
+    <!-- FIX 3: "Stalking" → "Tracking" -->
+    <div class="browse-panel" id="panel-track">
+      <div class="track-placeholder">
+        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+          <circle cx="26" cy="26" r="20" stroke="rgba(59,107,74,0.25)" stroke-width="1.5"/>
+          <circle cx="26" cy="26" r="11" stroke="rgba(59,107,74,0.4)" stroke-width="1.5"/>
+          <circle cx="26" cy="26" r="3.5" fill="#3B6B4A"/>
+          <path d="M26 6V13M26 39V46M6 26H13M39 26H46" stroke="rgba(59,107,74,0.25)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <div class="track-placeholder-label">Tracking mode incoming.</div>
+        <div class="track-placeholder-sub">Select a target to begin tracking.</div>
+      </div>
+    </div><!-- /panel-track -->
 
     <!-- BROWSE PANEL (fan layout — unchanged) -->
     <div class="browse-panel" id="panel-browse">
@@ -125,20 +139,6 @@
       </div>
     </div><!-- /panel-browse -->
 
-    <!-- TRACK PANEL (Leaflet.js map — Phase 3 pending) -->
-    <div class="browse-panel" id="panel-track">
-      <div class="track-placeholder">
-        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-          <circle cx="26" cy="26" r="20" stroke="rgba(59,107,74,0.25)" stroke-width="1.5"/>
-          <circle cx="26" cy="26" r="11" stroke="rgba(59,107,74,0.4)" stroke-width="1.5"/>
-          <circle cx="26" cy="26" r="3.5" fill="#3B6B4A"/>
-          <path d="M26 6V13M26 39V46M6 26H13M39 26H46" stroke="rgba(59,107,74,0.25)" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <div class="track-placeholder-label">Stalking mode incoming.</div>
-        <div class="track-placeholder-sub">Select a target to begin tracking.</div>
-      </div>
-    </div><!-- /panel-track -->
-
     <div class="bottom-nav">
       <div class="nav-item active">
         <svg viewBox="0 0 24 24" fill="none"><path d="M3 9L12 2L21 9V20C21 20.6 20.6 21 20 21H4C3.4 21 3 20.6 3 20V9Z" stroke="#3B6B4A" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 21V12H15V21" stroke="#3B6B4A" stroke-width="1.5" stroke-linejoin="round"/></svg>
@@ -157,6 +157,7 @@
         <span class="nav-label">Search</span>
       </div>
     </div>
+
   </div><!-- /screen-browse -->
 
   <!-- PROFILE SCREEN -->
@@ -170,6 +171,7 @@
         <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
       </div>
     </div>
+
     <div class="app-header">
       <svg class="hamburger profile-back" width="20" height="14" viewBox="0 0 20 14" fill="none" style="cursor:pointer;"><path d="M2 2H18M2 7H18M2 12H18" stroke="#3B6B4A" stroke-width="1.5" stroke-linecap="round"/></svg>
       <div class="app-title-group">
@@ -178,8 +180,10 @@
       </div>
       <svg class="search-icon" width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="6" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/><path d="M13 13L16 16" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"/></svg>
     </div>
+
     <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
     <div class="username" id="profileName"></div>
+
     <div class="profile-bottom">
       <div class="profile-bottom-left">
         <div class="stats-row" style="position:relative;bottom:auto;left:auto;">
@@ -215,6 +219,7 @@
         <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
       </div>
     </div>
+
     <div class="chat-header">
       <div class="back-btn" id="chatBackBtn">&#8249;</div>
       <div class="chat-av" id="chatAvatarLink" style="cursor:pointer;">
@@ -226,15 +231,18 @@
       </div>
       <img class="bow-logo" src="hunter.arrows/hunter.testing.logo.png" alt="" style="width:20px;height:20px;object-fit:contain;opacity:0.7;">
     </div>
+
     <div class="messages" id="messageList">
       <div class="spacer"></div>
     </div>
+
     <div class="input-bar">
       <input class="input-field" type="text" placeholder="Message..." autocomplete="off">
       <button class="send-btn">
         <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="send">
       </button>
     </div>
+
     <div class="lightbox" id="lightbox">
       <span class="lightbox-close">&#x2715;</span>
       <img id="lightboxImg" src="" alt="">
@@ -264,10 +272,10 @@ function shuffled(arr) {
 
 function buildPhotoArray(realPhotos, count) {
   count = count || 5;
-  var real   = realPhotos.slice(0, count);
+  var real = realPhotos.slice(0, count);
   var needed = count - real.length;
   if (needed <= 0) return real;
-  var fills  = shuffled(PLACEHOLDER_POOL)
+  var fills = shuffled(PLACEHOLDER_POOL)
     .filter(function(p) { return real.indexOf(p) === -1; })
     .slice(0, needed);
   return real.concat(fills);
@@ -317,7 +325,7 @@ var CHARS = {
     messages: [
       { time: 'Today 9:47 PM' },
       { from: 'them', text: 'hey' },
-      { from: 'me',   text: 'hey' },
+      { from: 'me', text: 'hey' },
       { from: 'them', text: "it's arabic. it's what happens when music moves through you and you can't not move" }
     ]
   },
@@ -463,17 +471,17 @@ var Hunter = {
 // ── Hunt stack ────────────────────────────────────────────────────────────────
 // B surfaces first — narrative priority.
 // Add char keys here as new profiles are built. All keys must exist in CHARS.
-var huntStack    = ['b', 'j', 'nightowl', 'runnerboy'];
-var huntFront    = 0;   // index of current front card
+var huntStack = ['b', 'j', 'nightowl', 'runnerboy'];
+var huntFront = 0;       // index of current front card
 var huntStackCards = []; // DOM elements, index-parallel to huntStack
 
 // Position configs, index 0 = front card.
 // Tune y/rot/scale/opacity here to adjust the look.
 var STACK_POSITIONS = [
-  { y: 0,  rot: 0,   scale: 1,    opacity: 1,    z: 10, events: true  },
-  { y: 14, rot: 2.5, scale: 0.97, opacity: 0.80, z: 9,  events: false },
-  { y: 26, rot: -2,  scale: 0.94, opacity: 0.60, z: 8,  events: false },
-  { y: 36, rot: 3,   scale: 0.91, opacity: 0.42, z: 7,  events: false }
+  { y: 0,  rot:  0,   scale: 1,    opacity: 1,    z: 10, events: true  },
+  { y: 14, rot:  2.5, scale: 0.97, opacity: 0.80, z: 9,  events: false },
+  { y: 26, rot: -2,   scale: 0.94, opacity: 0.60, z: 8,  events: false },
+  { y: 36, rot:  3,   scale: 0.91, opacity: 0.42, z: 7,  events: false }
 ];
 
 function applyStackPositions() {
@@ -490,7 +498,7 @@ function applyStackPositions() {
     }
     card.style.transform = 'translateY(' + p.y + 'px) rotate(' + p.rot + 'deg) scale(' + p.scale + ')';
     card.style.opacity = String(p.opacity);
-    card.style.zIndex  = String(p.z);
+    card.style.zIndex = String(p.z);
     card.style.pointerEvents = p.events ? 'auto' : 'none';
   });
 }
@@ -499,27 +507,20 @@ function dismissFront(direction) {
   var n = huntStack.length;
   var card = huntStackCards[huntFront];
   if (!card) return;
-
   card.style.pointerEvents = 'none';
 
-  // Animate front card off screen
-  var offY   = direction === 'up' ? -700 : 700;
+  var offY = direction === 'up' ? -700 : 700;
   var offRot = direction === 'up' ? -14 : 14;
   card.style.transition = 'transform 0.3s ease-in, opacity 0.26s ease-in';
-  card.style.transform  = 'translateY(' + offY + 'px) rotate(' + offRot + 'deg) scale(0.88)';
-  card.style.opacity    = '0';
+  card.style.transform = 'translateY(' + offY + 'px) rotate(' + offRot + 'deg) scale(0.88)';
+  card.style.opacity = '0';
 
   setTimeout(function() {
     huntFront = (huntFront + 1) % n;
-
-    // Teleport dismissed card to back position — invisible, no transition
-    // It's behind everything so the user can't see the jump
     card.style.transition = 'none';
-    card.style.transform  = 'translateY(36px) scale(0.91)';
-    card.style.opacity    = '0';
-    card.style.zIndex     = '1';
-
-    // Double rAF: commits the transition:none frame before re-enabling
+    card.style.transform = 'translateY(36px) scale(0.91)';
+    card.style.opacity = '0';
+    card.style.zIndex = '1';
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
         huntStackCards.forEach(function(c) { c.style.transition = ''; });
@@ -533,7 +534,7 @@ function showInterestPulse() {
   var card = huntStackCards[huntFront];
   if (!card) return;
   card.classList.remove('stack-interest');
-  void card.offsetWidth; // force reflow so re-adding class re-triggers animation
+  void card.offsetWidth;
   card.classList.add('stack-interest');
   setTimeout(function() { card.classList.remove('stack-interest'); }, 620);
 }
@@ -548,26 +549,23 @@ function initHuntStack() {
     if (!char) return;
 
     var card = document.createElement('div');
-    card.className    = 'stack-card';
+    card.className = 'stack-card';
     card.dataset.char = charKey;
 
-    // Photo — first real image or first placeholder
     var photos = buildPhotoArray(char.realPhotos, 1);
     var img = document.createElement('img');
     img.src = photos[0];
     img.alt = char.name;
     card.appendChild(img);
 
-    // Online status dot
     var dot = document.createElement('div');
     dot.className = 'stack-online-dot' + (char.online ? '' : ' offline');
     card.appendChild(dot);
 
-    // Name + meta overlay
     var info = document.createElement('div');
     info.className = 'stack-card-info';
     var metaParts = [char.stats.distance];
-    if (char.stats.age)  metaParts.push(char.stats.age);
+    if (char.stats.age) metaParts.push(char.stats.age);
     if (char.stats.role) metaParts.push(char.stats.role);
     info.innerHTML =
       '<div class="stack-card-name">' + char.name + '</div>' +
@@ -582,7 +580,7 @@ function initHuntStack() {
 
   // ── Gesture handling ───────────────────────────────────────────────────────
   var touchStartY = 0, touchStartX = 0, touchStartTime = 0;
-  var lastTapTime  = 0;
+  var lastTapTime = 0;
   var SWIPE_MIN    = 40;  // px vertical movement to count as swipe
   var TAP_MAX_MOVE = 14;  // px max movement to still count as tap
   var DBL_TAP_MS   = 300; // ms window for double-tap
@@ -597,16 +595,16 @@ function initHuntStack() {
 
   // Touch
   container.addEventListener('touchstart', function(e) {
-    touchStartY    = e.touches[0].clientY;
-    touchStartX    = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartX = e.touches[0].clientX;
     touchStartTime = Date.now();
   }, { passive: true });
 
   container.addEventListener('touchend', function(e) {
-    var dy      = touchStartY - e.changedTouches[0].clientY;
-    var dx      = touchStartX - e.changedTouches[0].clientX;
-    var absDy   = Math.abs(dy);
-    var absDx   = Math.abs(dx);
+    var dy = touchStartY - e.changedTouches[0].clientY;
+    var dx = touchStartX - e.changedTouches[0].clientX;
+    var absDy = Math.abs(dy);
+    var absDx = Math.abs(dx);
     var elapsed = Date.now() - touchStartTime;
 
     if (absDy > SWIPE_MIN && absDy > absDx) {
@@ -618,11 +616,11 @@ function initHuntStack() {
       var now = Date.now();
       if (now - lastTapTime < DBL_TAP_MS && lastTapTime !== 0) {
         var charKey = huntStack[huntFront];
-        var char    = CHARS[charKey];
+        var char = CHARS[charKey];
         if (char && char.hasProfile) {
           Hunter.goToProfile(charKey);
         } else {
-          showInterestPulse(); // no profile yet — fall back to interest
+          showInterestPulse();
         }
         lastTapTime = 0;
       } else {
@@ -634,12 +632,10 @@ function initHuntStack() {
 
   // Mouse (desktop)
   var mouseStartY = 0, mouseIsDown = false;
-
   container.addEventListener('mousedown', function(e) {
     mouseStartY = e.clientY;
     mouseIsDown = true;
   });
-
   document.addEventListener('mouseup', function(e) {
     if (!mouseIsDown) return;
     mouseIsDown = false;
@@ -649,10 +645,10 @@ function initHuntStack() {
 
   // Arrow keys
   document.addEventListener('keydown', function(e) {
-    var huntPanel    = document.getElementById('panel-hunt');
+    var huntPanel = document.getElementById('panel-hunt');
     var browseScreen = document.getElementById('screen-browse');
-    if (!huntPanel    || !huntPanel.classList.contains('panel-active'))   return;
-    if (!browseScreen || !browseScreen.classList.contains('active'))      return;
+    if (!huntPanel || !huntPanel.classList.contains('panel-active')) return;
+    if (!browseScreen || !browseScreen.classList.contains('active')) return;
     if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
       e.preventDefault();
       tryDismiss(e.key === 'ArrowUp' ? 'up' : 'down');
@@ -665,7 +661,6 @@ var huntIntakeAnswers = {};
 
 function initHuntIntake() {
   var intake = document.getElementById('huntIntake');
-
   if (localStorage.getItem('hunter.hunt.intake') === 'done') {
     intake.style.display = 'none';
     return;
@@ -678,7 +673,7 @@ function initHuntIntake() {
   q3opts.innerHTML = '';
   q3.options.forEach(function(opt) {
     var el = document.createElement('div');
-    el.className   = 'intake-option';
+    el.className = 'intake-option';
     el.textContent = opt;
     el.dataset.val = opt.toLowerCase().replace(/[\s&]+/g, '-');
     q3opts.appendChild(el);
@@ -688,15 +683,13 @@ function initHuntIntake() {
   document.querySelectorAll('.intake-step').forEach(function(step, stepIdx) {
     step.querySelectorAll('.intake-option').forEach(function(opt) {
       opt.addEventListener('click', function() {
-        if (step.dataset.answered) return; // prevent double-fire
-
+        if (step.dataset.answered) return;
         step.querySelectorAll('.intake-option').forEach(function(o) {
           o.classList.remove('selected');
         });
         opt.classList.add('selected');
         huntIntakeAnswers['q' + (stepIdx + 1)] = opt.dataset.val;
         step.dataset.answered = 'true';
-
         setTimeout(function() { advanceIntakeStep(stepIdx); }, 380);
       });
     });
@@ -712,10 +705,8 @@ function advanceIntakeStep(currentStep) {
   dots[currentStep].classList.remove('active');
 
   var nextStep = currentStep + 1;
-
   setTimeout(function() {
     steps[currentStep].classList.remove('exit');
-
     if (nextStep < steps.length) {
       steps[nextStep].classList.add('active');
       if (dots[nextStep]) dots[nextStep].classList.add('active');
@@ -724,8 +715,8 @@ function advanceIntakeStep(currentStep) {
       localStorage.setItem('hunter.hunt.intake', 'done');
       var intake = document.getElementById('huntIntake');
       intake.style.pointerEvents = 'none';
-      intake.style.transition    = 'opacity 0.5s ease';
-      intake.style.opacity       = '0';
+      intake.style.transition = 'opacity 0.5s ease';
+      intake.style.opacity = '0';
       setTimeout(function() { intake.style.display = 'none'; }, 540);
     }
   }, 260);
@@ -736,7 +727,6 @@ function initBrowseTabs() {
   var tabs     = document.querySelectorAll('#screen-browse .tab');
   var panels   = document.querySelectorAll('#screen-browse .browse-panel');
   var subtitle = document.getElementById('browseSubtitle');
-
   var subtitleMap = {
     'panel-hunt':   '4 in range',
     'panel-browse': '4 nearby',
@@ -746,12 +736,20 @@ function initBrowseTabs() {
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
       var panelId = tab.dataset.panel;
-      tabs.forEach(function(t)   { t.classList.remove('active'); });
+      tabs.forEach(function(t) { t.classList.remove('active'); });
       panels.forEach(function(p) { p.classList.remove('panel-active'); });
       tab.classList.add('active');
       var panel = document.getElementById(panelId);
       if (panel) panel.classList.add('panel-active');
       if (subtitle && subtitleMap[panelId]) subtitle.textContent = subtitleMap[panelId];
+
+      // FIX 1: Re-surface intake when Hunt tab is tapped if not yet completed
+      if (panelId === 'panel-hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
+        var intake = document.getElementById('huntIntake');
+        intake.style.display = '';
+        intake.style.opacity = '1';
+        intake.style.pointerEvents = '';
+      }
     });
   });
 }
@@ -765,6 +763,7 @@ function initCarousel(screenId, photos) {
 
   heroImg.src = photos[0];
   bar.innerHTML = '';
+
   if (photos.length <= 1) {
     bar.style.display = 'none';
   } else {
@@ -805,7 +804,6 @@ function initCarousel(screenId, photos) {
       e.preventDefault();
     }
   });
-
   heroArea.addEventListener('click', function() {
     document.getElementById('phone').classList.toggle('immersive');
   });
@@ -817,7 +815,7 @@ function initReadMore() {
     if (el.dataset.rmInit) return;
     el.dataset.rmInit = 'true';
     var toggle = document.createElement('span');
-    toggle.className  = 'read-more';
+    toggle.className = 'read-more';
     toggle.textContent = 'read more';
     el.parentNode.insertBefore(toggle, el.nextSibling);
     toggle.addEventListener('click', function(e) {
