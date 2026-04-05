@@ -478,12 +478,12 @@ var huntStackCards = []; // DOM elements, index-parallel to huntStack
 // Position configs, index 0 = front card.
 // Tune y/rot/scale/opacity here to adjust the look.
 var STACK_POSITIONS = [
-  { y: 0,  rot:  0,   scale: 1,    opacity: 1,    z: 10, events: true  },
-  { y: 14, rot:  2.5, scale: 0.97, opacity: 0.80, z: 9,  events: false },
-  { y: 26, rot: -2,   scale: 0.94, opacity: 0.60, z: 8,  events: false },
-  { y: 36, rot:  3,   scale: 0.91, opacity: 0.42, z: 7,  events: false }
+  { x: 0,  y: 0,  rot: 0, scale: 1,    opacity: 1,    z: 10, events: true  },
+  { x: 10, y: 20, rot: 0, scale: 0.97, opacity: 0.80, z: 9,  events: false },
+  { x: 20, y: 36, rot: 0, scale: 0.94, opacity: 0.60, z: 8,  events: false },
+  { x: 30, y: 50, rot: 0, scale: 0.91, opacity: 0.42, z: 7,  events: false }
 ];
-
+ 
 function applyStackPositions() {
   var n = huntStack.length;
   huntStackCards.forEach(function(card, i) {
@@ -496,7 +496,7 @@ function applyStackPositions() {
       card.style.pointerEvents = 'none';
       return;
     }
-    card.style.transform = 'translateY(' + p.y + 'px) rotate(' + p.rot + 'deg) scale(' + p.scale + ')';
+    card.style.transform = 'translateX(' + p.x + 'px) translateY(' + p.y + 'px) rotate(' + p.rot + 'deg) scale(' + p.scale + ')';
     card.style.opacity = String(p.opacity);
     card.style.zIndex = String(p.z);
     card.style.pointerEvents = p.events ? 'auto' : 'none';

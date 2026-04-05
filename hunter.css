@@ -165,10 +165,10 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   transition:transform 0.35s cubic-bezier(0.34,1.2,0.64,1), box-shadow 0.35s;
   box-shadow:0 4px 16px rgba(0,0,0,0.5);
 }
-#card-j         { transform:translateX(-80px) translateY(15px) rotate(-12deg); z-index:1; }
-#card-b         { transform:translateX(-25px) translateY(0px)  rotate(-4deg);  z-index:2; }
-#card-runnerboy { transform:translateX(30px)  translateY(0px)  rotate(4deg);   z-index:3; opacity:0.35; pointer-events:none; cursor:default; }
-#card-nightowl  { transform:translateX(85px)  translateY(15px) rotate(12deg);  z-index:4; opacity:0.35; pointer-events:none; cursor:default; }
+#card-j         { transform:translateX(-80px) translateY(0px) rotate(0deg); z-index:1; }
+#card-b         { transform:translateX(-25px) translateY(0px)  rotate(0deg);  z-index:2; }
+#card-runnerboy { transform:translateX(30px)  translateY(0px)  rotate(0deg);   z-index:3; opacity:0.35; pointer-events:none; cursor:default; }
+#card-nightowl  { transform:translateX(85px)  translateY(0px) rotate(0deg);  z-index:4; opacity:0.35; pointer-events:none; cursor:default; }
 .grid-card.selected {
   transform:translateX(0) translateY(-30px) rotate(0deg) !important;
   z-index:10 !important;
@@ -441,6 +441,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   position: relative;
   display: flex;
   align-items: center;
+  padding-top: 20px;
   justify-content: center;
   overflow: hidden;
   cursor: grab;
@@ -454,11 +455,13 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   height: 364px;
   border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(59,107,74,0.15);
+  border: 1px solid rgba(59,107,74,0.60);
   box-shadow: 0 8px 32px rgba(0,0,0,0.65);
   transition: transform 0.38s cubic-bezier(0.34, 1.1, 0.64, 1), opacity 0.38s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+  left: 50%;
+  margin-left: -130px;
 }
 .stack-card img {
   width: 100%;
