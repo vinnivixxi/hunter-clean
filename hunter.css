@@ -230,7 +230,8 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .about-label{color:#3B6B4A;font-size:9px;text-transform:uppercase;letter-spacing:1.5px;font-weight:600;margin-bottom:5px;}
 .about-text{color:rgba(255,255,255,0.7);font-size:12px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
 .about-text.expanded{display:block;overflow:visible;}
-.read-more{color:#3B6B4A;font-size:11px;font-weight:600;letter-spacing:0.5px;cursor:pointer;margin-top:6px;display:inline-block;}.actions-col{position:absolute;right:16px;z-index:10;display:flex;flex-direction:column;gap:12px;align-items:center;transition:opacity 0.3s;}
+.read-more{color:#3B6B4A;font-size:11px;font-weight:600;letter-spacing:0.5px;cursor:pointer;margin-top:6px;display:inline-block;}
+.actions-col{position:absolute;right:16px;z-index:10;display:flex;flex-direction:column;gap:12px;align-items:center;transition:opacity 0.3s;}
 .action-btn{width:36px;height:36px;border-radius:50%;background:rgba(26,26,26,0.5);border:1.5px solid rgba(59,107,74,0.25);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);cursor:pointer;transition:all 0.15s;}
 .action-btn:active{transform:scale(0.9);}
 .action-btn.active{background:rgba(59,107,74,0.25);border-color:rgba(59,107,74,0.6);}
@@ -293,16 +294,14 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .profile-bottom-right{display:flex;flex-direction:column;gap:8px;align-items:center;flex-shrink:0;width:44px;}
 .profile-bottom-right{display:flex;flex-direction:column;gap:8px;align-items:center;flex-shrink:0;margin-right:-8px;}
 .phone.immersive .profile-bottom{opacity:0;pointer-events:none;}
+
 /* SPA ROUTER */
 .screen{display:none;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;}
 .screen.active{display:block;}
 #screen-browse.active{display:flex;flex-direction:column;}
 #screen-chat.active{display:flex;flex-direction:column;}
-/* ═══════════════════════════════════════════════════════════════════════════
-   HUNT / BROWSE / TRACK PANEL SYSTEM
-   ═══════════════════════════════════════════════════════════════════════════ */
 
-/* Only the panel-active panel is visible — others are hidden */
+/* PANEL SYSTEM */
 .browse-panel {
   display: none;
   flex: 1;
@@ -313,7 +312,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .browse-panel.panel-active {
   display: flex;
 }
-/* Grid fills the browse panel exactly as it filled the screen before */
 #panel-browse {
   overflow: hidden;
 }
@@ -321,11 +319,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   flex: 1;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   HUNT INTAKE OVERLAY
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Absolute overlay covering the entire hunt panel */
+/* HUNT INTAKE */
 .hunt-intake {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -336,8 +330,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   align-items: center;
   padding: 32px 28px 24px;
 }
-
-/* Logo row */
 .intake-logo {
   display: flex;
   align-items: center;
@@ -356,8 +348,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   font-weight: 700;
   letter-spacing: 2.5px;
 }
-
-/* Progress dots */
 .intake-progress {
   display: flex;
   gap: 8px;
@@ -376,15 +366,11 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   background: #3B6B4A;
   transform: scale(1.25);
 }
-
-/* Steps container — all steps overlap here, transitions handle visibility */
 .intake-steps-container {
   position: relative;
   flex: 1;
   width: 100%;
 }
-
-/* Each step: absolute, full coverage, initially off-screen to the right */
 .intake-step {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -398,20 +384,16 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   transform: translateX(28px);
   transition: opacity 0.28s ease, transform 0.28s ease;
 }
-/* Active step: fully visible, centered */
 .intake-step.active {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(0);
 }
-/* Exiting step: slides left and fades */
 .intake-step.exit {
   opacity: 0;
   transform: translateX(-28px);
   transition: opacity 0.22s ease, transform 0.22s ease;
 }
-
-/* Question text */
 .intake-question {
   color: #e0e0e0;
   font-size: 20px;
@@ -421,8 +403,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   letter-spacing: -0.2px;
   margin-bottom: 32px;
 }
-
-/* Options — pills that flow and wrap naturally */
 .intake-options {
   display: flex;
   flex-wrap: wrap;
@@ -430,7 +410,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   justify-content: center;
   width: 100%;
 }
-
 .intake-option {
   padding: 12px 22px;
   border-radius: 30px;
@@ -450,18 +429,13 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .intake-option:active {
   transform: scale(0.96);
 }
-/* Selected state — green fill, shown briefly before step advances */
 .intake-option.selected {
   background: rgba(59,107,74,0.22);
   border-color: #3B6B4A;
   color: #3B6B4A;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   HUNT STACK
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Stack container — cards are centered here via flex */
+/* HUNT STACK */
 .hunt-stack-container {
   flex: 1;
   position: relative;
@@ -474,8 +448,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .hunt-stack-container:active {
   cursor: grabbing;
 }
-
-/* Individual stack card */
 .stack-card {
   position: absolute;
   width: 260px;
@@ -484,14 +456,10 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   overflow: hidden;
   border: 1px solid rgba(59,107,74,0.15);
   box-shadow: 0 8px 32px rgba(0,0,0,0.65);
-  /* Default transition — used when cards settle into new positions.
-     Dismissed cards get their own faster transition via inline style. */
   transition: transform 0.38s cubic-bezier(0.34, 1.1, 0.64, 1), opacity 0.38s ease;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
 }
-
-/* Photo fills the card — aligned top so faces are visible */
 .stack-card img {
   width: 100%;
   height: 100%;
@@ -500,8 +468,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   pointer-events: none;
   display: block;
 }
-
-/* Gradient overlay — fades photo to dark at bottom for text legibility */
 .stack-card::after {
   content: '';
   position: absolute;
@@ -511,8 +477,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   pointer-events: none;
   z-index: 1;
 }
-
-/* Online indicator — top right corner */
 .stack-online-dot {
   position: absolute;
   top: 12px;
@@ -528,8 +492,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   background: rgba(255,255,255,0.2);
   box-shadow: none;
 }
-
-/* Name + meta overlay — sits on top of gradient */
 .stack-card-info {
   position: absolute;
   bottom: 0; left: 0; right: 0;
@@ -548,8 +510,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   margin-top: 3px;
   letter-spacing: 0.2px;
 }
-
-/* Green pulse on single tap — express interest */
 @keyframes stackInterest {
   0%   { box-shadow: 0 8px 32px rgba(0,0,0,0.65); }
   40%  { box-shadow: 0 0 0 8px rgba(59,107,74,0.32), 0 8px 32px rgba(0,0,0,0.65); }
@@ -558,8 +518,6 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .stack-card.stack-interest {
   animation: stackInterest 0.55s ease-out forwards;
 }
-
-/* Gesture hints — below the stack */
 .stack-hints {
   display: flex;
   align-items: center;
@@ -575,10 +533,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   opacity: 0.4;
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   TRACK PANEL PLACEHOLDER
-   ═══════════════════════════════════════════════════════════════════════════ */
-
+/* TRACK PANEL */
 .track-placeholder {
   flex: 1;
   display: flex;
@@ -599,4 +554,11 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   font-size: 11px;
   text-align: center;
   line-height: 1.5;
+}
+
+/* LEFTY HANDEDNESS */
+.phone.lefty .profile-bottom-right {
+  order: -1;
+  margin-right: 0;
+  margin-left: -8px;
 }
