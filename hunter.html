@@ -42,7 +42,6 @@
       <span class="matches-subtitle" id="browseSubtitle">4 in range</span>
     </div>
 
-    <!-- FIX 2: Tab order corrected — Hunt, Track, Browse -->
     <div class="tabs">
       <div class="tab active" data-panel="panel-hunt">HUNT</div>
       <div class="tab" data-panel="panel-track">TRACK</div>
@@ -99,7 +98,6 @@
     </div><!-- /panel-hunt -->
 
     <!-- TRACK PANEL -->
-    <!-- FIX 3: "Stalking" → "Tracking" -->
     <div class="browse-panel" id="panel-track">
       <div class="track-placeholder">
         <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
@@ -113,7 +111,7 @@
       </div>
     </div><!-- /panel-track -->
 
-    <!-- BROWSE PANEL (fan layout — unchanged) -->
+    <!-- BROWSE PANEL -->
     <div class="browse-panel" id="panel-browse">
       <div class="grid">
         <div class="grid-card" id="card-j">
@@ -160,8 +158,20 @@
 
   </div><!-- /screen-browse -->
 
-  <!-- PROFILE SCREEN -->
+  <!-- PROFILE SCREEN — Session 8 restructure:
+       - drag-handle added (top center pill, first-open bounce via localStorage key hunter.profile.firstopen)
+       - carousel-bar moved out of profile-bottom-left → direct child of screen-profile, abs left rail
+       - profile-bottom-right moved out of profile-bottom → direct child of screen-profile, abs right rail
+       - gallery-filmstrip added (hidden until .gallery-mode on #screen-profile)
+       - profile-bottom now contains left content only (stats, last-active, bio)
+  -->
   <div class="screen" id="screen-profile">
+
+    <!-- Drag handle — pill at top center.
+         JS adds .bounce class once per device using localStorage key hunter.profile.firstopen.
+         Sits above header-band in z-order so it's always visible on open. -->
+    <div class="drag-handle" id="dragHandle"></div>
+
     <div class="header-band"></div>
     <div class="status-bar">
       <span class="status-time"></span>
@@ -184,6 +194,26 @@
     <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
     <div class="username" id="profileName"></div>
 
+    <!-- CAROUSEL BAR — Session 8: moved here from inside .profile-bottom-left.
+         Now a direct child of #screen-profile, absolutely positioned as left vertical rail.
+         Inline style removed — CSS owns the positioning.
+         initCarousel() builds circular thumbs inside this element.
+         Tapping a thumb sets the hero image only — does NOT enter gallery mode. -->
+    <div class="carousel-bar"></div>
+
+    <!-- PROFILE-BOTTOM-RIGHT — Session 8: moved here from inside .profile-bottom.
+         Now a direct child of #screen-profile, absolutely positioned as right rail.
+         Vertically centered to mirror the thumbnail column on the left.
+         CSS owns the position. .phone.lefty rule flips it to the left side. -->
+    <div class="profile-bottom-right">
+      <div class="action-btn" data-action="up"><svg viewBox="0 0 22 22" fill="none"><path d="M7 10V18H5C4.4 18 4 17.6 4 17V11C4 10.4 4.4 10 5 10H7ZM7 10L10 4C10 4 11 3 12 4C12 4 12.5 5 12 7H16.5C17.3 7 18 7.8 17.8 8.6L16 17C15.9 17.6 15.3 18 14.7 18H7" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="action-btn" data-action="down"><svg viewBox="0 0 22 22" fill="none"><path d="M15 12V4H17C17.6 4 18 4.4 18 5V11C18 11.6 17.6 12 17 12H15ZM15 12L12 18C12 18 11 19 10 18C10 18 9.5 17 10 15H5.5C4.7 15 4 14.2 4.2 13.4L6 5C6.1 4.4 6.7 4 7.3 4H15" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="action-btn" data-action="msg"><svg viewBox="0 0 22 22" fill="none"><path d="M4 5H18V15H7L4 18V5Z" stroke="#3B6B4A" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg></div>
+    </div>
+
+    <!-- PROFILE BOTTOM — Session 8: now left content only.
+         .profile-bottom-right and .carousel-bar have been moved out above.
+         padding-right increased in CSS to prevent bio overlap with right rail. -->
     <div class="profile-bottom">
       <div class="profile-bottom-left">
         <div class="stats-row" style="position:relative;bottom:auto;left:auto;">
@@ -199,17 +229,22 @@
           <div class="about-label">About</div>
           <div class="about-text" id="profileBio"></div>
         </div>
-        <div class="carousel-bar" style="position:relative;bottom:auto;left:auto;right:auto;"></div>
+        <!-- .carousel-bar removed from here — now direct child of #screen-profile above -->
       </div>
-      <div class="profile-bottom-right">
-        <div class="action-btn" data-action="up"><svg viewBox="0 0 22 22" fill="none"><path d="M7 10V18H5C4.4 18 4 17.6 4 17V11C4 10.4 4.4 10 5 10H7ZM7 10L10 4C10 4 11 3 12 4C12 4 12.5 5 12 7H16.5C17.3 7 18 7.8 17.8 8.6L16 17C15.9 17.6 15.3 18 14.7 18H7" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="action-btn" data-action="down"><svg viewBox="0 0 22 22" fill="none"><path d="M15 12V4H17C17.6 4 18 4.4 18 5V11C18 11.6 17.6 12 17 12H15ZM15 12L12 18C12 18 11 19 10 18C10 18 9.5 17 10 15H5.5C4.7 15 4 14.2 4.2 13.4L6 5C6.1 4.4 6.7 4 7.3 4H15" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="action-btn" data-action="msg"><svg viewBox="0 0 22 22" fill="none"><path d="M4 5H18V15H7L4 18V5Z" stroke="#3B6B4A" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg></div>
-      </div>
+      <!-- .profile-bottom-right removed from here — now direct child of #screen-profile above -->
     </div>
+
+    <!-- GALLERY FILMSTRIP — Session 8.
+         Hidden by default. Shown when #screen-profile has .gallery-mode class.
+         Triggered by tapping the hero image (not thumbnails).
+         Populated by initCarousel() — one filmstrip-thumb per photo + paywall at end.
+         Filmstrip thumbs call setPhoto() same as vertical rail (stay in sync).
+         Exit gallery: tap hero again, or edge swipe from left or right phone edge. -->
+    <div class="gallery-filmstrip" id="galleryFilmstrip"></div>
+
   </div><!-- /screen-profile -->
 
-  <!-- CHAT SCREEN -->
+  <!-- CHAT SCREEN — unchanged -->
   <div class="screen" id="screen-chat">
     <div class="status-bar">
       <span class="status-time"></span>
@@ -368,7 +403,9 @@ var Hunter = {
   selectedCard: null,
 
   navigate: function(screenId) {
+    // Clear immersive mode and gallery mode on any navigation
     document.getElementById('phone').classList.remove('immersive');
+    document.getElementById('screen-profile').classList.remove('gallery-mode');
     if (Hunter.selectedCard) {
       Hunter.selectedCard.classList.remove('selected');
       Hunter.selectedCard = null;
@@ -384,6 +421,8 @@ var Hunter = {
     Hunter.currentChar = charKey;
     Hunter.renderProfile(char);
     Hunter.navigate('profile');
+    // Session 8: bounce the drag handle on first ever profile open
+    initDragHandle();
   },
 
   renderProfile: function(char) {
@@ -406,6 +445,7 @@ var Hunter = {
     actMsg.style.opacity = char.canMessage ? '1' : '0.3';
     actMsg.style.pointerEvents = char.canMessage ? 'auto' : 'none';
 
+    // Clone and replace heroArea to clear all previous event listeners
     var heroArea = document.getElementById('heroArea');
     var freshHero = heroArea.cloneNode(true);
     heroArea.parentNode.replaceChild(freshHero, heroArea);
@@ -483,7 +523,7 @@ var STACK_POSITIONS = [
   { x: 20, y: 36, rot: 0, scale: 0.94, opacity: 0.60, z: 8,  events: false },
   { x: 30, y: 50, rot: 0, scale: 0.91, opacity: 0.42, z: 7,  events: false }
 ];
- 
+
 function applyStackPositions() {
   var n = huntStack.length;
   huntStackCards.forEach(function(card, i) {
@@ -581,9 +621,9 @@ function initHuntStack() {
   // ── Gesture handling ───────────────────────────────────────────────────────
   var touchStartY = 0, touchStartX = 0, touchStartTime = 0;
   var lastTapTime = 0;
-  var SWIPE_MIN    = 40;  // px vertical movement to count as swipe
-  var TAP_MAX_MOVE = 14;  // px max movement to still count as tap
-  var DBL_TAP_MS   = 300; // ms window for double-tap
+  var SWIPE_MIN    = 40;
+  var TAP_MAX_MOVE = 14;
+  var DBL_TAP_MS   = 300;
   var dismissLocked = false;
 
   function tryDismiss(direction) {
@@ -593,7 +633,6 @@ function initHuntStack() {
     setTimeout(function() { dismissLocked = false; }, 460);
   }
 
-  // Touch
   container.addEventListener('touchstart', function(e) {
     touchStartY = e.touches[0].clientY;
     touchStartX = e.touches[0].clientX;
@@ -630,20 +669,34 @@ function initHuntStack() {
     }
   });
 
-  // Mouse (desktop)
-  var mouseStartY = 0, mouseIsDown = false;
+var mouseStartY = 0, mouseIsDown = false, mouseDragged = false;
   container.addEventListener('mousedown', function(e) {
     mouseStartY = e.clientY;
     mouseIsDown = true;
+    mouseDragged = false;
   });
   document.addEventListener('mouseup', function(e) {
     if (!mouseIsDown) return;
     mouseIsDown = false;
     var dy = mouseStartY - e.clientY;
-    if (Math.abs(dy) > SWIPE_MIN) tryDismiss(dy > 0 ? 'up' : 'down');
+    if (Math.abs(dy) > SWIPE_MIN) {
+      mouseDragged = true;
+      tryDismiss(dy > 0 ? 'up' : 'down');
+    }
   });
-
-  // Arrow keys
+  container.addEventListener('click', function(e) {
+    if (mouseDragged) { mouseDragged = false; return; }
+    showInterestPulse();
+  });
+  container.addEventListener('dblclick', function(e) {
+    var charKey = huntStack[huntFront];
+    var char = CHARS[charKey];
+    if (char && char.hasProfile) {
+      Hunter.goToProfile(charKey);
+    } else {
+      showInterestPulse();
+    }
+  });
   document.addEventListener('keydown', function(e) {
     var huntPanel = document.getElementById('panel-hunt');
     var browseScreen = document.getElementById('screen-browse');
@@ -666,7 +719,6 @@ function initHuntIntake() {
     return;
   }
 
-  // Pick a random Q3
   var q3 = HUNT_Q3_POOL[Math.floor(Math.random() * HUNT_Q3_POOL.length)];
   document.getElementById('intakeQ3Text').textContent = q3.question;
   var q3opts = document.getElementById('intakeQ3Options');
@@ -679,7 +731,6 @@ function initHuntIntake() {
     q3opts.appendChild(el);
   });
 
-  // Wire option clicks for all three steps
   document.querySelectorAll('.intake-step').forEach(function(step, stepIdx) {
     step.querySelectorAll('.intake-option').forEach(function(opt) {
       opt.addEventListener('click', function() {
@@ -711,7 +762,6 @@ function advanceIntakeStep(currentStep) {
       steps[nextStep].classList.add('active');
       if (dots[nextStep]) dots[nextStep].classList.add('active');
     } else {
-      // All three answered — save and fade out
       localStorage.setItem('hunter.hunt.intake', 'done');
       var intake = document.getElementById('huntIntake');
       intake.style.pointerEvents = 'none';
@@ -743,7 +793,6 @@ function initBrowseTabs() {
       if (panel) panel.classList.add('panel-active');
       if (subtitle && subtitleMap[panelId]) subtitle.textContent = subtitleMap[panelId];
 
-      // FIX 1: Re-surface intake when Hunt tab is tapped if not yet completed
       if (panelId === 'panel-hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
         var intake = document.getElementById('huntIntake');
         intake.style.display = '';
@@ -754,58 +803,170 @@ function initBrowseTabs() {
   });
 }
 
-// ── Carousel ──────────────────────────────────────────────────────────────────
+// ── Carousel — Session 8 rewrite ──────────────────────────────────────────────
+// Builds vertical circular thumbnail rail on left side of profile screen.
+// Tapping a thumb sets the hero image — does NOT enter gallery mode.
+// Tapping the hero image enters/exits gallery mode.
+// Filmstrip is built into #galleryFilmstrip and stays in sync with the rail
+// via the shared setPhoto() function.
+// Called from renderProfile() each time a profile is opened.
+// heroArea is cloned fresh before this runs — no duplicate listeners accumulate.
+// #galleryFilmstrip is rebuilt from scratch each call — no listener accumulation.
 function initCarousel(screenId, photos) {
-  var screen  = document.getElementById(screenId);
-  var heroImg = screen.querySelector('.hero-full img');
-  var bar     = screen.querySelector('.carousel-bar');
-  var current = 0;
+  var screen    = document.getElementById(screenId);
+  var heroImg   = screen.querySelector('.hero-full img');
+  var heroArea  = screen.querySelector('.hero-full');
+  var bar       = screen.querySelector('.carousel-bar');
+  var filmstrip = document.getElementById('galleryFilmstrip');
+  var current   = 0;
 
   heroImg.src = photos[0];
   bar.innerHTML = '';
 
+  // Shared photo setter — keeps vertical rail and filmstrip in sync
+  function setPhoto(i) {
+    current = i;
+    heroImg.src = photos[i];
+    bar.querySelectorAll('.carousel-thumb').forEach(function(t, j) {
+      t.classList.toggle('active', j === i);
+    });
+    if (filmstrip) {
+      filmstrip.querySelectorAll('.filmstrip-thumb').forEach(function(ft, j) {
+        ft.classList.toggle('active', j === i);
+      });
+    }
+  }
+
+  // Build vertical circular thumbnail rail
   if (photos.length <= 1) {
     bar.style.display = 'none';
   } else {
+    bar.style.display = '';
     photos.forEach(function(src, i) {
       var thumb = document.createElement('div');
       thumb.className = 'carousel-thumb' + (i === 0 ? ' active' : '');
       thumb.dataset.idx = i;
       var img = document.createElement('img');
-      img.src = src; img.alt = String(i + 1);
+      img.src = src;
+      img.alt = String(i + 1);
       thumb.appendChild(img);
+      // Tap sets photo only — does not toggle gallery mode
+      thumb.addEventListener('click', function(e) {
+        e.stopPropagation();
+        setPhoto(+thumb.dataset.idx);
+      });
       bar.appendChild(thumb);
     });
   }
 
-  var thumbs = bar.querySelectorAll('.carousel-thumb');
+  // Build gallery filmstrip — populated fresh each renderProfile call
+  if (filmstrip) {
+    filmstrip.innerHTML = '';
+    photos.forEach(function(src, i) {
+      var ft = document.createElement('div');
+      ft.className = 'filmstrip-thumb' + (i === 0 ? ' active' : '');
+      ft.dataset.idx = i;
+      var img = document.createElement('img');
+      img.src = src;
+      img.alt = String(i + 1);
+      ft.appendChild(img);
+      ft.addEventListener('click', function(e) {
+        e.stopPropagation();
+        setPhoto(+ft.dataset.idx);
+      });
+      filmstrip.appendChild(ft);
+    });
 
-  function setPhoto(i) {
-    current = i;
-    heroImg.src = photos[i];
-    thumbs.forEach(function(t, j) { t.classList.toggle('active', j === i); });
+    // Paywall placeholder — scaffold only. Lock icon. No tap action. No backend.
+    var pw = document.createElement('div');
+    pw.className = 'filmstrip-paywall';
+    pw.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="9" rx="2" stroke="rgba(59,107,74,0.5)" stroke-width="1.3" fill="rgba(26,26,26,0.6)"/><path d="M6 8V5.5C6 3.6 12 3.6 12 5.5V8" stroke="rgba(59,107,74,0.5)" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="9" cy="12.5" r="1" fill="rgba(59,107,74,0.5)"/></svg>';
+    filmstrip.appendChild(pw);
   }
 
-  thumbs.forEach(function(t) {
-    t.addEventListener('click', function(e) {
-      e.stopPropagation();
-      setPhoto(+t.dataset.idx);
-    });
-  });
-
+  // Hero horizontal swipe — changes photo, suppresses click so gallery doesn't toggle
   var sx = 0;
-  var heroArea = screen.querySelector('.hero-full');
-  heroArea.addEventListener('touchstart', function(e) { sx = e.touches[0].clientX; });
+  heroArea.addEventListener('touchstart', function(e) {
+    sx = e.touches[0].clientX;
+  }, { passive: true });
   heroArea.addEventListener('touchend', function(e) {
     var d = sx - e.changedTouches[0].clientX;
     if (Math.abs(d) > 40) {
       if (d > 0 && current < photos.length - 1) setPhoto(current + 1);
       if (d < 0 && current > 0) setPhoto(current - 1);
-      e.preventDefault();
+      e.preventDefault(); // prevent synthetic click — swipe should not toggle gallery
     }
   });
+
+  // Hero tap — enter/exit gallery mode
   heroArea.addEventListener('click', function() {
-    document.getElementById('phone').classList.toggle('immersive');
+    var profileScreen = document.getElementById('screen-profile');
+    profileScreen.classList.toggle('gallery-mode');
+  });
+}
+
+// ── Drag handle — Session 8 ───────────────────────────────────────────────────
+// Fires the bounce animation exactly once per device lifetime.
+// localStorage key: hunter.profile.firstopen
+// Called from goToProfile() after navigate() so slide-up is already in motion.
+// Delay matches slide-up duration so bounce fires after screen settles.
+function initDragHandle() {
+  var handle = document.getElementById('dragHandle');
+  if (!handle) return;
+  if (!localStorage.getItem('hunter.profile.firstopen')) {
+    localStorage.setItem('hunter.profile.firstopen', 'done');
+    setTimeout(function() {
+      handle.classList.add('bounce');
+      setTimeout(function() { handle.classList.remove('bounce'); }, 700);
+    }, 420);
+  }
+}
+
+// ── Swipe-down dismiss + gallery edge swipe exit — Session 8 ─────────────────
+// Single listener pair on #screen-profile. Called once from DOMContentLoaded.
+// Does not re-register on profile re-opens.
+//
+// SWIPE-DOWN: drag down 80px+ with more vertical than horizontal movement
+//             → Hunter.navigate('browse'). Suppressed while gallery-mode active.
+//
+// EDGE SWIPE: touch starts within 24px of left OR right edge of the phone frame,
+//             swipes inward 40px+ → removes .gallery-mode from #screen-profile.
+//             Only fires when .gallery-mode is present.
+function initSwipeDownDismiss() {
+  var screen = document.getElementById('screen-profile');
+  var startY = 0, startX = 0;
+  var DISMISS_THRESHOLD = 80;  // px downward to trigger back nav
+  var EDGE_ZONE         = 24;  // px from left or right edge
+  var EDGE_SWIPE_MIN    = 40;  // px inward movement to exit gallery
+  var PHONE_WIDTH       = 375; // fixed phone frame width
+
+  screen.addEventListener('touchstart', function(e) {
+    startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+  }, { passive: true });
+
+  screen.addEventListener('touchend', function(e) {
+    var endY  = e.changedTouches[0].clientY;
+    var endX  = e.changedTouches[0].clientX;
+    var dy    = endY - startY;
+    var dx    = endX - startX;
+    var absDy = Math.abs(dy);
+    var absDx = Math.abs(dx);
+
+    // Gallery mode: edge swipe exits gallery. Swipe-down does nothing in this state.
+    if (screen.classList.contains('gallery-mode')) {
+      var fromLeftEdge  = startX < EDGE_ZONE && dx > EDGE_SWIPE_MIN;
+      var fromRightEdge = startX > (PHONE_WIDTH - EDGE_ZONE) && (-dx) > EDGE_SWIPE_MIN;
+      if (fromLeftEdge || fromRightEdge) {
+        screen.classList.remove('gallery-mode');
+      }
+      return;
+    }
+
+    // Normal mode: swipe down to dismiss profile, back to browse
+    if (dy > DISMISS_THRESHOLD && absDy > absDx) {
+      Hunter.navigate('browse');
+    }
   });
 }
 
@@ -926,6 +1087,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initBrowseTabs();
   initHuntStack();
   initHuntIntake();
+  initSwipeDownDismiss(); // Session 8: registered once here, not per profile open
 
   document.getElementById('lightbox').addEventListener('click', function() {
     document.getElementById('lightbox').classList.remove('open');
