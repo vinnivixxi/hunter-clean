@@ -636,6 +636,18 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   justify-content: center;
   cursor: default;
 }
+.rail-lock-hint {
+  cursor: default;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  background: rgba(26,26,26,0.5);
+  border: 1.5px solid rgba(59,107,74,0.25);
+  height: 60px;
+  width: 44px;
+}
 
 /* GALLERY MODE STATE — active when #screen-profile has .gallery-mode class */
 #screen-profile.gallery-mode .gallery-filmstrip { opacity:1; pointer-events:auto; }
