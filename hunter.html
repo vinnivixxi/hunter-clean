@@ -857,6 +857,12 @@ function initCarousel(screenId, photos) {
       });
       bar.appendChild(thumb);
     });
+
+    // Lock hint — sits below thumbs, signals more content behind paywall.
+    // Always visible in profile view. pointer-events:none — not tappable.
+    var railLock = document.createElement('div');
+    railLock.className = 'rail-lock-hint';
+railLock.innerHTML = '<svg width="20" height="20" viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="9" rx="2" stroke="rgba(59,107,74,0.7)" stroke-width="1.3" fill="rgba(26,26,26,0.6)"/><path d="M6 8V5.5C6 3.6 12 3.6 12 5.5V8" stroke="rgba(59,107,74,0.7)" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="9" cy="12.5" r="1" fill="rgba(59,107,74,0.7)"/></svg>';    bar.appendChild(railLock);
   }
 
   // Build gallery filmstrip — populated fresh each renderProfile call
@@ -880,26 +886,55 @@ function initCarousel(screenId, photos) {
     // Paywall placeholder — scaffold only. Lock icon. No tap action. No backend.
     var pw = document.createElement('div');
     pw.className = 'filmstrip-paywall';
-    pw.innerHTML = '<svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="9" rx="2" stroke="rgba(59,107,74,0.5)" stroke-width="1.3" fill="rgba(26,26,26,0.6)"/><path d="M6 8V5.5C6 3.6 12 3.6 12 5.5V8" stroke="rgba(59,107,74,0.5)" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="9" cy="12.5" r="1" fill="rgba(59,107,74,0.5)"/></svg>';
+    pw.innerHTML = '<svg width="20" height="20" viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="9" rx="2" stroke="rgba(59,107,74,0.7)" stroke-width="1.3" fill="rgba(26,26,26,0.6)"/><path d="M6 8V5.5C6 3.6 12 3.6 12 5.5V8" stroke="rgba(59,107,74,0.7)" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="9" cy="12.5" r="1" fill="rgba(59,107,74,0.7)"/></svg>';    
     filmstrip.appendChild(pw);
   }
-
   // Hero horizontal swipe — changes photo, suppresses click so gallery doesn't toggle
-  var sx = 0;
+var sx = 0, sy = 0;
   heroArea.addEventListener('touchstart', function(e) {
     sx = e.touches[0].clientX;
+    sy = e.touches[0].clientY;
   }, { passive: true });
   heroArea.addEventListener('touchend', function(e) {
-    var d = sx - e.changedTouches[0].clientX;
-    if (Math.abs(d) > 40) {
-      if (d > 0 && current < photos.length - 1) setPhoto(current + 1);
-      if (d < 0 && current > 0) setPhoto(current - 1);
-      e.preventDefault(); // prevent synthetic click — swipe should not toggle gallery
+    var dx = sx - e.changedTouches[0].clientX;
+    var dy = sy - e.changedTouches[0].clientY;
+    var absDx = Math.abs(dx);
+    var absDy = Math.abs(dy);
+    if (absDx > 40 && absDx >= absDy) {
+      // Horizontal swipe — change photo left/right
+      if (dx > 0 && current < photos.length - 1) setPhoto(current + 1);
+      if (dx < 0 && current > 0) setPhoto(current - 1);
+      e.preventDefault();
+    } else if (absDy > 40 && absDy > absDx) {
+      // Vertical swipe — change photo up/down
+      if (dy > 0 && current < photos.length - 1) setPhoto(current + 1);
+      if (dy < 0 && current > 0) setPhoto(current - 1);
+      e.preventDefault();
     }
   });
 
-  // Hero tap — enter/exit gallery mode
+  // Hero mouse drag — photo navigation on desktop
+  var heroMouseStartY = 0, heroMouseStartX = 0, heroMouseDragged = false;
+  heroArea.addEventListener('mousedown', function(e) {
+    heroMouseStartY = e.clientY;
+    heroMouseStartX = e.clientX;
+    heroMouseDragged = false;
+  });
+  heroArea.addEventListener('mouseup', function(e) {
+    var dy = heroMouseStartY - e.clientY;
+    var dx = heroMouseStartX - e.clientX;
+    var absDy = Math.abs(dy);
+    var absDx = Math.abs(dx);
+    if (absDy > 40 && absDy > absDx) {
+      heroMouseDragged = true;
+      if (dy > 0 && current < photos.length - 1) setPhoto(current + 1);
+      if (dy < 0 && current > 0) setPhoto(current - 1);
+    }
+  });
+
+  // Hero tap — enter/exit gallery mode (suppressed if mouse drag detected)
   heroArea.addEventListener('click', function() {
+    if (heroMouseDragged) { heroMouseDragged = false; return; }
     var profileScreen = document.getElementById('screen-profile');
     profileScreen.classList.toggle('gallery-mode');
   });
