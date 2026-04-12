@@ -227,7 +227,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .nav-item.active .nav-label { color:#3B6B4A; }
 
 /* PROFILE TEMPLATE */
-.header-band{position:absolute;top:0;left:0;right:0;height:140px;z-index:15;background:linear-gradient(180deg,rgba(0,0,0,0.85) 0%,rgba(0,0,0,0.6) 50%,transparent 100%);pointer-events:none;}
+.header-band{position:absolute;top:0;left:0;right:0;height:72px;z-index:15;background:linear-gradient(180deg,rgba(0,0,0,0.45) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);pointer-events:none;}
 .app-header{position:absolute;top:48px;left:0;right:0;height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;z-index:20;}
 .app-title-group{display:flex;align-items:center;gap:5px;}
 .app-title{color:#3B6B4A;font-size:12px;font-weight:700;letter-spacing:2.5px;text-shadow:0 1px 8px rgba(0,0,0,1),0 0 20px rgba(0,0,0,0.8);}
@@ -238,7 +238,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .hero-full img{width:100%;height:100%;object-fit:cover;object-position:center top;}
 .hero-full::after{content:"";position:absolute;bottom:0;left:0;right:0;height:65%;background:linear-gradient(0deg,rgba(26,26,26,0.98) 0%,rgba(26,26,26,0.85) 28%,rgba(0,0,0,0.2) 60%,transparent 100%);pointer-events:none;transition:opacity 0.3s;}
 .phone.immersive .hero-full::after{opacity:0.15;}
-.username{position:absolute;top:105px;left:20px;z-index:20;color:#3B6B4A;font-size:22px;font-weight:700;text-shadow:0 2px 12px rgba(0,0,0,1),0 0 30px rgba(0,0,0,0.9);transition:opacity 0.3s;}
+.username{position:relative;display:block;color:#3B6B4A;font-size:22px;font-weight:700;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,1),0 0 30px rgba(0,0,0,0.9);transition:opacity 0.3s;}
 .stats-row{position:absolute;left:16px;z-index:10;display:flex;gap:14px;transition:opacity 0.3s;}
 .stat-item{display:flex;flex-direction:column;align-items:center;gap:5px;}
 .stat-circle{width:36px;height:36px;border-radius:50%;background:rgba(26,26,26,0.5);border:1.5px solid rgba(59,107,74,0.25);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
@@ -636,6 +636,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
   justify-content: center;
   cursor: default;
 }
+.profile-back-arrow{position:absolute;bottom:28px;left:14px;z-index:25;cursor:pointer;width:36px;height:36px;display:flex;align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent;}
 .rail-lock-hint {
   cursor: default;
   pointer-events: none;
