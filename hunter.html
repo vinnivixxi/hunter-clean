@@ -996,7 +996,7 @@ function initSwipeDownDismiss() {
   var EDGE_SWIPE_MIN    = 40;  // px inward movement to exit gallery
   var PHONE_WIDTH       = 375; // fixed phone frame width
 
-  screen.addEventListener('touchstart', function(e) {
+ screen.addEventListener('touchstart', function(e) {
     startY = e.touches[0].clientY;
     startX = e.touches[0].clientX;
   }, { passive: true });
@@ -1020,6 +1020,26 @@ function initSwipeDownDismiss() {
     }
 
     // Normal mode: swipe down to dismiss profile, back to browse
+    if (dy > DISMISS_THRESHOLD && absDy > absDx) {
+      Hunter.navigate('browse');
+    }
+  });
+
+  // Mouse drag down to dismiss — desktop support
+  var mouseStartY = 0, mouseStartX = 0, mouseIsDown = false;
+  screen.addEventListener('mousedown', function(e) {
+    mouseStartY = e.clientY;
+    mouseStartX = e.clientX;
+    mouseIsDown = true;
+  });
+  document.addEventListener('mouseup', function(e) {
+    if (!mouseIsDown) return;
+    mouseIsDown = false;
+    if (screen.classList.contains('gallery-mode')) return;
+    var dy    = e.clientY - mouseStartY;
+    var dx    = e.clientX - mouseStartX;
+    var absDy = Math.abs(dy);
+    var absDx = Math.abs(dx);
     if (dy > DISMISS_THRESHOLD && absDy > absDx) {
       Hunter.navigate('browse');
     }
