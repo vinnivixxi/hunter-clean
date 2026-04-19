@@ -181,12 +181,7 @@
         <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
       </div>
     </div>
-    <div class="profile-back-arrow profile-back" id="profileBackArrow">
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <circle cx="10" cy="10" r="9.5" stroke="rgba(59,107,74,0.4)" fill="rgba(26,26,26,0.55)"/>
-    <path d="M12 6L8 10L12 14" stroke="#3B6B4A" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-  </svg>
-</div>
+
     <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
 
     <!-- CAROUSEL BAR — Session 8: moved here from inside .profile-bottom-left.
@@ -200,36 +195,35 @@
          Now a direct child of #screen-profile, absolutely positioned as right rail.
          Vertically centered to mirror the thumbnail column on the left.
          CSS owns the position. .phone.lefty rule flips it to the left side. -->
-    <div class="profile-bottom-right">
-      <div class="action-btn" data-action="up"><svg viewBox="0 0 22 22" fill="none"><path d="M7 10V18H5C4.4 18 4 17.6 4 17V11C4 10.4 4.4 10 5 10H7ZM7 10L10 4C10 4 11 3 12 4C12 4 12.5 5 12 7H16.5C17.3 7 18 7.8 17.8 8.6L16 17C15.9 17.6 15.3 18 14.7 18H7" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="action-btn" data-action="down"><svg viewBox="0 0 22 22" fill="none"><path d="M15 12V4H17C17.6 4 18 4.4 18 5V11C18 11.6 17.6 12 17 12H15ZM15 12L12 18C12 18 11 19 10 18C10 18 9.5 17 10 15H5.5C4.7 15 4 14.2 4.2 13.4L6 5C6.1 4.4 6.7 4 7.3 4H15" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <div class="action-btn" data-action="msg"><svg viewBox="0 0 22 22" fill="none"><path d="M4 5H18V15H7L4 18V5Z" stroke="#3B6B4A" stroke-width="1.3" fill="none" stroke-linejoin="round"/></svg></div>
-    </div>
 
     <!-- PROFILE BOTTOM — Session 8: now left content only.
          .profile-bottom-right and .carousel-bar have been moved out above.
          padding-right increased in CSS to prevent bio overlap with right rail. -->
     <div class="profile-bottom">
-      <div class="profile-bottom-left">
-        <div class="stats-row" style="position:relative;bottom:auto;left:auto;">
-        <div class="username" id="profileName"></div>
+      <div class="profile-bottom-row1">
+        <div class="profile-name-group">
+          <div class="username" id="profileName"></div>
+          <div class="online-dot" id="profileOnlineDot"></div>
+          <span class="last-active-text" id="profileLastActive"></span>
+        </div>
+        <div class="profile-msg-btn disabled" id="profileMsgBtn">Message</div>
+      </div>
+      <div class="profile-bottom-row2">
+        <div class="stats-row" style="position:relative;bottom:auto;left:auto;width:100%;justify-content:space-between;">
           <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2C6.5 2 4.5 4 4.5 6.5C4.5 10 9 16 9 16C9 16 13.5 10 13.5 6.5C13.5 4 11.5 2 9 2Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><circle cx="9" cy="6.5" r="2" stroke="#3B6B4A" stroke-width="1.1" fill="none"/></svg></div><span class="stat-val" id="statDistance"></span></div>
           <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="4" rx="1" stroke="#3B6B4A" stroke-width="1.2" fill="none"/><rect x="4.5" y="12" width="9" height="3.5" rx="1" stroke="#3B6B4A" stroke-width="1.2" fill="none"/><path d="M6.5 8V6.5M9 8V6.5M11.5 8V6.5" stroke="#3B6B4A" stroke-width="1" stroke-linecap="round"/><circle cx="6.5" cy="5.5" r="0.7" fill="#3B6B4A"/><circle cx="9" cy="5.5" r="0.7" fill="#3B6B4A"/><circle cx="11.5" cy="5.5" r="0.7" fill="#3B6B4A"/></svg></div><span class="stat-val" id="statAge"></span></div>
           <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2L7 4.5M9 2L11 4.5M9 2V16M9 16L7 13.5M9 16L11 13.5" stroke="#3B6B4A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="stat-val" id="statHeight"></span></div>
           <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 15C6 15 3.5 12.5 4 9.5C4.3 7.5 5.5 5 6.5 4.5C7.5 4 8.5 4.5 9 5C9.5 4.5 10.5 4 11.5 4.5C12.5 5 13.7 7.5 14 9.5C14.5 12.5 12 15 9 15Z" stroke="#3B6B4A" stroke-width="1.2" fill="none"/></svg></div><span class="stat-val" id="statRole"></span></div>
+          <div class="stat-item" id="statVibeItem"><div class="stat-circle stat-vibe"><svg id="statVibeIcon" viewBox="0 0 18 18" fill="none"></svg></div><span class="stat-val" id="statVibe"></span></div>
         </div>
-        <div class="last-active" style="position:relative;bottom:auto;left:auto;">
-          <div class="online-dot" id="profileOnlineDot"></div><span class="last-active-text" id="profileLastActive"></span>
-        </div>
-        <div class="about-panel">
+      </div>
+      <div class="profile-bottom-row3">
+        <div class="about-panel" id="aboutPanel">
           <div class="about-label">About</div>
           <div class="about-text" id="profileBio"></div>
         </div>
-        <!-- .carousel-bar removed from here — now direct child of #screen-profile above -->
       </div>
-      <!-- .profile-bottom-right removed from here — now direct child of #screen-profile above -->
     </div>
-
     <!-- GALLERY FILMSTRIP — Session 8.
          Hidden by default. Shown when #screen-profile has .gallery-mode class.
          Triggered by tapping the hero image (not thumbnails).
@@ -442,6 +436,7 @@ var Hunter = {
     Hunter.currentChar = charKey;
     Hunter.renderProfile(char);
     Hunter.navigate('profile');
+    history.pushState({ screen: 'profile' }, '');
     // Session 8: bounce the drag handle on first ever profile open
     initDragHandle();
   },
@@ -455,6 +450,31 @@ var Hunter = {
     document.getElementById('profileLastActive').textContent = char.lastActive;
     document.getElementById('profileOnlineDot').className = 'online-dot' + (char.online ? '' : ' offline');
 
+    // Vibe icon
+    var vibeIcons = {
+      kink: '<path d="M9 16C9 16 3 12 3 7C3 4.8 4.8 3 7 3C8.1 3 9 3.9 9 3.9C9 3.9 9.9 3 11 3C13.2 3 15 4.8 15 7C15 12 9 16 9 16Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/>',
+      netflix: '<rect x="3" y="6" width="12" height="8" rx="1.5" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><path d="M3 9H15" stroke="#3B6B4A" stroke-width="1.3"/><path d="M7 13V15M11 13V15" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round"/>',
+      gymbro: '<path d="M2 9H4M14 9H16M4 9V7.5C4 6.7 4.7 6 5.5 6V6C6.3 6 7 6.7 7 7.5V10.5C7 11.3 6.3 12 5.5 12V12C4.7 12 4 11.3 4 10.5V9ZM14 9V7.5C14 6.7 13.3 6 12.5 6V6C11.7 6 11 6.7 11 7.5V10.5C11 11.3 11.7 12 12.5 12V12C13.3 12 14 11.3 14 10.5V9ZM7 9H11" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round"/>',
+      adventure: '<path d="M9 3L10.5 7H15L11.5 9.5L13 13.5L9 11L5 13.5L6.5 9.5L3 7H7.5L9 3Z" stroke="#3B6B4A" stroke-width="1.3" fill="none" stroke-linejoin="round"/>',
+      social: '<path d="M9 3C7.5 3 6 4 6 5.5C6 7.5 9 10 9 10C9 10 12 7.5 12 5.5C12 4 10.5 3 9 3Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><path d="M5 10C4 10.5 3 11.5 3 13V15H15V13C15 11.5 14 10.5 13 10" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" fill="none"/>',
+      whatevers: '<path d="M9 12V13" stroke="#3B6B4A" stroke-width="1.5" stroke-linecap="round"/><path d="M9 6C9 6 11 6 11 8C11 9.5 9 10 9 10.5" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round"/><circle cx="9" cy="9" r="6.5" stroke="#3B6B4A" stroke-width="1.3" fill="none"/>'
+    };
+    var vibeLabels = {
+      kink: 'Kink', netflix: 'Chill', gymbro: 'Gym', adventure: 'Adventure',
+      social: 'Social', whatevers: 'Whatevers'
+    };
+    var vibeKey = (char.stats.vibe || 'whatevers').toLowerCase();
+    var vibeIcon = document.getElementById('statVibeIcon');
+    var vibeVal = document.getElementById('statVibe');
+    var vibeItem = document.getElementById('statVibeItem');
+    if (vibeIcon && vibeIcons[vibeKey]) {
+      vibeIcon.innerHTML = vibeIcons[vibeKey];
+      vibeVal.textContent = vibeLabels[vibeKey] || '';
+      vibeItem.style.display = '';
+    } else if (vibeItem) {
+      vibeItem.style.display = 'none';
+    }
+
     var bioEl = document.getElementById('profileBio');
     bioEl.textContent = char.bio;
     bioEl.classList.remove('expanded');
@@ -463,8 +483,10 @@ var Hunter = {
     if (oldToggle) oldToggle.parentNode.removeChild(oldToggle);
 
     var actMsg = document.querySelector('#screen-profile [data-action="msg"]');
-    actMsg.style.opacity = char.canMessage ? '1' : '0.3';
-    actMsg.style.pointerEvents = char.canMessage ? 'auto' : 'none';
+    if (actMsg) {
+      actMsg.style.opacity = char.canMessage ? '1' : '0.3';
+      actMsg.style.pointerEvents = char.canMessage ? 'auto' : 'none';
+    }
 
     // Clone and replace heroArea to clear all previous event listeners
     var heroArea = document.getElementById('heroArea');
@@ -472,8 +494,9 @@ var Hunter = {
     heroArea.parentNode.replaceChild(freshHero, heroArea);
 
     initCarousel('screen-profile', buildPhotoArray(char.realPhotos));
-    initReadMore();
     initActionButtons('screen-profile', char.key);
+    initAboutPanel();
+    initMsgBtn(char);
   },
 
   goToChat: function(charKey) {
@@ -1000,108 +1023,38 @@ function initDragHandle() {
   }
 }
 
-// ── Swipe-down dismiss + gallery edge swipe exit — Session 8 ─────────────────
-// Single listener pair on #screen-profile. Called once from DOMContentLoaded.
-// Does not re-register on profile re-opens.
-//
-// SWIPE-DOWN: drag down 80px+ with more vertical than horizontal movement
-//             → Hunter.navigate('browse'). Suppressed while gallery-mode active.
-//
-// EDGE SWIPE: touch starts within 24px of left OR right edge of the phone frame,
-//             swipes inward 40px+ → removes .gallery-mode from #screen-profile.
-//             Only fires when .gallery-mode is present.
-function initSwipeDownDismiss() {
-  var screen = document.getElementById('screen-profile');
-  var startY = 0, startX = 0;
-  var DISMISS_THRESHOLD = 80;  // px downward to trigger back nav
-  var EDGE_ZONE         = 24;  // px from left or right edge
-  var EDGE_SWIPE_MIN    = 40;  // px inward movement to exit gallery
-  var PHONE_WIDTH       = 375; // fixed phone frame width
-
- screen.addEventListener('touchstart', function(e) {
-    startY = e.touches[0].clientY;
-    startX = e.touches[0].clientX;
-  }, { passive: true });
-
-  screen.addEventListener('touchend', function(e) {
-    var endY  = e.changedTouches[0].clientY;
-    var endX  = e.changedTouches[0].clientX;
-    var dy    = endY - startY;
-    var dx    = endX - startX;
-    var absDy = Math.abs(dy);
-    var absDx = Math.abs(dx);
-
-    // Gallery mode: edge swipe exits gallery. Swipe-down does nothing in this state.
-    if (screen.classList.contains('gallery-mode')) {
-      var fromLeftEdge  = startX < EDGE_ZONE && dx > EDGE_SWIPE_MIN;
-      var fromRightEdge = startX > (PHONE_WIDTH - EDGE_ZONE) && (-dx) > EDGE_SWIPE_MIN;
-      if (fromLeftEdge || fromRightEdge) {
-        screen.classList.remove('gallery-mode');
-      }
-      return;
-    }
-
-    // Normal mode: swipe down to dismiss profile, back to browse
-    if (dy > DISMISS_THRESHOLD && absDy > absDx) {
-      Hunter.navigate('browse');
-    }
-  });
-
-  // Mouse drag down to dismiss — desktop support
-  var mouseStartY = 0, mouseStartX = 0, mouseIsDown = false;
-  screen.addEventListener('mousedown', function(e) {
-    mouseStartY = e.clientY;
-    mouseStartX = e.clientX;
-    mouseIsDown = true;
-  });
-  document.addEventListener('mouseup', function(e) {
-    if (!mouseIsDown) return;
-    mouseIsDown = false;
-    if (screen.classList.contains('gallery-mode')) return;
-    var dy    = e.clientY - mouseStartY;
-    var dx    = e.clientX - mouseStartX;
-    var absDy = Math.abs(dy);
-    var absDx = Math.abs(dx);
-    if (dy > DISMISS_THRESHOLD && absDy > absDx) {
-      Hunter.navigate('browse');
-    }
-  });
+// ── About panel tap to expand ─────────────────────────────────────────────────
+function initAboutPanel() {
+  var panel = document.getElementById('aboutPanel');
+  var bio = document.getElementById('profileBio');
+  if (!panel || !bio) return;
+  panel.onclick = function(e) {
+    e.stopPropagation();
+    bio.classList.toggle('expanded');
+  };
 }
 
-// ── Read more ─────────────────────────────────────────────────────────────────
-function initReadMore() {
-  document.querySelectorAll('.about-text').forEach(function(el) {
-    if (el.dataset.rmInit) return;
-    el.dataset.rmInit = 'true';
-    var toggle = document.createElement('span');
-    toggle.className = 'read-more';
-    toggle.textContent = 'read more';
-    el.parentNode.insertBefore(toggle, el.nextSibling);
-    toggle.addEventListener('click', function(e) {
+// ── Message button ────────────────────────────────────────────────────────────
+function initMsgBtn(char) {
+  var btn = document.getElementById('profileMsgBtn');
+  if (!btn) return;
+  if (char.canMessage) {
+    btn.classList.remove('disabled');
+    btn.onclick = function(e) {
       e.stopPropagation();
-      el.classList.toggle('expanded');
-      toggle.textContent = el.classList.contains('expanded') ? 'read less' : 'read more';
-    });
-  });
+      Hunter.goToChat(char.key);
+    };
+  } else {
+    btn.classList.add('disabled');
+    btn.onclick = null;
+  }
 }
 
 // ── Action buttons ────────────────────────────────────────────────────────────
 function initActionButtons(screenId, charKey) {
   var screen  = document.getElementById(screenId);
-  var actUp   = screen.querySelector('[data-action="up"]');
-  var actDown = screen.querySelector('[data-action="down"]');
   var actMsg  = screen.querySelector('[data-action="msg"]');
-
-  actUp.onclick = function(e) {
-    e.stopPropagation();
-    actDown.classList.remove('active');
-    actUp.classList.toggle('active');
-  };
-  actDown.onclick = function(e) {
-    e.stopPropagation();
-    actUp.classList.remove('active');
-    actDown.classList.toggle('active');
-  };
+  if (!actMsg) return;
   actMsg.onclick = function(e) {
     e.stopPropagation();
     if (!CHARS[charKey] || !CHARS[charKey].canMessage) return;
@@ -1136,6 +1089,14 @@ function initBackButtons() {
   });
   document.getElementById('chatBackBtn').addEventListener('click', function() {
     Hunter.currentChar ? Hunter.navigate('profile') : Hunter.navigate('browse');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var profileScreen = document.getElementById('screen-profile');
+      if (profileScreen && profileScreen.classList.contains('active')) {
+        Hunter.navigate('browse');
+      }
+    }
   });
 }
 
@@ -1185,13 +1146,18 @@ document.addEventListener('DOMContentLoaded', function() {
   initBrowseTabs();
   initHuntStack();
   initHuntIntake();
-  initSwipeDownDismiss(); // Session 8: registered once here, not per profile open
 
   document.getElementById('lightbox').addEventListener('click', function() {
     document.getElementById('lightbox').classList.remove('open');
   });
 
   Hunter.navigate('browse');
+  window.addEventListener('popstate', function(e) {
+    var profileScreen = document.getElementById('screen-profile');
+    if (profileScreen && profileScreen.classList.contains('active')) {
+      Hunter.navigate('browse');
+    }
+  });
 });
 </script>
 </body>
