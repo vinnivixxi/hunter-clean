@@ -185,22 +185,13 @@
 
     <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
 
-    <!-- CAROUSEL BAR — Session 8: moved here from inside .profile-bottom-left.
-         Now a direct child of #screen-profile, absolutely positioned as left vertical rail.
-         Inline style removed — CSS owns the positioning.
-         initCarousel() builds circular thumbs inside this element.
-         Tapping a thumb sets the hero image only — does NOT enter gallery mode. -->
-    <div class="carousel-bar-left"></div>
-<div class="carousel-bar-right"></div>
+    <div class="photo-dots" id="photoDots"></div>
 
-    <!-- PROFILE-BOTTOM-RIGHT — Session 8: moved here from inside .profile-bottom.
-         Now a direct child of #screen-profile, absolutely positioned as right rail.
-         Vertically centered to mirror the thumbnail column on the left.
-         CSS owns the position. .phone.lefty rule flips it to the left side. -->
+    <div class="lock-card" id="lockCard">
+      <i class="fa-solid fa-lock"></i>
+      <p>Unlock exclusive content — coming soon.</p>
+    </div>
 
-    <!-- PROFILE BOTTOM — Session 8: now left content only.
-         .profile-bottom-right and .carousel-bar have been moved out above.
-         padding-right increased in CSS to prevent bio overlap with right rail. -->
     <div class="profile-bottom">
       <div class="profile-bottom-row1">
         <div class="profile-name-group">
@@ -226,13 +217,6 @@
         </div>
       </div>
     </div>
-    <!-- GALLERY FILMSTRIP — Session 8.
-         Hidden by default. Shown when #screen-profile has .gallery-mode class.
-         Triggered by tapping the hero image (not thumbnails).
-         Populated by initCarousel() — one filmstrip-thumb per photo + paywall at end.
-         Filmstrip thumbs call setPhoto() same as vertical rail (stay in sync).
-         Exit gallery: tap hero again, or edge swipe from left or right phone edge. -->
-    <div class="gallery-filmstrip" id="galleryFilmstrip"></div>
 
   </div><!-- /screen-profile -->
 
@@ -368,7 +352,14 @@ var CHARS = {
     subtitle: 'Online · 2 mi away',
     avatar: 'profile.images/tarab.jpg',
     myAvatar: 'profile.images/phalanx.potens.png',
-    realPhotos: ['profile.images/tarab.jpg'],
+    realPhotos: [
+  'profile.images/tarab.jpg',
+  'profile.images/tarab_frenchie.png',
+  'profile.images/tarab_couch.png',
+  'profile.images/tarab_coffee.png',
+  'profile.images/tarab_walking.png',
+  'profile.images/tarab_jog.png'
+],
     naughtyPhotos: ['profile.images/placeholder.bear.png'],
     bio: "Down to try new things with someone who knows what they're doing.",
     stats: { distance: '4 mi', age: '20', height: "5'10\"", role: 'Bottom', vibe: 'whatevers' },
@@ -842,132 +833,66 @@ function initBrowseTabs() {
   });
 }
 
-// ── Carousel — Session 8 rewrite ──────────────────────────────────────────────
-// Builds vertical circular thumbnail rail on left side of profile screen.
-// Tapping a thumb sets the hero image — does NOT enter gallery mode.
-// Tapping the hero image enters/exits gallery mode.
-// Filmstrip is built into #galleryFilmstrip and stays in sync with the rail
-// via the shared setPhoto() function.
+// ── Carousel — Session 15 rewrite ────────────────────────────────────────────
+// Dot indicators on dominant hand side — one per public photo, active updates on navigate.
+// Lock card renders as final swipe position when naughtyPhotos has content.
+// Thumbnail rails and filmstrip removed. Gestures and gallery mode unchanged.
 // Called from renderProfile() each time a profile is opened.
 // heroArea is cloned fresh before this runs — no duplicate listeners accumulate.
-// #galleryFilmstrip is rebuilt from scratch each call — no listener accumulation.
 function initCarousel(screenId, char) {
-  var screen    = document.getElementById(screenId);
-  var heroImg   = screen.querySelector('.hero-full img');
-  var heroArea  = screen.querySelector('.hero-full');
-  var barLeft   = screen.querySelector('.carousel-bar-left');
-  var barRight  = screen.querySelector('.carousel-bar-right');
-  var filmstrip = document.getElementById('galleryFilmstrip');
-  var current   = 0;
+  var screen        = document.getElementById(screenId);
+  var heroImg       = screen.querySelector('.hero-full img');
+  var heroArea      = screen.querySelector('.hero-full');
+  var dotsContainer = document.getElementById('photoDots');
+  var lockCard      = document.getElementById('lockCard');
+  var current       = 0;
+  var atLock        = false;
 
   var realPhotos    = char.realPhotos || [];
   var naughtyPhotos = char.naughtyPhotos || [];
   var hasNaughty    = naughtyPhotos.length > 0;
-  var isLefty       = localStorage.getItem('hunter.handedness') === 'left';
 
   // Hero: first real photo or random placeholder
   var heroSrc = realPhotos.length > 0 ? realPhotos[0] : shuffled(PLACEHOLDER_POOL)[0];
   heroImg.src = heroSrc;
+  heroImg.style.opacity = '';
 
-  // Rail photos: index 1 onward — hero not repeated
-  var railPhotos = realPhotos.slice(1);
-
-  // Full photo set for gesture navigation — hero at index 0
+  // Full photo set for gesture navigation
   var photos = realPhotos.length > 0 ? realPhotos : [heroSrc];
 
-  // Dominant and off-hand rails based on handedness
-  var dominantBar = isLefty ? barLeft : barRight;
-  var offhandBar  = isLefty ? barRight : barLeft;
+  // Reset lock card on every profile open
+  lockCard.classList.remove('visible');
 
-  barLeft.innerHTML  = '';
-  barRight.innerHTML = '';
-  barLeft.style.display  = 'none';
-  barRight.style.display = 'none';
+  // Build dots — one per public photo, only when more than one photo or lock exists
+  dotsContainer.innerHTML = '';
+  if (photos.length > 1 || hasNaughty) {
+    photos.forEach(function(src, i) {
+      var dot = document.createElement('div');
+      dot.className = 'photo-dot' + (i === 0 ? ' active' : '');
+      dotsContainer.appendChild(dot);
+    });
+  }
 
-  // Shared photo setter — keeps both rails and filmstrip in sync
+  function updateDots(activeIdx) {
+    dotsContainer.querySelectorAll('.photo-dot').forEach(function(dot, i) {
+      dot.classList.toggle('active', i === activeIdx);
+    });
+  }
+
   function setPhoto(i) {
     current = i;
+    atLock = false;
     heroImg.src = photos[i];
-    barLeft.querySelectorAll('.carousel-thumb').forEach(function(t, j) {
-      t.classList.toggle('active', +t.dataset.idx === i);
-    });
-    barRight.querySelectorAll('.carousel-thumb').forEach(function(t, j) {
-      t.classList.toggle('active', +t.dataset.idx === i);
-    });
-    if (filmstrip) {
-      filmstrip.querySelectorAll('.filmstrip-thumb').forEach(function(ft) {
-        ft.classList.toggle('active', +ft.dataset.idx === i);
-      });
-    }
+    heroImg.style.opacity = '';
+    lockCard.classList.remove('visible');
+    updateDots(i);
   }
 
-  function makeThumb(src, railIdx, bar) {
-    var thumb = document.createElement('div');
-    thumb.className = 'carousel-thumb' + (railIdx === 0 ? ' active' : '');
-    thumb.dataset.idx = railIdx;
-    var img = document.createElement('img');
-    img.src = src;
-    img.alt = String(railIdx + 1);
-    thumb.appendChild(img);
-    thumb.addEventListener('click', function(e) {
-      e.stopPropagation();
-      setPhoto(+thumb.dataset.idx);
-    });
-    bar.appendChild(thumb);
-  }
-
-  function makeLock(bar) {
-    var lockThumb = document.createElement('div');
-    lockThumb.className = 'rail-lock-hint';
-   lockThumb.innerHTML = '<i class="fa-solid fa-lock" style="color:rgba(59,107,74,0.9);font-size:20px;"></i>';
-    bar.appendChild(lockThumb);
-  }
-
-  // Distribute thumbs — first 3 go to dominant rail, overflow to off-hand
-  if (railPhotos.length > 0 || hasNaughty) {
-    var dominantThumbs = railPhotos.slice(0, 3);
-    var offhandThumbs  = railPhotos.slice(3);
-
-    if (dominantThumbs.length > 0 || hasNaughty) {
-      dominantBar.style.display = '';
-      dominantThumbs.forEach(function(src, i) {
-        makeThumb(src, i + 1, dominantBar);
-      });
-      if (hasNaughty) makeLock(dominantBar);
-    }
-
-    if (offhandThumbs.length > 0) {
-      offhandBar.style.display = '';
-      offhandThumbs.forEach(function(src, i) {
-        makeThumb(src, i + 4, offhandBar);
-      });
-    }
-  }
-
-  // Build gallery filmstrip — hero included at index 0
-  if (filmstrip) {
-    filmstrip.innerHTML = '';
-    photos.forEach(function(src, i) {
-      var ft = document.createElement('div');
-      ft.className = 'filmstrip-thumb' + (i === 0 ? ' active' : '');
-      ft.dataset.idx = i;
-      var img = document.createElement('img');
-      img.src = src;
-      img.alt = String(i + 1);
-      ft.appendChild(img);
-      ft.addEventListener('click', function(e) {
-        e.stopPropagation();
-        setPhoto(+ft.dataset.idx);
-      });
-      filmstrip.appendChild(ft);
-    });
-
-    if (hasNaughty) {
-      var pw = document.createElement('div');
-      pw.className = 'filmstrip-paywall';
-      pw.innerHTML = '<svg width="20" height="20" viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="9" rx="2" stroke="rgba(59,107,74,0.7)" stroke-width="1.3" fill="rgba(26,26,26,0.6)"/><path d="M6 8V5.5C6 3.6 12 3.6 12 5.5V8" stroke="rgba(59,107,74,0.7)" stroke-width="1.3" stroke-linecap="round" fill="none"/><circle cx="9" cy="12.5" r="1" fill="rgba(59,107,74,0.7)"/></svg>';
-      filmstrip.appendChild(pw);
-    }
+  function showLock() {
+    atLock = true;
+    heroImg.style.opacity = '0';
+    lockCard.classList.add('visible');
+    updateDots(-1);
   }
 
   // Hero horizontal/vertical swipe — photo navigation
@@ -982,13 +907,21 @@ function initCarousel(screenId, char) {
     var absDx = Math.abs(dx);
     var absDy = Math.abs(dy);
     if (absDx > 40 && absDx >= absDy) {
-      if (dx > 0 && current < photos.length - 1) setPhoto(current + 1);
-      if (dx < 0 && current > 0) setPhoto(current - 1);
-      e.preventDefault();
+      if (dx > 0) {
+        if (!atLock && current < photos.length - 1) { setPhoto(current + 1); e.preventDefault(); }
+        else if (!atLock && hasNaughty) { showLock(); e.preventDefault(); }
+      } else {
+        if (atLock) { setPhoto(photos.length - 1); e.preventDefault(); }
+        else if (current > 0) { setPhoto(current - 1); e.preventDefault(); }
+      }
     } else if (absDy > 40 && absDy > absDx) {
-      if (dy > 0 && current < photos.length - 1) setPhoto(current + 1);
-      if (dy < 0 && current > 0) setPhoto(current - 1);
-      e.preventDefault();
+      if (dy > 0) {
+        if (!atLock && current < photos.length - 1) { setPhoto(current + 1); e.preventDefault(); }
+        else if (!atLock && hasNaughty) { showLock(); e.preventDefault(); }
+      } else {
+        if (atLock) { setPhoto(photos.length - 1); e.preventDefault(); }
+        else if (current > 0) { setPhoto(current - 1); e.preventDefault(); }
+      }
     }
   });
 
@@ -1012,17 +945,27 @@ function initCarousel(screenId, char) {
     var absDx = Math.abs(dx);
     if (absDy > 40 && absDy > absDx) {
       heroMouseDragged = true;
-      if (dy > 0 && current < photos.length - 1) setPhoto(current + 1);
-      if (dy < 0 && current > 0) setPhoto(current - 1);
+      if (dy > 0) {
+        if (!atLock && current < photos.length - 1) setPhoto(current + 1);
+        else if (!atLock && hasNaughty) showLock();
+      } else {
+        if (atLock) setPhoto(photos.length - 1);
+        else if (current > 0) setPhoto(current - 1);
+      }
     } else if (absDx > 40 && absDx > absDy) {
       heroMouseDragged = true;
-      if (dx > 0 && current < photos.length - 1) setPhoto(current + 1);
-      if (dx < 0 && current > 0) setPhoto(current - 1);
+      if (dx > 0) {
+        if (!atLock && current < photos.length - 1) setPhoto(current + 1);
+        else if (!atLock && hasNaughty) showLock();
+      } else {
+        if (atLock) setPhoto(photos.length - 1);
+        else if (current > 0) setPhoto(current - 1);
+      }
     }
   };
   document.addEventListener('mouseup', window._heroMouseUpHandler);
 
-  // Hero tap — toggle gallery mode
+  // Hero tap — toggle gallery mode (lock card captures clicks when visible)
   heroArea.addEventListener('click', function() {
     if (heroMouseDragged) { heroMouseDragged = false; return; }
     var profileScreen = document.getElementById('screen-profile');
@@ -1032,8 +975,13 @@ function initCarousel(screenId, char) {
   // Scroll wheel — desktop photo navigation
   heroArea.addEventListener('wheel', function(e) {
     e.preventDefault();
-    if (e.deltaY > 0 && current < photos.length - 1) setPhoto(current + 1);
-    if (e.deltaY < 0 && current > 0) setPhoto(current - 1);
+    if (e.deltaY > 0) {
+      if (!atLock && current < photos.length - 1) setPhoto(current + 1);
+      else if (!atLock && hasNaughty) showLock();
+    } else {
+      if (atLock) setPhoto(photos.length - 1);
+      else if (current > 0) setPhoto(current - 1);
+    }
   }, { passive: false });
 }
 
