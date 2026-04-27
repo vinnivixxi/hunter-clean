@@ -76,10 +76,10 @@
             <div class="intake-question">What's the vibe?</div>
             <div class="intake-options">
               <div class="intake-option" data-val="kink">Kink</div>
-              <div class="intake-option" data-val="netflix">Netflix &amp; Chill</div>
-              <div class="intake-option" data-val="gymbro">Gym Bro</div>
-              <div class="intake-option" data-val="adventure">Adventure</div>
-              <div class="intake-option" data-val="other">Other</div>
+              <div class="intake-option" data-val="whatevers">Whatevers</div>
+              <div class="intake-option" data-val="anon">Anon</div>
+              <div class="intake-option" data-val="romance">Romance</div>
+              <div class="intake-option" data-val="collab">Collab</div>
             </div>
           </div>
           <!-- Q3: populated by initHuntIntake() from HUNT_Q3_POOL. Do not hardcode. -->
@@ -159,12 +159,12 @@
 
   </div><!-- /screen-browse -->
 
-  <!-- PROFILE SCREEN — Session 8 restructure:
-       - drag-handle added (top center pill, first-open bounce via localStorage key hunter.profile.firstopen)
-       - carousel-bar moved out of profile-bottom-left → direct child of screen-profile, abs left rail
-       - profile-bottom-right moved out of profile-bottom → direct child of screen-profile, abs right rail
-       - gallery-filmstrip added (hidden until .gallery-mode on #screen-profile)
-       - profile-bottom now contains left content only (stats, last-active, bio)
+  <!-- PROFILE SCREEN — Session 16 state:
+       - drag-handle: top center pill, bounces once via localStorage key hunter.profile.firstopen
+       - photo-dots: vertical column, right rail (left rail when .phone.lefty), one dot per public photo
+       - lock-card: full-hero overlay, pointer-events:none, visible as final swipe position when naughtyPhotos has content
+       - profile-bottom: three rows — Row 1 (username / online dot / message pill), Row 2 (FA icon stat circles), Row 3 (about panel tap-to-expand)
+       - No carousel rails, no filmstrip. Gallery mode toggled by hero tap.
   -->
   <div class="screen" id="screen-profile">
 
@@ -203,11 +203,11 @@
       </div>
       <div class="profile-bottom-row2">
         <div class="stats-row" style="position:relative;bottom:auto;left:auto;width:100%;justify-content:space-between;">
-          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2C6.5 2 4.5 4 4.5 6.5C4.5 10 9 16 9 16C9 16 13.5 10 13.5 6.5C13.5 4 11.5 2 9 2Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><circle cx="9" cy="6.5" r="2" stroke="#3B6B4A" stroke-width="1.1" fill="none"/></svg></div><span class="stat-val" id="statDistance"></span></div>
-          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><rect x="3" y="8" width="12" height="4" rx="1" stroke="#3B6B4A" stroke-width="1.2" fill="none"/><rect x="4.5" y="12" width="9" height="3.5" rx="1" stroke="#3B6B4A" stroke-width="1.2" fill="none"/><path d="M6.5 8V6.5M9 8V6.5M11.5 8V6.5" stroke="#3B6B4A" stroke-width="1" stroke-linecap="round"/><circle cx="6.5" cy="5.5" r="0.7" fill="#3B6B4A"/><circle cx="9" cy="5.5" r="0.7" fill="#3B6B4A"/><circle cx="11.5" cy="5.5" r="0.7" fill="#3B6B4A"/></svg></div><span class="stat-val" id="statAge"></span></div>
-          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 2L7 4.5M9 2L11 4.5M9 2V16M9 16L7 13.5M9 16L11 13.5" stroke="#3B6B4A" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="stat-val" id="statHeight"></span></div>
-          <div class="stat-item"><div class="stat-circle"><svg viewBox="0 0 18 18" fill="none"><path d="M9 15C6 15 3.5 12.5 4 9.5C4.3 7.5 5.5 5 6.5 4.5C7.5 4 8.5 4.5 9 5C9.5 4.5 10.5 4 11.5 4.5C12.5 5 13.7 7.5 14 9.5C14.5 12.5 12 15 9 15Z" stroke="#3B6B4A" stroke-width="1.2" fill="none"/></svg></div><span class="stat-val" id="statRole"></span></div>
-          <div class="stat-item" id="statVibeItem"><div class="stat-circle stat-vibe"><svg id="statVibeIcon" viewBox="0 0 18 18" fill="none"></svg></div><span class="stat-val" id="statVibe"></span></div>
+          <div class="stat-item"><div class="stat-circle"><i class="fa-solid fa-location-dot"></i></div><span class="stat-val" id="statDistance"></span></div>
+          <div class="stat-item"><div class="stat-circle"><i class="fa-solid fa-cake-candles"></i></div><span class="stat-val" id="statAge"></span></div>
+          <div class="stat-item"><div class="stat-circle"><i class="fa-solid fa-ruler-vertical"></i></div><span class="stat-val" id="statHeight"></span></div>
+          <div class="stat-item"><div class="stat-circle"><i id="statRoleIcon"></i></div><span class="stat-val" id="statRole"></span></div>
+          <div class="stat-item" id="statVibeItem"><div class="stat-circle stat-vibe"><i id="statVibeIcon"></i></div><span class="stat-val" id="statVibe"></span></div>
         </div>
       </div>
       <div class="profile-bottom-row3">
@@ -432,7 +432,7 @@ var Hunter = {
     Hunter.renderProfile(char);
     Hunter.navigate('profile');
     history.pushState({ screen: 'profile' }, '');
-    // Session 8: bounce the drag handle on first ever profile open
+    // Bounce drag handle on first ever profile open — localStorage key hunter.profile.firstopen
     initDragHandle();
   },
 
@@ -442,29 +442,26 @@ var Hunter = {
     document.getElementById('statAge').textContent = char.stats.age;
     document.getElementById('statHeight').textContent = char.stats.height;
     document.getElementById('statRole').textContent = char.stats.role;
+    var roleIcons = { top: 'fa-solid fa-arrow-up', bottom: 'fa-solid fa-arrow-down', vers: 'fa-solid fa-arrows-up-down', side: 'fa-solid fa-arrows-left-right' };
+    document.getElementById('statRoleIcon').className = roleIcons[(char.stats.role || '').toLowerCase()] || 'fa-solid fa-question';
     document.getElementById('profileLastActive').textContent = char.lastActive;
     document.getElementById('profileOnlineDot').className = 'online-dot' + (char.online ? '' : ' offline');
 
     // Vibe icon
-    var vibeIcons = {
-      kink: '<path d="M9 16C9 16 3 12 3 7C3 4.8 4.8 3 7 3C8.1 3 9 3.9 9 3.9C9 3.9 9.9 3 11 3C13.2 3 15 4.8 15 7C15 12 9 16 9 16Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/>',
-      netflix: '<rect x="3" y="6" width="12" height="8" rx="1.5" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><path d="M3 9H15" stroke="#3B6B4A" stroke-width="1.3"/><path d="M7 13V15M11 13V15" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round"/>',
-      gymbro: '<path d="M2 9H4M14 9H16M4 9V7.5C4 6.7 4.7 6 5.5 6V6C6.3 6 7 6.7 7 7.5V10.5C7 11.3 6.3 12 5.5 12V12C4.7 12 4 11.3 4 10.5V9ZM14 9V7.5C14 6.7 13.3 6 12.5 6V6C11.7 6 11 6.7 11 7.5V10.5C11 11.3 11.7 12 12.5 12V12C13.3 12 14 11.3 14 10.5V9ZM7 9H11" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round"/>',
-      adventure: '<path d="M9 3L10.5 7H15L11.5 9.5L13 13.5L9 11L5 13.5L6.5 9.5L3 7H7.5L9 3Z" stroke="#3B6B4A" stroke-width="1.3" fill="none" stroke-linejoin="round"/>',
-      social: '<path d="M9 3C7.5 3 6 4 6 5.5C6 7.5 9 10 9 10C9 10 12 7.5 12 5.5C12 4 10.5 3 9 3Z" stroke="#3B6B4A" stroke-width="1.3" fill="none"/><path d="M5 10C4 10.5 3 11.5 3 13V15H15V13C15 11.5 14 10.5 13 10" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round" fill="none"/>',
-      whatevers: '<path d="M9 12V13" stroke="#3B6B4A" stroke-width="1.5" stroke-linecap="round"/><path d="M9 6C9 6 11 6 11 8C11 9.5 9 10 9 10.5" stroke="#3B6B4A" stroke-width="1.3" stroke-linecap="round"/><circle cx="9" cy="9" r="6.5" stroke="#3B6B4A" stroke-width="1.3" fill="none"/>'
-    };
-    var vibeLabels = {
-      kink: 'Kink', netflix: 'Chill', gymbro: 'Gym', adventure: 'Adventure',
-      social: 'Social', whatevers: 'Whatevers'
+    var vibeMap = {
+      kink:      { cls: 'fa-solid fa-socks',      label: 'Kink' },
+      whatevers: { cls: 'fa-solid fa-question',   label: 'Whatevers' },
+      anon:    { cls: 'fa-solid fa-mask',   label: 'Anon' },
+      romance:   { cls: 'fa-solid fa-wine-glass', label: 'Romance' },
+      collab:    { cls: 'fa-solid fa-camera',     label: 'Collab' }
     };
     var vibeKey = (char.stats.vibe || 'whatevers').toLowerCase();
     var vibeIcon = document.getElementById('statVibeIcon');
     var vibeVal = document.getElementById('statVibe');
     var vibeItem = document.getElementById('statVibeItem');
-    if (vibeIcon && vibeIcons[vibeKey]) {
-      vibeIcon.innerHTML = vibeIcons[vibeKey];
-      vibeVal.textContent = vibeLabels[vibeKey] || '';
+    if (vibeIcon && vibeMap[vibeKey]) {
+      vibeIcon.className = vibeMap[vibeKey].cls;
+      vibeVal.textContent = vibeMap[vibeKey].label;
       vibeItem.style.display = '';
     } else if (vibeItem) {
       vibeItem.style.display = 'none';
@@ -985,7 +982,7 @@ function initCarousel(screenId, char) {
   }, { passive: false });
 }
 
-// ── Drag handle — Session 8 ───────────────────────────────────────────────────
+// ── Drag handle ───────────────────────────────────────────────────────────────
 // Fires the bounce animation exactly once per device lifetime.
 // localStorage key: hunter.profile.firstopen
 // Called from goToProfile() after navigate() so slide-up is already in motion.

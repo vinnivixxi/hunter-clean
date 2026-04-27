@@ -4,7 +4,7 @@ Here is the corrected Session 15 log:
 
 HUNTER APP — SESSION LOG
 
-Last updated: April 26, 2026 (Session 15)
+Last updated: April 26, 2026 (Session 16)
 
 # ORIENTATION — READ THIS FIRST AND IN FULL BEFORE RESPONDING
 
@@ -37,15 +37,16 @@ Subfolders: profile.images/ and hunter.arrows/
 
 # FILE INTEGRITY — CURRENT STATE
 
-**hunter.html — Session 15 output. Contains:**
+**hunter.html — Session 16 output. Contains:**
 
 - Loading screen with bow/arrow animation
 - #screen-browse with Hunt/Track/Browse tab panel system
-- #screen-profile — single dynamic template, Session 15 redesigned
+- #screen-profile — single dynamic template, Session 16 updated
 - #screen-chat — dynamic chat template
 - PLACEHOLDER_POOL, shuffled(), buildPhotoArray()
 - HUNT_Q3_POOL — 27 questions, fully populated by Vinn
-- CHARS object with j, b, runnerboy, nightowl entries — all with vibe field and naughtyPhotos array. B's realPhotos updated to 6 images.
+- CHARS object with j, b, runnerboy, nightowl entries — all with vibe field and naughtyPhotos array. B's realPhotos: 6 images.
+- Intake Q2 vibe options: Kink, Whatevers, Anon, Romance, Collab
 - Hunter object: navigate, goToProfile, renderProfile, goToChat, renderChat
 - initHuntStack() — touch + mouse click/dblclick handlers
 - initHuntIntake(), initBrowseTabs()
@@ -59,14 +60,17 @@ Subfolders: profile.images/ and hunter.arrows/
 - Font Awesome kit loaded in head (kit: 5822e1492d)
 - #photoDots — static div, direct child of #screen-profile. Populated by initCarousel().
 - #lockCard — static div, direct child of #screen-profile. fa-lock + paywall text. Shown via .visible class.
-- Inline comments still partially outdated — update Session 16
+- All stat row icons use Font Awesome i tags — no inline SVGs remain in stat row
+- roleIcons lookup in renderProfile — dynamic FA icon for role stat: Top (fa-arrow-up), Bottom (fa-arrow-down), Vers (fa-arrows-up-down), Side (fa-arrows-left-right), default (fa-question)
+- vibeMap in renderProfile — replaces vibeIcons/vibeLabels. 5 entries: kink, whatevers, anon, romance, collab
+- Inline comments updated to Session 16 state — no stale rail/filmstrip references remain
 
-**hunter.css — Session 15 output. Contains:**
+**hunter.css — Session 16 output. Contains:**
 
 - Loading screen animations
 - Browse grid layout (de-fanned, flat cards)
 - Tab system
-- Profile template styles — Session 15 updated
+- Profile template styles — Session 16 updated
 - Chat styles
 - Panel system: .browse-panel, .panel-active
 - Hunt intake styles: .hunt-intake, .intake-step, .intake-option
@@ -80,6 +84,8 @@ Subfolders: profile.images/ and hunter.arrows/
 - Profile bottom rows: .profile-bottom-row1, .profile-bottom-row2, .profile-bottom-row3
 - Message button: .profile-msg-btn
 - Vibe stat styles: .stat-vibe
+- stat-circle: 42px diameter. .stat-circle i{font-size:20px;color:#3B6B4A;} — covers all five stat icons uniformly. .stat-vibe i override removed.
+- profile-bottom padding-left: 16px (corrected from 68px — legacy left rail value removed Session 16)
 - Mobile viewport: @media (max-width: 768px) — full screen on mobile, 100svh height
 - Gallery mode state: remaining selectors (profile-bottom, header-band, app-header, drag-handle)
 - .phone.lefty handedness toggle (CSS ready, UI not built)
@@ -101,6 +107,7 @@ Subfolders: profile.images/ and hunter.arrows/
 - Session 11 — April 19: Profile screen fully redesigned — thumbs up/down removed, back arrow removed, read more removed, action column removed. New three-row bottom section: Row 1 username/online dot/message pill, Row 2 stats with vibe icon, Row 3 about panel tap-to-expand. Vibe stat added to CHARS and renderProfile with 6 icon types. initSwipeDownDismiss removed — replaced with history.pushState + popstate listener for native browser back gesture on iOS and Android. Escape key confirmed working on desktop. Mobile viewport fixed — media query at 768px, 100svh height, full screen on Pixel 10. All changes verified working on desktop and Pixel 10.
 - Session 14 — April 19, 2026: Dead code cleanup — removed oldToggle block, actMsg block, initActionButtons function and its call from renderProfile. CHARS data model updated — naughtyPhotos[] added to j and b. initCarousel() rewritten — hero not repeated in rail, placeholders removed from profile rail, two-rail split with handedness awareness, dominant rail fills first up to 3 thumbs then overflow to off-hand rail, lock renders only when naughtyPhotos has content. carousel-bar split into carousel-bar-left and carousel-bar-right in HTML and CSS. Font Awesome kit added to HTML head (kit: 5822e1492d). Lock icon converted from inline SVG to Font Awesome fa-lock. Lock visual polish carries to Session 15.
 - Session 15 — April 26, 2026: Lock icon visual polish completed — fa-lock sized correctly in both rail (.rail-lock-hint i at 24px) and filmstrip paywall (.filmstrip-paywall i at 26px). Filmstrip paywall SVG replaced with fa-lock for consistency. Filmstrip paywall container styled to match rail lock (background rgba(59,107,74,0.15), border rgba(59,107,74,0.5), box-shadow). Major profile screen photo navigation redesign — both carousel rails and gallery filmstrip removed entirely. Replaced with: photo dot indicators (white, 10px, top:80px right rail, handedness aware via .phone.lefty) and lock card overlay (full-hero dark overlay, pointer-events:none, fa-lock 40px + paywall text, shows as final swipe position when naughtyPhotos has content — gallery mode still toggles via heroArea click when lock card is visible). initCarousel() fully rewritten — atLock boolean state, showLock()/setPhoto() functions, all gesture handlers updated (touch swipe, mouse drag, scroll wheel). Gallery mode toggle unchanged. B's realPhotos expanded to 6 images by Vinn.
+- Session 16 — April 26, 2026: Intake Q2 vibe options replaced — Kink, Whatevers, Anon, Romance, Collab (Gym Bro removed, Anon added, OnlyHoes dropped in favor of Collab). All stat row inline SVGs replaced with Font Awesome i tags: distance (fa-location-dot), age (fa-cake-candles), height (fa-ruler-vertical), role (dynamic via roleIcons lookup: Top/Bottom/Vers/Side/default), vibe (dynamic via vibeMap). vibeIcons and vibeLabels objects replaced with single vibeMap (5 entries: kink, whatevers, anon, romance, collab). stat-circle grown to 42px, icon font-size to 20px, .stat-vibe i override removed. profile-bottom padding-left corrected from 68px to 16px (legacy left rail value). Inline HTML comments updated — Session 8/9 rail architecture references removed, replaced with Session 16 state.
 
 # WHERE WE ARE — CURRENT STATE
 
@@ -122,7 +129,7 @@ Subfolders: profile.images/ and hunter.arrows/
 - Profile screen: gallery mode toggles via heroArea click when lock card is visible
 - Profile screen: swipe back from lock card returns to last public photo
 - Profile screen: Row 1 — username, online dot, message pill inline
-- Profile screen: Row 2 — stats row with vibe icon rendering
+- Profile screen: Row 2 — all five stat icons use Font Awesome (fa-location-dot distance, fa-cake-candles age, fa-ruler-vertical height, role dynamic via roleIcons, vibe dynamic via vibeMap)
 - Profile screen: Row 3 — about panel, tap to expand working
 - Profile screen: message button active on B, disabled on J
 - Profile screen: gallery mode — hero tap enters, dots remain visible
@@ -134,31 +141,15 @@ Subfolders: profile.images/ and hunter.arrows/
 - Back navigation works throughout all screens
 - Clock updates in status bar
 
-**BROKEN / PENDING SESSION 16:**
+**BROKEN / PENDING SESSION 17:**
 
 - Drag handle bounce does not re-fire if hunter.profile.firstopen already set — clear via DevTools to re-test.
 - Bottom nav labels still say Browse/Profile/Chats/Search. Deferred.
-- Stat icons small — deferred.
-- OnlyHoes not yet added to intake Q2 options.
-- Anon vibe not yet added — carry to Session 16.
-- Inline HTML comments still reference old Session 8/9 rail architecture — update Session 16.
-- B's naughtyPhotos set to placeholder.bear.png for testing — revert to empty array when lock card testing is complete.
-- B's realPhotos path mismatch — CHARS uses underscores (tarab_frenchie.png) but files on disk use dots (tarab.frenchie.png). Images 2-6 will not load until paths are corrected.
-- profile-bottom left padding still set to 68px (legacy from old left rail) — should be reduced now that left rail is gone. Deferred.
+- B's naughtyPhotos set to placeholder.bear.png intentionally kept — lock card must remain visible. No revert planned.
 
 # WHERE WE'RE GOING — NEXT BUILD ITEMS IN ORDER
 
-## NEXT SESSION (Session 16)
-
-**B REALPHOTO PATH FIX** — CHARS has underscores (tarab_frenchie.png) but files on disk use dots (tarab.frenchie.png). Fix paths in CHARS.b.realPhotos so images 2-6 actually load.
-
-**INTAKE Q2 UPDATE** — add OnlyHoes option with camera icon. Vibe icon map already has camera icon defined — just needs HTML option added.
-
-**VIBE EXPANSION** — add Anon as new vibe option. Archetype: no face pics, headless profiles, lock-only presentation. Icon: fa-mask from Font Awesome free tier. Add to intake Q2 options and vibe icon map in CHARS and renderProfile.
-
-**STAT ICON SCALE** — stat icons still small. Scale up now that rails are gone and bottom section has more width.
-
-**INLINE COMMENT CLEANUP** — HTML inline comments still reference old Session 8/9 rail architecture. Update to reflect dot indicators, lock card, naughtyPhotos model, and Font Awesome icons.
+## NEXT SESSION (Session 17)
 
 **PROFILE DATA GENERATION SCRIPT** — Build a script that generates CHARS-compatible profile objects with randomized handles, stats, bios, and vibe assignments. Output pastes directly into the CHARS object. Allows profile pool to be built without waiting for the profile creation UI. Vinn has existing images to use — pick one archetype to start, build 5-8 profiles, 5 images each, test end to end before expanding to other archetypes.
 
@@ -190,26 +181,18 @@ Subfolders: profile.images/ and hunter.arrows/
 **VIBE → ARCHETYPE MAPPING:**
 
 - kink → Kinkster pool
-- netflix → Bro or Daddy pool
-- gymbro → Bro pool
-- adventure → TBD
-- social → TBD
 - whatevers → random across all pools
-- onlyhoes → OnlyHoe pool
-- anon → TBD
+- anon → TBD (archetype: no face pics, headless profiles, lock-only presentation)
+- romance → TBD
+- collab → TBD
 
 **VIBE ICON MAP — FINAL:**
 
-- Kink → feet icon (Font Awesome pro — use fa-socks free tier substitute)
-- Netflix & Chill → couch icon
-- Gym Bro → barbell icon
-- Adventure → campfire icon
-- Social → wine glass icon
-- Whatevers → question mark icon
-- OnlyHoes → camera icon
-- Anon → fa-mask (Font Awesome free) — no face pics, headless profiles, lock-only presentation
-
-NOTE: OnlyHoes and Anon to be added to intake Q2 options in Session 16.
+- Kink → fa-solid fa-socks
+- Whatevers → fa-solid fa-question
+- Anon → fa-solid fa-mask
+- Romance → fa-solid fa-wine-glass
+- Collab → fa-solid fa-camera
 
 NOTE: "Whatevers" is intentional regional dialect — do not correct.
 
@@ -305,7 +288,7 @@ Each character entry: key, name, subtitle, avatar, myAvatar
 - realPhotos[] — real image paths (empty array = placeholder hero, no dots)
 - naughtyPhotos[] — gated content paths. Lock card renders as final swipe position only when this array has content. Empty array = no lock card.
 - bio, stats{ distance, age, height, role, vibe }
-- vibe maps to icon in profile stats row. Values: kink, netflix, gymbro, adventure, social, whatevers, onlyhoes, anon.
+- vibe maps to icon in profile stats row. Values: kink, whatevers, anon, romance, collab.
 - "Whatevers" is intentional regional dialect — do not correct.
 - online, lastActive, canMessage, hasProfile
 - messages[]
@@ -350,7 +333,7 @@ Stacked cards. One dominant. Back cards peek with offset + rotation. STACK_POSIT
 - Stack loops — finite prey pool is narratively justified.
 - Easter eggs (deferred): shake/spin/wrist flick = force refresh stack.
 
-# PROFILE SCREEN — SESSION 15 STATE
+# PROFILE SCREEN — SESSION 16 STATE
 
 - Entry: slide-up animation from bottom of phone frame (0.35s).
 - Drag handle: pill at top center. Bounces once on first ever open. localStorage key: hunter.profile.firstopen
@@ -390,7 +373,7 @@ Stacked cards. One dominant. Back cards peek with offset + rotation. STACK_POSIT
 **Bottom section — three rows:**
 
 - Row 1: Username · online dot · message pill (right side, disabled on J)
-- Row 2: Stats icons spread evenly — distance, age, height, role, vibe
+- Row 2: FA icon stat circles spread evenly — fa-location-dot (distance), fa-cake-candles (age), fa-ruler-vertical (height), fa-arrow-up/down/etc. (role, dynamic via roleIcons), fa-socks/question/etc. (vibe, dynamic via vibeMap)
 - Row 3: About panel — 3 line clamp, tap anywhere to expand
 
 **Gallery mode:** Dots remain visible. Lock card remains accessible via swipe. No filmstrip in gallery mode as of Session 15. Hero fills screen via .gallery-mode CSS.

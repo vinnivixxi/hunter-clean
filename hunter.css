@@ -242,10 +242,9 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .username{position:relative;display:block;color:#3B6B4A;font-size:22px;font-weight:700;margin-bottom:8px;text-shadow:0 2px 12px rgba(0,0,0,1),0 0 30px rgba(0,0,0,0.9);transition:opacity 0.3s;}
 .stats-row{position:absolute;left:16px;z-index:10;display:flex;gap:14px;transition:opacity 0.3s;}
 .stat-item{display:flex;flex-direction:column;align-items:center;gap:5px;}
-.stat-circle{width:36px;height:36px;border-radius:50%;background:rgba(26,26,26,0.5);border:1.5px solid rgba(59,107,74,0.25);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
-.stat-circle svg{width:16px;height:16px;}
+.stat-circle{width:42px;height:42px;border-radius:50%;background:rgba(26,26,26,0.5);border:1.5px solid rgba(59,107,74,0.25);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px);}
+.stat-circle i{font-size:20px;color:#3B6B4A;}
 .stat-val{color:rgba(255,255,255,0.6);font-size:11px;font-weight:500;text-shadow:0 1px 6px rgba(0,0,0,0.9);}
-.stat-vibe svg{width:16px;height:16px;}
 .last-active{position:absolute;left:16px;z-index:10;display:flex;align-items:center;gap:6px;transition:opacity 0.3s;}
 .online-dot{width:6px;height:6px;border-radius:50%;background:#3B6B4A;box-shadow:0 0 4px rgba(59,107,74,0.4);}
 .last-active-text{color:rgba(255,255,255,0.45);font-size:12px;font-weight:400;}
@@ -374,7 +373,7 @@ body { min-height:100vh; background:#111; display:flex; align-items:center; just
 .lightbox.open{display:flex;}
 .lightbox img{max-width:95%;max-height:90%;object-fit:contain;border-radius:8px;}
 .lightbox-close{position:absolute;top:60px;right:20px;color:rgba(255,255,255,0.5);font-size:24px;cursor:pointer;z-index:51;}
-.profile-bottom{position:absolute;bottom:0;left:0;right:0;z-index:10;padding:0 16px 24px 68px;transition:opacity 0.3s;}
+.profile-bottom{position:absolute;bottom:0;left:0;right:0;z-index:10;padding:0 16px 24px 16px;transition:opacity 0.3s;}
 
 /* SPA ROUTER */
 .screen{display:none;position:absolute;top:0;left:0;right:0;bottom:0;overflow:hidden;}
