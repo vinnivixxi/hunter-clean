@@ -246,10 +246,10 @@
 <script>
 // ── Placeholder pool ──────────────────────────────────────────────────────────
 var PLACEHOLDER_POOL = [
-  'profile.images/placeholder.bear.png',
-  'profile.images/placeholder.daddy.png',
-  'profile.images/placeholder.frat.png',
-  'profile.images/placeholder.twink.png',
+  'profile.images/placeholder_bear.png',
+  'profile.images/placeholder_daddy.png',
+  'profile.images/placeholder_frat.png',
+  'profile.images/placeholder_twink.png',
   'profile.images/placeholder.png'
 ];
 
@@ -310,6 +310,10 @@ var HUNT_Q3_POOL = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Character data ────────────────────────────────────────────────────────────
+// j and b are narrative-critical. They live in CHARS permanently across all story contexts.
+// Do not move j or b to JSON. Do not remove them.
+// runnerboy and nightowl are stubs. hasProfile: false is intentional, not a bug.
+// They will be removed from CHARS and HTML when JSON architecture is built this session.
 var CHARS = {
   j: {
     key: 'j',
@@ -341,7 +345,7 @@ var CHARS = {
   'profile.images/tarab_walking.png',
   'profile.images/tarab_jog.png'
 ],
-    naughtyPhotos: ['profile.images/placeholder.bear.png'],
+    naughtyPhotos: ['profile.images/placeholder.bear.png'], // placeholder.bear.png is intentional. Lock card must remain visible for B. Do not remove until a real naughty photo replaces it.
     bio: "Down to try new things with someone who knows what they're doing.",
     stats: { distance: '4 mi', age: '20', height: "5'10\"", role: 'Bottom', vibe: 'whatevers' },
         online: true,
@@ -429,6 +433,8 @@ var Hunter = {
     document.getElementById('profileOnlineDot').className = 'online-dot' + (char.online ? '' : ' offline');
 
     // Vibe icon
+    // vibeMap — 5 locked vibe options. Labels are final. Do not autocorrect.
+    // 'Whatevers' is intentional regional dialect, not a typo.
     var vibeMap = {
       kink:      { cls: 'fa-solid fa-socks',      label: 'Kink' },
       whatevers: { cls: 'fa-solid fa-question',   label: 'Whatevers' },
@@ -811,12 +817,19 @@ function initBrowseTabs() {
   });
 }
 
-// ── Carousel — Session 15 rewrite ────────────────────────────────────────────
+// ── Carousel — builds photo navigation and lock card for the profile hero.
 // Dot indicators on dominant hand side — one per public photo, active updates on navigate.
 // Lock card renders as final swipe position when naughtyPhotos has content.
 // Thumbnail rails and filmstrip removed. Gestures and gallery mode unchanged.
 // Called from renderProfile() each time a profile is opened.
-// heroArea is cloned fresh before this runs — no duplicate listeners accumulate.
+// atLock: boolean tracking whether the lock card is currently the active position.
+//   true = lock card visible, heroImg opacity 0. false = real photo showing.
+// showLock(): sets atLock true, hides heroImg, shows lock card, clears dot active state.
+// setPhoto(i): sets atLock false, loads photos[i], restores heroImg, updates dots.
+// heroArea is cloned fresh in renderProfile() before this runs — prevents duplicate listeners.
+// _heroMouseUpHandler is assigned to window so the previous listener can be explicitly
+//   removed before a new one is added. mouseup fires on document, not heroArea,
+//   so it catches drag-release outside the element boundary.
 function initCarousel(screenId, char) {
   var screen        = document.getElementById(screenId);
   var heroImg       = screen.querySelector('.hero-full img');
@@ -1008,6 +1021,10 @@ function initMsgBtn(char) {
 }
 
 // ── Browse cards ──────────────────────────────────────────────────────────────
+// initBrowseCards — wires tap-to-select and double-tap-to-open for browse grid cards.
+// Only j and b are wired. runnerboy and nightowl are intentionally skipped.
+// hasProfile: false on those stubs means tapping them would go nowhere.
+// Remove this function and replace with JSON-driven card wiring after architecture is built.
 function initBrowseCards() {
   ['j', 'b'].forEach(function(charKey) {
     var card = document.getElementById('card-' + charKey);
