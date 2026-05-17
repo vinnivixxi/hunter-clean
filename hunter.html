@@ -113,29 +113,9 @@
     </div><!-- /panel-track -->
 
     <!-- BROWSE PANEL -->
+    <!-- Grid cards rendered dynamically by initBrowseCards() from profiles.json -->
     <div class="browse-panel" id="panel-browse">
-      <div class="grid">
-        <div class="grid-card" id="card-j">
-          <img src="profile.images/phalanx.potens.png" alt="Phalanx Potens">
-          <div class="grid-dot online"></div>
-          <div class="grid-info"><div class="grid-name">Phalanx Potens</div><div class="grid-meta">2 mi &middot; 40 &middot; 6'4"</div></div>
-        </div>
-        <div class="grid-card" id="card-b">
-          <img src="profile.images/tarab.jpg" alt="Tarab">
-          <div class="grid-dot online"></div>
-          <div class="grid-info"><div class="grid-name">Tarab</div><div class="grid-meta">2 mi &middot; 20 &middot; 5'6"</div></div>
-        </div>
-        <div class="grid-card" id="card-runnerboy">
-          <img src="profile.images/runnerboy.png" alt="RunnerBoy">
-          <div class="grid-dot offline"></div>
-          <div class="grid-info"><div class="grid-name">RunnerBoy</div><div class="grid-meta">5 mi &middot; 19 &middot; 5'8"</div></div>
-        </div>
-        <div class="grid-card" id="card-nightowl">
-          <img src="profile.images/nightowl.png" alt="Nightowl">
-          <div class="grid-dot offline"></div>
-          <div class="grid-info"><div class="grid-name">Nightowl</div><div class="grid-meta">3 mi &middot; 22 &middot; 5'10"</div></div>
-        </div>
-      </div>
+      <div class="grid" id="browseGrid"></div>
     </div><!-- /panel-browse -->
 
   </div><!-- /screen-browse -->
@@ -312,8 +292,7 @@ var HUNT_Q3_POOL = [
 // ── Character data ────────────────────────────────────────────────────────────
 // j and b are narrative-critical. They live in CHARS permanently across all story contexts.
 // Do not move j or b to JSON. Do not remove them.
-// runnerboy and nightowl are stubs. hasProfile: false is intentional, not a bug.
-// They will be removed from CHARS and HTML when JSON architecture is built this session.
+// Pool profiles live in profiles.json — loaded and rendered dynamically by initBrowseCards().
 var CHARS = {
   j: {
     key: 'j',
@@ -359,37 +338,6 @@ var CHARS = {
       { from: 'them', text: "it's arabic. it's what happens when music moves through you and you can't not move" }
     ]
   },
-  // ── Stubs — set hasProfile: true and fill all fields when profiles are built ─
-  runnerboy: {
-    key: 'runnerboy',
-    name: 'RunnerBoy',
-    subtitle: '5 mi away',
-    avatar: 'profile.images/runnerboy.png',
-    myAvatar: 'profile.images/phalanx.potens.png',
-    realPhotos: ['profile.images/runnerboy.png'],
-    bio: '',
-    stats: { distance: '5 mi', age: '19', height: "5'8\"", role: '' },
-    online: false,
-    lastActive: 'Active recently',
-    canMessage: false,
-    hasProfile: false,
-    messages: []
-  },
-  nightowl: {
-    key: 'nightowl',
-    name: 'Nightowl',
-    subtitle: '3 mi away',
-    avatar: 'profile.images/nightowl.png',
-    myAvatar: 'profile.images/phalanx.potens.png',
-    realPhotos: ['profile.images/nightowl.png'],
-    bio: '',
-    stats: { distance: '3 mi', age: '22', height: "5'10\"", role: '' },
-    online: false,
-    lastActive: 'Active recently',
-    canMessage: false,
-    hasProfile: false,
-    messages: []
-  }
 };
 
 // ── Router ────────────────────────────────────────────────────────────────────
@@ -500,13 +448,14 @@ var Hunter = {
       avDiv.className = 'msg-av-sm';
       var avImg = document.createElement('img');
       avImg.src = m.from === 'them' ? char.avatar : char.myAvatar;
+      avImg.loading = 'lazy';
       avDiv.appendChild(avImg);
       row.appendChild(avDiv);
       if (m.img) {
         var imgWrap = document.createElement('div');
         imgWrap.className = 'bubble-img';
         imgWrap.dataset.img = m.img;
-        imgWrap.innerHTML = '<img src="' + m.img + '" alt="">';
+        imgWrap.innerHTML = '<img src="' + m.img + '" alt="" loading="lazy">';
         row.appendChild(imgWrap);
       } else {
         var b = document.createElement('div');
@@ -525,7 +474,7 @@ var Hunter = {
 // ── Hunt stack ────────────────────────────────────────────────────────────────
 // B surfaces first — narrative priority.
 // Add char keys here as new profiles are built. All keys must exist in CHARS.
-var huntStack = ['b', 'j', 'nightowl', 'runnerboy'];
+var huntStack = ['b', 'j'];
 var huntFront = 0;       // index of current front card
 var huntStackCards = []; // DOM elements, index-parallel to huntStack
 
@@ -610,6 +559,7 @@ function initHuntStack() {
     var img = document.createElement('img');
     img.src = photos[0];
     img.alt = char.name;
+    img.loading = 'lazy';
     card.appendChild(img);
 
     var dot = document.createElement('div');
@@ -1021,24 +971,71 @@ function initMsgBtn(char) {
 }
 
 // ── Browse cards ──────────────────────────────────────────────────────────────
-// initBrowseCards — wires tap-to-select and double-tap-to-open for browse grid cards.
-// Only j and b are wired. runnerboy and nightowl are intentionally skipped.
-// hasProfile: false on those stubs means tapping them would go nowhere.
-// Remove this function and replace with JSON-driven card wiring after architecture is built.
-function initBrowseCards() {
-  ['j', 'b'].forEach(function(charKey) {
-    var card = document.getElementById('card-' + charKey);
-    if (!card) return;
+// initBrowseCards — fetches profiles.json and renders the browse grid dynamically.
+// Initial batch: 6 cards. Next batch loads as user approaches end of scroll.
+// j and b are not in the pool — they live in CHARS and are not rendered in the browse grid.
+var browseProfiles = [];
+var browseOffset = 0;
+var BROWSE_BATCH = 6;
+
+function renderBrowseBatch() {
+  var grid = document.getElementById('browseGrid');
+  var batch = browseProfiles.slice(browseOffset, browseOffset + BROWSE_BATCH);
+  batch.forEach(function(profile) {
+    var card = document.createElement('div');
+    card.className = 'grid-card';
+    card.dataset.key = profile.key;
+
+    var img = document.createElement('img');
+    img.src = profile.avatar;
+    img.alt = profile.name;
+    img.loading = 'lazy';
+    card.appendChild(img);
+
+    var dot = document.createElement('div');
+    dot.className = 'grid-dot ' + (profile.online ? 'online' : 'offline');
+    card.appendChild(dot);
+
+    var info = document.createElement('div');
+    info.className = 'grid-info';
+    info.innerHTML =
+      '<div class="grid-name">' + profile.name + '</div>' +
+      '<div class="grid-meta">' + profile.stats.distance + ' &middot; ' + profile.stats.age + ' &middot; ' + profile.stats.role + '</div>';
+    card.appendChild(info);
+
     card.addEventListener('click', function() {
       if (Hunter.selectedCard === card) {
-        Hunter.goToProfile(charKey);
+        Hunter.goToProfile(profile.key);
       } else {
         if (Hunter.selectedCard) Hunter.selectedCard.classList.remove('selected');
         Hunter.selectedCard = card;
         card.classList.add('selected');
       }
     });
+
+    grid.appendChild(card);
   });
+  browseOffset += batch.length;
+}
+
+function initBrowseCards() {
+  fetch('profiles.json')
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      browseProfiles = data;
+      renderBrowseBatch();
+      var panel = document.getElementById('panel-browse');
+      panel.addEventListener('scroll', function() {
+        if (panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 100) {
+          if (browseOffset < browseProfiles.length) {
+            renderBrowseBatch();
+          }
+        }
+      });
+    })
+    .catch(function(err) {
+      console.error('profiles.json failed to load:', err);
+    });
 }
 
 // ── Back buttons ──────────────────────────────────────────────────────────────
