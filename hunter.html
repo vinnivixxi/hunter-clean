@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Hunter</title>
 <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="hunter.css">
@@ -41,12 +41,6 @@
         <span class="matches-title">HUNTER</span>
       </div>
       <span class="matches-subtitle" id="browseSubtitle">4 in range</span>
-    </div>
-
-    <div class="tabs">
-      <div class="tab active" data-panel="panel-hunt">HUNT</div>
-      <div class="tab" data-panel="panel-track">TRACK</div>
-      <div class="tab" data-panel="panel-browse">BROWSE</div>
     </div>
 
     <!-- HUNT PANEL -->
@@ -118,6 +112,20 @@
       <div class="grid" id="browseGrid"></div>
     </div><!-- /panel-browse -->
 
+    <div class="tabs">
+      <div class="tab active" data-panel="panel-hunt">
+        <i class="fa-solid fa-crosshairs"></i>
+        HUNT
+      </div>
+      <div class="tab" data-panel="panel-track">
+        <i class="fa-solid fa-location-dot"></i>
+        TRACK
+      </div>
+      <div class="tab" data-panel="panel-browse">
+        <i class="fa-solid fa-table-cells"></i>
+        BROWSE
+      </div>
+    </div>
   </div><!-- /screen-browse -->
 
   <!-- PROFILE SCREEN — Session 16 state:
@@ -359,7 +367,7 @@ var Hunter = {
   },
 
   goToProfile: function(charKey) {
-    var char = CHARS[charKey];
+    var char = CHARS[charKey] || browseProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
     Hunter.currentChar = charKey;
     Hunter.renderProfile(char);
@@ -910,7 +918,9 @@ function initCarousel(screenId, char) {
   heroArea.addEventListener('click', function() {
     if (heroMouseDragged) { heroMouseDragged = false; return; }
     var profileScreen = document.getElementById('screen-profile');
+    var phone = document.getElementById('phone');
     profileScreen.classList.toggle('gallery-mode');
+    phone.classList.toggle('immersive');
   });
 
   // Scroll wheel — desktop photo navigation
@@ -1004,13 +1014,7 @@ function renderBrowseBatch() {
     card.appendChild(info);
 
     card.addEventListener('click', function() {
-      if (Hunter.selectedCard === card) {
-        Hunter.goToProfile(profile.key);
-      } else {
-        if (Hunter.selectedCard) Hunter.selectedCard.classList.remove('selected');
-        Hunter.selectedCard = card;
-        card.classList.add('selected');
-      }
+      Hunter.goToProfile(profile.key);
     });
 
     grid.appendChild(card);
