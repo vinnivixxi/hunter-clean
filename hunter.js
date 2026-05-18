@@ -514,12 +514,6 @@ function advanceIntakeStep(currentStep) {
 function initBrowseTabs() {
   var tabs     = document.querySelectorAll('#screen-browse .tab');
   var panels   = document.querySelectorAll('#screen-browse .browse-panel');
-  var subtitle = document.getElementById('browseSubtitle');
-  var subtitleMap = {
-    'panel-hunt':   '4 in range',
-    'panel-browse': '4 nearby',
-    'panel-track':  'select target'
-  };
 
   tabs.forEach(function(tab) {
     tab.addEventListener('click', function() {
@@ -534,9 +528,7 @@ function initBrowseTabs() {
       if (panelId === 'panel-hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
         var intake = document.getElementById('huntIntake');
         intake.style.display = '';
-        intake.style.opacity = '1';
-        intake.style.pointerEvents = '';
-      }
+        intake.style.opacity = '1';      }
     });
   });
 }
