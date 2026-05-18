@@ -1,234 +1,260 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Hunter</title>
-<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="hunter.css">
-<script src="https://kit.fontawesome.com/5822e1492d.js" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Hunter</title>
+  <link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="hunter.css">
+  <script src="https://kit.fontawesome.com/5822e1492d.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<div class="phone" id="phone">
+  <div class="phone" id="phone">
 
-  <div class="loading-screen" id="loadingScreen">
-    <div class="bow-container">
-      <img class="bow-img" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="Bow">
-      <img class="arrow" src="hunter.arrows/arrow.testing.png" alt="Arrow">
-      <div class="bowstring-pull"></div>
-      <div class="shockwave"></div>
-      <div class="shockwave s2"></div>
-      <div class="shockwave s3"></div>
-    </div>
-    <div class="loading-title">HUNTER</div>
-    <div class="loading-sub">Find Your Prey</div>
-    <div class="loading-dots"><span></span><span></span><span></span></div>
-  </div>
-
-  <div class="screen" id="screen-browse">
-    <div class="status-bar">
-      <span class="status-time"></span>
-      <div class="status-right">
-        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="8" width="2.5" height="4" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="5.5" width="2.5" height="6.5" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="7" y="3" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="12" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="rgba(255,255,255,0.5)"/><path d="M4.5 8C5.3 7.2 6.3 6.7 7.5 6.7c1.2 0 2.2.5 3 1.3" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2 5.2c1.5-1.4 3.4-2.2 5.5-2.2s4 .8 5.5 2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M0 2.5C2 .8 4.6 0 7.5 0S13 .8 15 2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
-        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
+    <div class="loading-screen" id="loadingScreen">
+      <div class="bow-container">
+        <img class="bow-img" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="Bow">
+        <img class="arrow" src="hunter.arrows/arrow.testing.png" alt="Arrow">
+        <div class="bowstring-pull"></div>
+        <div class="shockwave"></div>
+        <div class="shockwave s2"></div>
+        <div class="shockwave s3"></div>
       </div>
+      <div class="loading-title">HUNTER</div>
+      <div class="loading-sub">Find Your Prey</div>
+      <div class="loading-dots"><span></span><span></span><span></span></div>
     </div>
 
-    <div class="matches-header">
-      <div class="matches-title-group">
-        <img class="matches-bow" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
-        <span class="matches-title">HUNTER</span>
+    <div class="screen" id="screen-browse">
+      <div class="status-bar">
+        <span class="status-time"></span>
+        <div class="status-right">
+
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+
+        </div>
       </div>
-    </div>
 
-    <!-- HUNT PANEL -->
-    <div class="browse-panel panel-active" id="panel-hunt">
-      <div class="hunt-intake" id="huntIntake">
-        <div class="intake-logo">
-          <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
-          <span>HUNTER</span>
+      <div class="matches-header">
+        <div class="matches-title-group">
+          <img class="matches-bow" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
+          <span class="matches-title">HUNTER</span>
         </div>
-        <div class="intake-progress">
-          <div class="intake-dot active"></div>
-          <div class="intake-dot"></div>
-          <div class="intake-dot"></div>
-        </div>
-        <div class="intake-steps-container">
-          <div class="intake-step active" data-step="0">
-            <div class="intake-question">What are you hunting?</div>
-            <div class="intake-options">
-              <div class="intake-option" data-val="top">Top</div>
-              <div class="intake-option" data-val="bottom">Bottom</div>
-              <div class="intake-option" data-val="vers">Vers</div>
-              <div class="intake-option" data-val="side">Side</div>
-              <div class="intake-option" data-val="other">Other</div>
+      </div>
+
+      <!-- HUNT PANEL -->
+      <div class="browse-panel panel-active" id="panel-hunt">
+        <div class="hunt-intake" id="huntIntake">
+          <div class="intake-logo">
+            <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
+            <span>HUNTER</span>
+          </div>
+          <div class="intake-progress">
+            <div class="intake-dot active"></div>
+            <div class="intake-dot"></div>
+            <div class="intake-dot"></div>
+          </div>
+          <div class="intake-steps-container">
+            <div class="intake-step active" data-step="0">
+              <div class="intake-question">What are you hunting?</div>
+              <div class="intake-options">
+                <div class="intake-option" data-val="top">Top</div>
+                <div class="intake-option" data-val="bottom">Bottom</div>
+                <div class="intake-option" data-val="vers">Vers</div>
+                <div class="intake-option" data-val="side">Side</div>
+                <div class="intake-option" data-val="other">Other</div>
+              </div>
+            </div>
+            <div class="intake-step" data-step="1">
+              <div class="intake-question">What's the vibe?</div>
+              <div class="intake-options">
+                <div class="intake-option" data-val="kink">Kink</div>
+                <div class="intake-option" data-val="whatevers">Whatevers</div>
+                <div class="intake-option" data-val="anon">Anon</div>
+                <div class="intake-option" data-val="romance">Romance</div>
+                <div class="intake-option" data-val="collab">Collab</div>
+              </div>
+            </div>
+            <!-- Q3: populated by initHuntIntake() from HUNT_Q3_POOL. Do not hardcode. -->
+            <div class="intake-step" data-step="2">
+              <div class="intake-question" id="intakeQ3Text"></div>
+              <div class="intake-options" id="intakeQ3Options"></div>
             </div>
           </div>
-          <div class="intake-step" data-step="1">
-            <div class="intake-question">What's the vibe?</div>
-            <div class="intake-options">
-              <div class="intake-option" data-val="kink">Kink</div>
-              <div class="intake-option" data-val="whatevers">Whatevers</div>
-              <div class="intake-option" data-val="anon">Anon</div>
-              <div class="intake-option" data-val="romance">Romance</div>
-              <div class="intake-option" data-val="collab">Collab</div>
-            </div>
-          </div>
-          <!-- Q3: populated by initHuntIntake() from HUNT_Q3_POOL. Do not hardcode. -->
-          <div class="intake-step" data-step="2">
-            <div class="intake-question" id="intakeQ3Text"></div>
-            <div class="intake-options" id="intakeQ3Options"></div>
-          </div>
+        </div><!-- /hunt-intake -->
+
+        <div class="hunt-stack-container" id="huntStackContainer"></div>
+        <div class="stack-hints" id="stackHints">
+          <span>swipe &uarr;&darr; to pass</span>
+          <span class="stack-hint-sep">&middot;</span>
+          <span>tap to mark &middot; double-tap to open</span>
         </div>
-      </div><!-- /hunt-intake -->
+      </div><!-- /panel-hunt -->
 
-      <div class="hunt-stack-container" id="huntStackContainer"></div>
-      <div class="stack-hints" id="stackHints">
-        <span>swipe &uarr;&darr; to pass</span>
-        <span class="stack-hint-sep">&middot;</span>
-        <span>tap to mark &middot; double-tap to open</span>
-      </div>
-    </div><!-- /panel-hunt -->
+      <!-- TRACK PANEL -->
+      <div class="browse-panel" id="panel-track">
+        <div class="track-placeholder">
+          <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
+            <circle cx="26" cy="26" r="20" stroke="rgba(59,107,74,0.25)" stroke-width="1.5" />
+            <circle cx="26" cy="26" r="11" stroke="rgba(59,107,74,0.4)" stroke-width="1.5" />
+            <circle cx="26" cy="26" r="3.5" fill="#3B6B4A" />
+            <path d="M26 6V13M26 39V46M6 26H13M39 26H46" stroke="rgba(59,107,74,0.25)" stroke-width="1.5"
+              stroke-linecap="round" />
+          </svg>
+          <div class="track-placeholder-label">Tracking mode incoming.</div>
+          <div class="track-placeholder-sub">Select a target to begin tracking.</div>
+        </div>
+      </div><!-- /panel-track -->
 
-    <!-- TRACK PANEL -->
-    <div class="browse-panel" id="panel-track">
-      <div class="track-placeholder">
-        <svg width="52" height="52" viewBox="0 0 52 52" fill="none">
-          <circle cx="26" cy="26" r="20" stroke="rgba(59,107,74,0.25)" stroke-width="1.5"/>
-          <circle cx="26" cy="26" r="11" stroke="rgba(59,107,74,0.4)" stroke-width="1.5"/>
-          <circle cx="26" cy="26" r="3.5" fill="#3B6B4A"/>
-          <path d="M26 6V13M26 39V46M6 26H13M39 26H46" stroke="rgba(59,107,74,0.25)" stroke-width="1.5" stroke-linecap="round"/>
-        </svg>
-        <div class="track-placeholder-label">Tracking mode incoming.</div>
-        <div class="track-placeholder-sub">Select a target to begin tracking.</div>
-      </div>
-    </div><!-- /panel-track -->
+      <!-- BROWSE PANEL -->
+      <!-- Grid cards rendered dynamically by initBrowseCards() from profiles.json -->
+      <div class="browse-panel" id="panel-browse">
+        <div class="grid" id="browseGrid"></div>
+      </div><!-- /panel-browse -->
 
-    <!-- BROWSE PANEL -->
-    <!-- Grid cards rendered dynamically by initBrowseCards() from profiles.json -->
-    <div class="browse-panel" id="panel-browse">
-      <div class="grid" id="browseGrid"></div>
-    </div><!-- /panel-browse -->
+      <div class="tabs">
+        <div class="tab active" data-panel="panel-hunt">
+          <i class="fa-solid fa-crosshairs"></i>
+          HUNT
+        </div>
+        <div class="tab" data-panel="panel-track">
+          <i class="fa-solid fa-location-dot"></i>
+          TRACK
+        </div>
+        <div class="tab" data-panel="panel-browse">
+          <i class="fa-solid fa-table-cells"></i>
+          BROWSE
+        </div>
+      </div>
+    </div><!-- /screen-browse -->
 
-    <div class="tabs">
-      <div class="tab active" data-panel="panel-hunt">
-        <i class="fa-solid fa-crosshairs"></i>
-        HUNT
-      </div>
-      <div class="tab" data-panel="panel-track">
-        <i class="fa-solid fa-location-dot"></i>
-        TRACK
-      </div>
-      <div class="tab" data-panel="panel-browse">
-        <i class="fa-solid fa-table-cells"></i>
-        BROWSE
-      </div>
-    </div>
-  </div><!-- /screen-browse -->
-
-  <!-- PROFILE SCREEN — Session 16 state:
+    <!-- PROFILE SCREEN — Session 16 state:
        - drag-handle: top center pill, bounces once via localStorage key hunter.profile.firstopen
        - photo-dots: vertical column, right rail (left rail when .phone.lefty), one dot per public photo
        - lock-card: full-hero overlay, pointer-events:none, visible as final swipe position when naughtyPhotos has content
        - profile-bottom: three rows — Row 1 (username / online dot / message pill), Row 2 (FA icon stat circles), Row 3 (about panel tap-to-expand)
        - No carousel rails, no filmstrip. Gallery mode toggled by hero tap.
   -->
-  <div class="screen" id="screen-profile">
+    <div class="screen" id="screen-profile">
 
-    <!-- Drag handle — pill at top center.
+      <!-- Drag handle — pill at top center.
          JS adds .bounce class once per device using localStorage key hunter.profile.firstopen.
          Sits above header-band in z-order so it's always visible on open. -->
-    <div class="drag-handle" id="dragHandle"></div>
+      <div class="drag-handle" id="dragHandle"></div>
 
-    <div class="header-band"></div>
-    <div class="status-bar">
-      <span class="status-time"></span>
-      <div class="status-right">
-        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="8" width="2.5" height="4" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="5.5" width="2.5" height="6.5" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="7" y="3" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="12" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="rgba(255,255,255,0.5)"/><path d="M4.5 8C5.3 7.2 6.3 6.7 7.5 6.7c1.2 0 2.2.5 3 1.3" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2 5.2c1.5-1.4 3.4-2.2 5.5-2.2s4 .8 5.5 2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M0 2.5C2 .8 4.6 0 7.5 0S13 .8 15 2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
-        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
-      </div>
-    </div>
+      <div class="header-band"></div>
+      <div class="status-bar">
+        <span class="status-time"></span>
+        <div class="status-right">
 
-    <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
 
-    <div class="photo-dots" id="photoDots"></div>
-
-    <div class="lock-card" id="lockCard">
-      <i class="fa-solid fa-lock"></i>
-      <p>Unlock exclusive content — coming soon.</p>
-    </div>
-
-    <div class="profile-bottom">
-      <div class="profile-bottom-row1">
-        <div class="profile-name-group">
-          <div class="username" id="profileName"></div>
-          <div class="online-dot" id="profileOnlineDot"></div>
-          <span class="last-active-text" id="profileLastActive"></span>
-        </div>
-        <div class="profile-msg-btn disabled" id="profileMsgBtn">Message</div>
-      </div>
-      <div class="profile-bottom-row2">
-        <div class="stats-row" style="position:relative;bottom:auto;left:auto;width:100%;justify-content:space-between;">
-          <div class="stat-item"><div class="stat-circle"><i class="fa-solid fa-location-dot"></i></div><span class="stat-val" id="statDistance"></span></div>
-          <div class="stat-item"><div class="stat-circle"><i class="fa-solid fa-cake-candles"></i></div><span class="stat-val" id="statAge"></span></div>
-          <div class="stat-item"><div class="stat-circle"><i class="fa-solid fa-ruler-vertical"></i></div><span class="stat-val" id="statHeight"></span></div>
-          <div class="stat-item"><div class="stat-circle"><i id="statRoleIcon"></i></div><span class="stat-val" id="statRole"></span></div>
-          <div class="stat-item" id="statVibeItem"><div class="stat-circle stat-vibe"><i id="statVibeIcon"></i></div><span class="stat-val" id="statVibe"></span></div>
         </div>
       </div>
-      <div class="profile-bottom-row3">
-        <div class="about-panel" id="aboutPanel">
-          <div class="about-label">About</div>
-          <div class="about-text" id="profileBio"></div>
+
+      <div class="hero-full" id="heroArea"><img id="heroImg" src="" alt="Profile"></div>
+
+      <div class="photo-dots" id="photoDots"></div>
+
+      <div class="lock-card" id="lockCard">
+        <i class="fa-solid fa-lock"></i>
+        <p>Unlock exclusive content — coming soon.</p>
+      </div>
+
+      <div class="profile-bottom">
+        <div class="profile-bottom-row1">
+          <div class="profile-name-group">
+            <div class="username" id="profileName"></div>
+            <div class="online-dot" id="profileOnlineDot"></div>
+            <span class="last-active-text" id="profileLastActive"></span>
+          </div>
+          <div class="profile-msg-btn disabled" id="profileMsgBtn">Message</div>
+        </div>
+        <div class="profile-bottom-row2">
+          <div class="stats-row"
+            style="position:relative;bottom:auto;left:auto;width:100%;justify-content:space-between;">
+            <div class="stat-item">
+              <div class="stat-circle"><i class="fa-solid fa-location-dot"></i></div><span class="stat-val"
+                id="statDistance"></span>
+            </div>
+            <div class="stat-item">
+              <div class="stat-circle"><i class="fa-solid fa-cake-candles"></i></div><span class="stat-val"
+                id="statAge"></span>
+            </div>
+            <div class="stat-item">
+              <div class="stat-circle"><i class="fa-solid fa-ruler-vertical"></i></div><span class="stat-val"
+                id="statHeight"></span>
+            </div>
+            <div class="stat-item">
+              <div class="stat-circle"><i id="statRoleIcon"></i></div><span class="stat-val" id="statRole"></span>
+            </div>
+            <div class="stat-item" id="statVibeItem">
+              <div class="stat-circle stat-vibe"><i id="statVibeIcon"></i></div><span class="stat-val"
+                id="statVibe"></span>
+            </div>
+          </div>
+        </div>
+        <div class="profile-bottom-row3">
+          <div class="about-panel" id="aboutPanel">
+            <div class="about-label">About</div>
+            <div class="about-text" id="profileBio"></div>
+          </div>
         </div>
       </div>
-    </div>
 
-  </div><!-- /screen-profile -->
+    </div><!-- /screen-profile -->
 
-  <!-- CHAT SCREEN — unchanged -->
-  <div class="screen" id="screen-chat">
-    <div class="status-bar">
-      <span class="status-time"></span>
-      <div class="status-right">
-        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="0" y="8" width="2.5" height="4" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="3.5" y="5.5" width="2.5" height="6.5" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="7" y="3" width="2.5" height="9" rx="0.5" fill="rgba(255,255,255,0.5)"/><rect x="10.5" y="0" width="2.5" height="12" rx="0.5" fill="rgba(255,255,255,0.5)"/></svg>
-        <svg width="15" height="12" viewBox="0 0 15 12" fill="none"><path d="M7.5 11.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z" fill="rgba(255,255,255,0.5)"/><path d="M4.5 8C5.3 7.2 6.3 6.7 7.5 6.7c1.2 0 2.2.5 3 1.3" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M2 5.2c1.5-1.4 3.4-2.2 5.5-2.2s4 .8 5.5 2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/><path d="M0 2.5C2 .8 4.6 0 7.5 0S13 .8 15 2.5" stroke="rgba(255,255,255,0.5)" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg>
-        <svg width="27" height="12" viewBox="0 0 27 12" fill="none"><rect x="0" y="1" width="22" height="10" rx="2" stroke="rgba(255,255,255,0.35)" stroke-width="1"/><rect x="1.5" y="2.5" width="15" height="7" rx="1" fill="#3B6B4A"/><path d="M23 4.5V7.5C23.8 7.2 24 6.5 24 6C24 5.5 23.8 4.8 23 4.5Z" fill="rgba(255,255,255,0.35)"/></svg>
+    <!-- CHAT SCREEN — unchanged -->
+    <div class="screen" id="screen-chat">
+      <div class="status-bar">
+        <span class="status-time"></span>
+        <div class="status-right">
+          <i class="fa-solid fa-signal"></i>
+          <i class="fa-solid fa-wifi"></i>
+          <i class="fa-solid fa-battery-full"></i>
+        </div>
       </div>
-    </div>
 
-    <div class="chat-header">
-      <div class="back-btn" id="chatBackBtn">&#8249;</div>
-      <div class="chat-av" id="chatAvatarLink" style="cursor:pointer;">
-        <img id="chatAvatar" src="" alt="">
+      <div class="chat-header">
+        <div class="back-btn" id="chatBackBtn">&#8249;</div>
+        <div class="chat-av" id="chatAvatarLink" style="cursor:pointer;">
+          <img id="chatAvatar" src="" alt="">
+        </div>
+        <div class="chat-info">
+          <div class="chat-name" id="chatName">Character</div>
+          <div class="chat-status" id="chatSubtitle">Online · 2 mi away</div>
+        </div>
+        <img class="bow-logo" src="hunter.arrows/hunter.testing.logo.png" alt=""
+          style="width:20px;height:20px;object-fit:contain;opacity:0.7;">
       </div>
-      <div class="chat-info">
-        <div class="chat-name" id="chatName">Character</div>
-        <div class="chat-status" id="chatSubtitle">Online · 2 mi away</div>
+
+      <div class="messages" id="messageList">
+        <div class="spacer"></div>
       </div>
-      <img class="bow-logo" src="hunter.arrows/hunter.testing.logo.png" alt="" style="width:20px;height:20px;object-fit:contain;opacity:0.7;">
-    </div>
 
-    <div class="messages" id="messageList">
-      <div class="spacer"></div>
-    </div>
+      <div class="input-bar">
+        <input class="input-field" type="text" placeholder="Message..." autocomplete="off">
+        <button class="send-btn">
+          <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="send">
+        </button>
+      </div>
 
-    <div class="input-bar">
-      <input class="input-field" type="text" placeholder="Message..." autocomplete="off">
-      <button class="send-btn">
-        <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="send">
-      </button>
-    </div>
+      <div class="lightbox" id="lightbox">
+        <span class="lightbox-close">&#x2715;</span>
+        <img id="lightboxImg" src="" alt="">
+      </div>
+    </div><!-- /screen-chat -->
 
-    <div class="lightbox" id="lightbox">
-      <span class="lightbox-close">&#x2715;</span>
-      <img id="lightboxImg" src="" alt="">
-    </div>
-  </div><!-- /screen-chat -->
-
-</div><!-- /phone -->
-<script src="hunter.js" defer></script>
+  </div><!-- /phone -->
+  <script src="hunter.js" defer></script>
 </body>
+
 </html>
