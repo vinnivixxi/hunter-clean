@@ -63,57 +63,6 @@ var HUNT_Q3_POOL = [
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
-// ── Character data ────────────────────────────────────────────────────────────
-// j and b are narrative-critical. They live in CHARS permanently across all story contexts.
-// Do not move j or b to JSON. Do not remove them.
-// Pool profiles live in profiles.json — loaded and rendered dynamically by initBrowseCards().
-var CHARS = {
-  j: {
-    key: 'j',
-    name: 'Phalanx Potens',
-    subtitle: 'Online · 2 mi away',
-    avatar: 'profile.images/phalanx.potens.png',
-    myAvatar: 'profile.images/phalanx.potens.png',
-    realPhotos: [],
-    naughtyPhotos: [],
-    bio: "Looking for a good boy, that knows how to take orders and dick. If you're a really good boy you might earn the privilege of coming over. Open to breaking in the right boy.",
-    stats: { distance: '2 mi', age: '40', height: "6'5\"", role: 'Top', vibe: 'whatevers' },
-    online: true,
-    lastActive: 'Online now',
-    canMessage: false,
-    hasProfile: true,
-    messages: [] 
-  },
-  b: {
-    key: 'b',
-    name: 'Tarab',
-    subtitle: 'Online · 2 mi away',
-    avatar: 'profile.images/tarab.jpg',
-    myAvatar: 'profile.images/phalanx.potens.png',
-    realPhotos: [
-  'profile.images/tarab.jpg',
-  'profile.images/tarab_frenchie.png',
-  'profile.images/tarab_couch.png',
-  'profile.images/tarab_coffee.png',
-  'profile.images/tarab_walking.png',
-  'profile.images/tarab_jog.png'
-],
-    naughtyPhotos: ['profile.images/placeholder.bear.png'], // placeholder.bear.png is intentional. Lock card must remain visible for B. Do not remove until a real naughty photo replaces it.
-    bio: "Down to try new things with someone who knows what they're doing.",
-    stats: { distance: '4 mi', age: '20', height: "5'10\"", role: 'Bottom', vibe: 'whatevers' },
-        online: true,
-    lastActive: 'Online now',
-    canMessage: true,
-    hasProfile: true,
-    messages: [
-      { time: 'Today 9:47 PM' },
-      { from: 'them', text: 'hey' },
-      { from: 'me', text: 'hey' },
-      { from: 'them', text: "it's arabic. it's what happens when music moves through you and you can't not move" }
-    ]
-  },
-};
-
 // ── Router ────────────────────────────────────────────────────────────────────
 var Hunter = {
   currentChar: null,
@@ -133,7 +82,7 @@ var Hunter = {
   },
 
   goToProfile: function(charKey) {
-    var char = CHARS[charKey] || browseProfiles.find(function(p) { return p.key === charKey; });
+    var char = browseProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
     Hunter.currentChar = charKey;
     Hunter.renderProfile(char);
@@ -192,7 +141,7 @@ var Hunter = {
   },
 
   goToChat: function(charKey) {
-    var char = CHARS[charKey];
+    var char = browseProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
     Hunter.currentChar = charKey;
     Hunter.renderChat(char);
@@ -201,7 +150,7 @@ var Hunter = {
 
   renderChat: function(char) {
     document.getElementById('chatName').textContent = char.name;
-    document.getElementById('chatSubtitle').textContent = char.subtitle;
+    document.getElementById('chatSubtitle').textContent = char.lastActive + ' · ' + char.stats.distance;
     document.getElementById('chatAvatar').src = char.avatar;
     document.getElementById('chatAvatarLink').dataset.char = char.key;
 
@@ -247,7 +196,7 @@ var Hunter = {
 
 // ── Hunt stack ────────────────────────────────────────────────────────────────
 // B surfaces first — narrative priority.
-// Add char keys here as new profiles are built. All keys must exist in CHARS.
+// Add char keys here as new profiles are built. All keys must exist in hunter_profiles.json.
 var huntStack = ['b', 'j'];
 var huntFront = 0;       // index of current front card
 var huntStackCards = []; // DOM elements, index-parallel to huntStack
@@ -322,7 +271,7 @@ function initHuntStack() {
   huntStackCards = [];
 
   huntStack.forEach(function(charKey) {
-    var char = CHARS[charKey];
+    var char = browseProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
 
     var card = document.createElement('div');
@@ -393,7 +342,7 @@ function initHuntStack() {
       var now = Date.now();
       if (now - lastTapTime < DBL_TAP_MS && lastTapTime !== 0) {
         var charKey = huntStack[huntFront];
-        var char = CHARS[charKey];
+        var char = browseProfiles.find(function(p) { return p.key === charKey; });
         if (char && char.hasProfile) {
           Hunter.goToProfile(charKey);
         } else {
@@ -428,7 +377,7 @@ var mouseStartY = 0, mouseIsDown = false, mouseDragged = false;
   });
   container.addEventListener('dblclick', function(e) {
     var charKey = huntStack[huntFront];
-    var char = CHARS[charKey];
+    var char = browseProfiles.find(function(p) { return p.key === charKey; });
     if (char && char.hasProfile) {
       Hunter.goToProfile(charKey);
     } else {
@@ -523,7 +472,6 @@ function initBrowseTabs() {
       tab.classList.add('active');
       var panel = document.getElementById(panelId);
       if (panel) panel.classList.add('panel-active');
-      if (subtitle && subtitleMap[panelId]) subtitle.textContent = subtitleMap[panelId];
 
       if (panelId === 'panel-hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
         var intake = document.getElementById('huntIntake');
@@ -742,7 +690,7 @@ function initMsgBtn(char) {
 // ── Browse cards ──────────────────────────────────────────────────────────────
 // initBrowseCards — fetches profiles.json and renders the browse grid dynamically.
 // Initial batch: 6 cards. Next batch loads as user approaches end of scroll.
-// j and b are not in the pool — they live in CHARS and are not rendered in the browse grid.
+// All profiles including narrative characters live in hunter_profiles.json.
 var browseProfiles = [];
 var browseOffset = 0;
 var BROWSE_BATCH = 6;
