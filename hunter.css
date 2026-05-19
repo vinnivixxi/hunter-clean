@@ -1470,8 +1470,8 @@ min-height: 0;
 
 .stack-card {
   position: absolute;
-  width: 260px;
-  height: 58dvh;
+  width: 350px;
+  height: 72dvh;
   border-radius: 20px;
   overflow: hidden;
   border: 1px solid rgba(59, 107, 74, 0.60);
@@ -1480,7 +1480,7 @@ min-height: 0;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   left: 50%;
-  margin-left: -130px;
+  margin-left: -175px;
 }
 
 @media (min-width: 769px) {

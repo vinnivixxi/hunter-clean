@@ -197,7 +197,7 @@ var Hunter = {
 // ── Hunt stack ────────────────────────────────────────────────────────────────
 // B surfaces first — narrative priority.
 // Add char keys here as new profiles are built. All keys must exist in hunter_profiles.json.
-var huntStack = ['b', 'j'];
+var huntStack = [];
 var huntFront = 0;       // index of current front card
 var huntStackCards = []; // DOM elements, index-parallel to huntStack
 
@@ -263,6 +263,27 @@ function showInterestPulse() {
   void card.offsetWidth;
   card.classList.add('stack-interest');
   setTimeout(function() { card.classList.remove('stack-interest'); }, 620);
+}
+
+function buildHuntStack() {
+  var vibeAnswer = huntIntakeAnswers.q2 || localStorage.getItem('hunter.hunt.vibe') || null;
+  var narrative = ['j', 'b'];
+  var pool = browseProfiles.filter(function(p) {
+    return narrative.indexOf(p.key) === -1;
+  });
+  var matched = vibeAnswer
+    ? pool.filter(function(p) { return p.stats.vibe === vibeAnswer; })
+    : [];
+  if (matched.length < 3) {
+    matched = pool;
+  }
+  var fills = shuffled(matched).slice(0, 3);
+  var narrativeProfiles = browseProfiles.filter(function(p) {
+    return narrative.indexOf(p.key) !== -1;
+  });
+  huntStack = shuffled(narrativeProfiles.concat(fills)).map(function(p) { return p.key; });
+  huntFront = 0;
+  initHuntStack();
 }
 
 function initHuntStack() {
@@ -427,6 +448,7 @@ function initHuntIntake() {
         });
         opt.classList.add('selected');
         huntIntakeAnswers['q' + (stepIdx + 1)] = opt.dataset.val;
+        if (stepIdx === 1) localStorage.setItem('hunter.hunt.vibe', opt.dataset.val);
         step.dataset.answered = 'true';
         setTimeout(function() { advanceIntakeStep(stepIdx); }, 380);
       });
@@ -455,7 +477,8 @@ function advanceIntakeStep(currentStep) {
       intake.style.transition = 'opacity 0.5s ease';
       intake.style.opacity = '0';
       setTimeout(function() { intake.style.display = 'none'; }, 540);
-    }
+    buildHuntStack();
+  }
   }, 260);
 }
 
@@ -814,7 +837,11 @@ document.addEventListener('DOMContentLoaded', function() {
   initBackButtons();
   initChatAvatarTap();
   initBrowseTabs();
+  if (localStorage.getItem('hunter.hunt.intake') === 'done') {
+  buildHuntStack();
+} else {
   initHuntStack();
+}
   initHuntIntake();
 
   document.getElementById('lightbox').addEventListener('click', function() {
