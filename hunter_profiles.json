@@ -1,5 +1,74 @@
 [
   {
+    "key": "j",
+    "name": "Phalanx Potens",
+    "narrative": true,
+    "avatar": "profile.images/phalanx.potens.png",
+    "myAvatar": "profile.images/phalanx.potens.png",
+    "realPhotos": [],
+    "naughtyPhotos": [],
+    "bio": "Looking for a good boy, that knows how to take orders and dick. If you're a really good boy you might earn the privilege of coming over. Open to breaking in the right boy.",
+    "stats": {
+      "distance": "2 mi",
+      "age": "40",
+      "height": "6'5\"",
+      "role": "Top",
+      "vibe": "whatevers"
+    },
+    "online": true,
+    "lastActive": "Online now",
+    "canMessage": false,
+    "hasProfile": true,
+    "messages": []
+  },
+  {
+    "key": "b",
+    "name": "Tarab",
+    "narrative": true,
+    "avatar": "profile.images/tarab.jpg",
+    "myAvatar": "profile.images/phalanx.potens.png",
+    "realPhotos": [
+      "profile.images/tarab.jpg",
+      "profile.images/tarab_frenchie.png",
+      "profile.images/tarab_couch.png",
+      "profile.images/tarab_coffee.png",
+      "profile.images/tarab_walking.png",
+      "profile.images/tarab_jog.png"
+    ],
+    "naughtyPhotos": [
+      "profile.images/placeholder.bear.png"
+    ],
+    "bio": "Down to try new things with someone who knows what they're doing.",
+    "stats": {
+      "distance": "4 mi",
+      "age": "20",
+      "height": "5'10\"",
+      "role": "Bottom",
+      "vibe": "whatevers"
+    },
+    "online": true,
+    "lastActive": "Online now",
+    "canMessage": true,
+    "hasProfile": true,
+    "messages": [
+      {
+        "time": "Today 9:47 PM"
+      },
+      {
+        "from": "them",
+        "text": "hey"
+      },
+      {
+        "from": "me",
+        "text": "hey"
+      },
+      {
+        "from": "them",
+        "text": "it's arabic. it's what happens when music moves through you and you can't not move"
+      }
+    ]
+  },
+  {
     "key": "beto",
     "name": "Beto",
     "avatar": "profile.images/beto/real/beto_0.png",
@@ -22,11 +91,17 @@
       "role": "Top",
       "vibe": "kink"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "cowboy",
@@ -48,11 +123,17 @@
       "role": "Top",
       "vibe": "whatevers"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active 2 hours ago",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "ghost",
@@ -76,11 +157,17 @@
       "role": "Top",
       "vibe": "anon"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "goldie",
@@ -101,11 +188,17 @@
       "role": "Vers",
       "vibe": "whatevers"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "kpop",
@@ -127,11 +220,17 @@
       "role": "Vers",
       "vibe": "collab"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active recently",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "venice",
@@ -156,11 +255,17 @@
       "role": "Vers",
       "vibe": "romance"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "futballer",
@@ -180,11 +285,17 @@
       "role": "Bottom",
       "vibe": "whatevers"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active 4 hours ago",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "xochipilli",
@@ -204,11 +315,17 @@
       "role": "Bottom",
       "vibe": "kink"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "reader",
@@ -227,11 +344,17 @@
       "role": "Bottom",
       "vibe": "romance"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active recently",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "trent",
@@ -250,11 +373,17 @@
       "role": "Side",
       "vibe": "anon"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "ruben",
@@ -272,11 +401,17 @@
       "role": "Side",
       "vibe": "whatevers"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active 6 hours ago",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "dlite",
@@ -294,11 +429,17 @@
       "role": "Side",
       "vibe": "collab"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active recently",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "vo",
@@ -321,11 +462,17 @@
       "role": "Vers",
       "vibe": "whatevers"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": true,
     "lastActive": "Online now",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   },
   {
     "key": "nightowl",
@@ -343,10 +490,16 @@
       "role": "Side",
       "vibe": "anon"
     },
-    "location": { "lat": null, "lng": null },
+    "location": {
+      "lat": null,
+      "lng": null
+    },
     "online": false,
     "lastActive": "Active recently",
     "canMessage": false,
-    "hasProfile": true
+    "hasProfile": true,
+    "narrative": false,
+    "myAvatar": "",
+    "messages": []
   }
 ]

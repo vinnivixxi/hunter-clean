@@ -528,7 +528,8 @@ function initBrowseTabs() {
       if (panelId === 'panel-hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
         var intake = document.getElementById('huntIntake');
         intake.style.display = '';
-        intake.style.opacity = '1';      }
+        intake.style.opacity = '1';
+      }
     });
   });
 }
