@@ -82,7 +82,7 @@ var Hunter = {
   },
 
   goToProfile: function(charKey) {
-    var char = browseProfiles.find(function(p) { return p.key === charKey; });
+    var char = reconProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
     Hunter.currentChar = charKey;
     Hunter.renderProfile(char);
@@ -141,7 +141,7 @@ var Hunter = {
   },
 
   goToChat: function(charKey) {
-    var char = browseProfiles.find(function(p) { return p.key === charKey; });
+    var char = reconProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
     Hunter.currentChar = charKey;
     Hunter.renderChat(char);
@@ -194,110 +194,63 @@ var Hunter = {
   }
 };
 
-// ── Hunt stack ────────────────────────────────────────────────────────────────
-// B surfaces first — narrative priority.
-// Add char keys here as new profiles are built. All keys must exist in hunter_profiles.json.
-var huntStack = [];
-var huntFront = 0;       // index of current front card
-var huntStackCards = []; // DOM elements, index-parallel to huntStack
-
-// Position configs, index 0 = front card.
-// Tune y/rot/scale/opacity here to adjust the look.
-var STACK_POSITIONS = [
-  { x: 0,  y: 0,  rot: 0, scale: 1,    opacity: 1,    z: 10, events: true  },
-  { x: 10, y: 20, rot: 0, scale: 0.97, opacity: 0.80, z: 9,  events: false },
-  { x: 20, y: 36, rot: 0, scale: 0.94, opacity: 0.60, z: 8,  events: false },
-  { x: 30, y: 50, rot: 0, scale: 0.91, opacity: 0.42, z: 7,  events: false }
-];
-
-function applyStackPositions() {
-  var n = huntStack.length;
-  huntStackCards.forEach(function(card, i) {
-    var relPos = (i - huntFront + n) % n;
-    var p = STACK_POSITIONS[relPos];
-    if (!p) {
-      card.style.opacity = '0';
-      card.style.zIndex = '1';
-      card.style.transform = 'translateY(36px) scale(0.91)';
-      card.style.pointerEvents = 'none';
-      return;
-    }
-    card.style.transform = 'translateX(' + p.x + 'px) translateY(' + p.y + 'px) rotate(' + p.rot + 'deg) scale(' + p.scale + ')';
-    card.style.opacity = String(p.opacity);
-    card.style.zIndex = String(p.z);
-    card.style.pointerEvents = p.events ? 'auto' : 'none';
-  });
-}
-
-function dismissFront(direction) {
-  var n = huntStack.length;
-  var card = huntStackCards[huntFront];
-  if (!card) return;
-  card.style.pointerEvents = 'none';
-
-  var offY = direction === 'up' ? -700 : 700;
-  var offRot = direction === 'up' ? -14 : 14;
-  card.style.transition = 'transform 0.3s ease-in, opacity 0.26s ease-in';
-  card.style.transform = 'translateY(' + offY + 'px) rotate(' + offRot + 'deg) scale(0.88)';
-  card.style.opacity = '0';
-
-  setTimeout(function() {
-    huntFront = (huntFront + 1) % n;
-    card.style.transition = 'none';
-    card.style.transform = 'translateY(36px) scale(0.91)';
-    card.style.opacity = '0';
-    card.style.zIndex = '1';
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        huntStackCards.forEach(function(c) { c.style.transition = ''; });
-        applyStackPositions();
-      });
-    });
-  }, 330);
-}
-
-function showInterestPulse() {
-  var card = huntStackCards[huntFront];
-  if (!card) return;
-  card.classList.remove('stack-interest');
-  void card.offsetWidth;
-  card.classList.add('stack-interest');
-  setTimeout(function() { card.classList.remove('stack-interest'); }, 620);
-}
+// ── Hunt cards ────────────────────────────────────────────────────────────────
+// 5 full-screen vertical-scroll cards, vibe-matched from intake.
+// No narrative priority — j and b surface only if vibe matches.
+// Profiles without real photos get a random placeholder from PLACEHOLDER_POOL.
+// Dot indicators on dominant hand rail show current card position.
+// Tap card to open full profile.
+var huntCards = [];
+var huntCurrentIdx = 0;
+var HUNT_COUNT = 5;
 
 function buildHuntStack() {
   var vibeAnswer = huntIntakeAnswers.q2 || localStorage.getItem('hunter.hunt.vibe') || null;
-  var narrative = ['j', 'b'];
-  var pool = browseProfiles.filter(function(p) {
-    return narrative.indexOf(p.key) === -1;
-  });
   var matched = vibeAnswer
-    ? pool.filter(function(p) { return p.stats.vibe === vibeAnswer; })
+    ? reconProfiles.filter(function(p) { return p.stats.vibe === vibeAnswer; })
     : [];
-  if (matched.length < 3) {
-    matched = pool;
+  if (matched.length < HUNT_COUNT) {
+    matched = reconProfiles.slice();
   }
-  var fills = shuffled(matched).slice(0, 3);
-  var narrativeProfiles = browseProfiles.filter(function(p) {
-    return narrative.indexOf(p.key) !== -1;
-  });
-  huntStack = shuffled(narrativeProfiles.concat(fills)).map(function(p) { return p.key; });
-  huntFront = 0;
+  huntCards = shuffled(matched).slice(0, HUNT_COUNT).map(function(p) { return p.key; });
+  huntCurrentIdx = 0;
   initHuntStack();
+}
+
+function buildHuntDots() {
+  var existing = document.getElementById('huntDots');
+  if (existing) existing.remove();
+  var dots = document.createElement('div');
+  dots.id = 'huntDots';
+  dots.className = 'hunt-dots';
+  huntCards.forEach(function(key, i) {
+    var dot = document.createElement('div');
+    dot.className = 'hunt-dot' + (i === 0 ? ' active' : '');
+    dots.appendChild(dot);
+  });
+  var panel = document.getElementById('panel-hunt');
+  panel.appendChild(dots);
+}
+
+function updateHuntDots(idx) {
+  var dots = document.querySelectorAll('.hunt-dot');
+  dots.forEach(function(dot, i) {
+    dot.classList.toggle('active', i === idx);
+  });
 }
 
 function initHuntStack() {
   var container = document.getElementById('huntStackContainer');
   container.innerHTML = '';
-  huntStackCards = [];
 
-  huntStack.forEach(function(charKey) {
-    var char = browseProfiles.find(function(p) { return p.key === charKey; });
+  huntCards.forEach(function(charKey, idx) {
+    var char = reconProfiles.find(function(p) { return p.key === charKey; });
     if (!char) return;
 
     var card = document.createElement('div');
-    card.className = 'stack-card';
+    card.className = 'hunt-card';
     card.dataset.char = charKey;
+    card.dataset.idx = idx;
 
     var photos = buildPhotoArray(char.realPhotos, 1);
     var img = document.createElement('img');
@@ -320,101 +273,23 @@ function initHuntStack() {
       '<div class="stack-card-meta">' + metaParts.join(' &middot; ') + '</div>';
     card.appendChild(info);
 
+    card.addEventListener('click', function() {
+      if (char.hasProfile) Hunter.goToProfile(charKey);
+    });
+
     container.appendChild(card);
-    huntStackCards.push(card);
   });
 
-  applyStackPositions();
+  buildHuntDots();
 
-  // ── Gesture handling ───────────────────────────────────────────────────────
-  var touchStartY = 0, touchStartX = 0, touchStartTime = 0;
-  var lastTapTime = 0;
-  var SWIPE_MIN    = 40;
-  var TAP_MAX_MOVE = 14;
-  var DBL_TAP_MS   = 300;
-  var dismissLocked = false;
-
-  function tryDismiss(direction) {
-    if (dismissLocked) return;
-    dismissLocked = true;
-    dismissFront(direction);
-    setTimeout(function() { dismissLocked = false; }, 460);
-  }
-
-  container.addEventListener('touchstart', function(e) {
-    touchStartY = e.touches[0].clientY;
-    touchStartX = e.touches[0].clientX;
-    touchStartTime = Date.now();
+  container.addEventListener('scroll', function() {
+    var cardHeight = container.clientHeight;
+    var idx = Math.round(container.scrollTop / cardHeight);
+    if (idx !== huntCurrentIdx) {
+      huntCurrentIdx = idx;
+      updateHuntDots(idx);
+    }
   }, { passive: true });
-
-  container.addEventListener('touchend', function(e) {
-    var dy = touchStartY - e.changedTouches[0].clientY;
-    var dx = touchStartX - e.changedTouches[0].clientX;
-    var absDy = Math.abs(dy);
-    var absDx = Math.abs(dx);
-    var elapsed = Date.now() - touchStartTime;
-
-    if (absDy > SWIPE_MIN && absDy > absDx) {
-      tryDismiss(dy > 0 ? 'up' : 'down');
-      return;
-    }
-
-    if (absDy < TAP_MAX_MOVE && absDx < TAP_MAX_MOVE && elapsed < 300) {
-      var now = Date.now();
-      if (now - lastTapTime < DBL_TAP_MS && lastTapTime !== 0) {
-        var charKey = huntStack[huntFront];
-        var char = browseProfiles.find(function(p) { return p.key === charKey; });
-        if (char && char.hasProfile) {
-          Hunter.goToProfile(charKey);
-        } else {
-          showInterestPulse();
-        }
-        lastTapTime = 0;
-      } else {
-        showInterestPulse();
-        lastTapTime = now;
-      }
-    }
-  });
-
-var mouseStartY = 0, mouseIsDown = false, mouseDragged = false;
-  container.addEventListener('mousedown', function(e) {
-    mouseStartY = e.clientY;
-    mouseIsDown = true;
-    mouseDragged = false;
-  });
-  document.addEventListener('mouseup', function(e) {
-    if (!mouseIsDown) return;
-    mouseIsDown = false;
-    var dy = mouseStartY - e.clientY;
-    if (Math.abs(dy) > SWIPE_MIN) {
-      mouseDragged = true;
-      tryDismiss(dy > 0 ? 'up' : 'down');
-    }
-  });
-  container.addEventListener('click', function(e) {
-    if (mouseDragged) { mouseDragged = false; return; }
-    showInterestPulse();
-  });
-  container.addEventListener('dblclick', function(e) {
-    var charKey = huntStack[huntFront];
-    var char = browseProfiles.find(function(p) { return p.key === charKey; });
-    if (char && char.hasProfile) {
-      Hunter.goToProfile(charKey);
-    } else {
-      showInterestPulse();
-    }
-  });
-  document.addEventListener('keydown', function(e) {
-    var huntPanel = document.getElementById('panel-hunt');
-    var browseScreen = document.getElementById('screen-browse');
-    if (!huntPanel || !huntPanel.classList.contains('panel-active')) return;
-    if (!browseScreen || !browseScreen.classList.contains('active')) return;
-    if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      tryDismiss(e.key === 'ArrowUp' ? 'up' : 'down');
-    }
-  });
 }
 
 // ── Hunt intake ───────────────────────────────────────────────────────────────
@@ -483,26 +358,49 @@ function advanceIntakeStep(currentStep) {
 }
 
 // ── Tab switching ─────────────────────────────────────────────────────────────
-function initBrowseTabs() {
-  var tabs     = document.querySelectorAll('#screen-browse .tab');
-  var panels   = document.querySelectorAll('#screen-browse .browse-panel');
+// ── Mode footer — cycles HUNT / TRACK / RECON on tap ─────────────────────────
+// Handedness-aware: bow sits right for righties, left for lefties via .phone.lefty
+// Header title updates to reflect current mode on each tap.
+var MODES = ['hunt', 'track', 'recon'];
+var currentModeIdx = 0;
 
-  tabs.forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var panelId = tab.dataset.panel;
-      tabs.forEach(function(t) { t.classList.remove('active'); });
-      panels.forEach(function(p) { p.classList.remove('panel-active'); });
-      tab.classList.add('active');
-      var panel = document.getElementById(panelId);
-      if (panel) panel.classList.add('panel-active');
+function initModeFooter() {
+  var footer = document.getElementById('modeFooter');
+  var label  = document.getElementById('modeLabel');
+  var title  = document.getElementById('matchesTitle');
+  var panels = document.querySelectorAll('#screen-recon .browse-panel');
 
-      if (panelId === 'panel-hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
-        var intake = document.getElementById('huntIntake');
-        intake.style.display = '';
-        intake.style.opacity = '1';
-      }
-    });
+  function activateMode(idx) {
+    currentModeIdx = idx;
+    var mode = MODES[idx];
+    var modeUpper = mode.toUpperCase();
+
+    label.textContent = modeUpper;
+    if (title) title.textContent = 'HUNTER';
+
+    panels.forEach(function(p) { p.classList.remove('panel-active'); });
+    var panel = document.getElementById('panel-' + mode);
+    if (panel) panel.classList.add('panel-active');
+
+    if (mode === 'hunt' && localStorage.getItem('hunter.hunt.intake') !== 'done') {
+      var intake = document.getElementById('huntIntake');
+      intake.style.display = '';
+      intake.style.opacity = '1';
+    }
+  }
+
+  label.addEventListener('click', function() {
+    activateMode((currentModeIdx + 1) % MODES.length);
   });
+
+  activateMode(0);
+
+  setTimeout(function() {
+    label.classList.add('pulse');
+    label.addEventListener('animationend', function() {
+      label.classList.remove('pulse');
+    }, { once: true });
+  }, 1000);
 }
 
 // ── Carousel — builds photo navigation and lock card for the profile hero.
@@ -710,17 +608,17 @@ function initMsgBtn(char) {
   }
 }
 
-// ── Browse cards ──────────────────────────────────────────────────────────────
-// initBrowseCards — fetches profiles.json and renders the browse grid dynamically.
+// ── Recon cards ───────────────────────────────────────────────────────────────
+// initReconCards — fetches profiles.json and renders the recon grid dynamically.
 // Initial batch: 6 cards. Next batch loads as user approaches end of scroll.
 // All profiles including narrative characters live in hunter_profiles.json.
-var browseProfiles = [];
-var browseOffset = 0;
-var BROWSE_BATCH = 6;
+var reconProfiles = [];
+var reconOffset = 0;
+var RECON_BATCH = 6;
 
-function renderBrowseBatch() {
-  var grid = document.getElementById('browseGrid');
-  var batch = browseProfiles.slice(browseOffset, browseOffset + BROWSE_BATCH);
+function renderReconBatch() {
+  var grid = document.getElementById('reconGrid');
+  var batch = reconProfiles.slice(reconOffset, reconOffset + RECON_BATCH);
   batch.forEach(function(profile) {
     var card = document.createElement('div');
     card.className = 'grid-card';
@@ -749,20 +647,20 @@ function renderBrowseBatch() {
 
     grid.appendChild(card);
   });
-  browseOffset += batch.length;
+  reconOffset += batch.length;
 }
 
-function initBrowseCards() {
+function initReconCards() {
   fetch('hunter_profiles.json')
     .then(function(res) { return res.json(); })
     .then(function(data) {
-      browseProfiles = data;
-      renderBrowseBatch();
-      var panel = document.getElementById('panel-browse');
+      reconProfiles = data;
+      renderReconBatch();
+      var panel = document.getElementById('panel-recon');
       panel.addEventListener('scroll', function() {
         if (panel.scrollTop + panel.clientHeight >= panel.scrollHeight - 100) {
-          if (browseOffset < browseProfiles.length) {
-            renderBrowseBatch();
+          if (reconOffset < reconProfiles.length) {
+            renderReconBatch();
           }
         }
       });
@@ -777,17 +675,17 @@ function initBackButtons() {
   document.querySelectorAll('.profile-back').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.stopPropagation();
-      Hunter.navigate('browse');
+      Hunter.navigate('recon');
     });
   });
   document.getElementById('chatBackBtn').addEventListener('click', function() {
-    Hunter.currentChar ? Hunter.navigate('profile') : Hunter.navigate('browse');
+    Hunter.currentChar ? Hunter.navigate('profile') : Hunter.navigate('recon');
   });
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       var profileScreen = document.getElementById('screen-profile');
       if (profileScreen && profileScreen.classList.contains('active')) {
-        Hunter.navigate('browse');
+        Hunter.navigate('recon');
       }
     }
   });
@@ -833,10 +731,10 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('loadingScreen').classList.add('done');
   }, 3600);
 
-  initBrowseCards();
+  initReconCards();
   initBackButtons();
   initChatAvatarTap();
-  initBrowseTabs();
+  initModeFooter();
   if (localStorage.getItem('hunter.hunt.intake') === 'done') {
   buildHuntStack();
 } else {
@@ -848,11 +746,11 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('lightbox').classList.remove('open');
   });
 
-  Hunter.navigate('browse');
+  Hunter.navigate('recon');
   window.addEventListener('popstate', function(e) {
     var profileScreen = document.getElementById('screen-profile');
     if (profileScreen && profileScreen.classList.contains('active')) {
-      Hunter.navigate('browse');
+      Hunter.navigate('recon');
     }
   });
 });

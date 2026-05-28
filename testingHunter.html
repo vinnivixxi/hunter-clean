@@ -17,7 +17,7 @@
 
     <div class="loading-screen" id="loadingScreen">
       <div class="bow-container">
-        <img class="bow-img" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="Bow">
+        <img class="bow-img" src="hunter.arrows/downloadlogo.v3.png" alt="Bow">
         <img class="arrow" src="hunter.arrows/arrow.testing.png" alt="Arrow">
         <div class="bowstring-pull"></div>
         <div class="shockwave"></div>
@@ -43,8 +43,8 @@
 
       <div class="matches-header">
         <div class="matches-title-group">
-          <img class="matches-bow" src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
-          <span class="matches-title">HUNTER</span>
+          <img class="matches-bow" src="hunter.arrows/hunter.logo.png" alt="">
+          <span class="matches-title" id="matchesTitle">HUNTER</span>
         </div>
       </div>
 
@@ -52,7 +52,7 @@
       <div class="browse-panel panel-active" id="panel-hunt">
         <div class="hunt-intake" id="huntIntake">
           <div class="intake-logo">
-            <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="">
+            <img src="hunter.arrows/downloadlogo.v3.png" alt="">
             <span>HUNTER</span>
           </div>
           <div class="intake-progress">
@@ -118,20 +118,10 @@
         <div class="grid" id="reconGrid"></div>
       </div><!-- /panel-recon -->
 
-      <div class="tabs">
-        <div class="tab active" data-panel="panel-hunt">
-          <i class="fa-solid fa-crosshairs"></i>
-          HUNT
-        </div>
-        <div class="tab" data-panel="panel-track">
-          <i class="fa-solid fa-location-dot"></i>
-          TRACK
-        </div>
-        <div class="tab" data-panel="panel-recon">
-          <i class="fa-solid fa-table-cells"></i>
-          RECON
-        </div>
+      <div class="mode-footer" id="modeFooter">
+        <span class="mode-label" id="modeLabel">HUNT</span>
       </div>
+
     </div><!-- /screen-recon -->
 
     <!-- PROFILE SCREEN — Session 16 state:
@@ -243,7 +233,7 @@
       <div class="input-bar">
         <input class="input-field" type="text" placeholder="Message..." autocomplete="off">
         <button class="send-btn">
-          <img src="hunter.arrows/hunter.arrows/downloadlogo.v3.png" alt="send">
+          <img src="hunter.arrows/downloadlogo.v3.png" alt="send">
         </button>
       </div>
 
