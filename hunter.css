@@ -451,27 +451,8 @@ body {
   animation: labelPulse 0.5s ease-in-out 3;
 }
 
-.phone.lefty .mode-bow {
-  margin-left: 0;
-  margin-right: auto;
-}
-
 .phone.lefty .mode-footer {
   flex-direction: row-reverse;
-}
-
-.mode-bow {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
-  opacity: 0.9;
-}
-
-.mode-label {
-  color: #3B6B4A;
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 3px;
 }
 
 @media (max-width: 768px) {

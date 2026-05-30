@@ -1,10 +1,10 @@
 // ── Placeholder pool ──────────────────────────────────────────────────────────
 var PLACEHOLDER_POOL = [
-  'profile.images/placeholder_bear.png',
-  'profile.images/placeholder_daddy.png',
-  'profile.images/placeholder_frat.png',
-  'profile.images/placeholder_twink.png',
-  'profile.images/placeholder.png'
+  'profile.images/placeholders/placeholder_bear.png',
+  'profile.images/placeholders/placeholder_daddy.png',
+  'profile.images/placeholders/placeholder_frat.png',
+  'profile.images/placeholders/placeholder_twink.png',
+  'profile.images/placeholders/placeholder.png'
 ];
 
 function shuffled(arr) {
@@ -625,7 +625,8 @@ function renderReconBatch() {
     card.dataset.key = profile.key;
 
     var img = document.createElement('img');
-    img.src = profile.avatar;
+    var avatarPool = profile.realPhotos && profile.realPhotos.length > 0 ? profile.realPhotos : PLACEHOLDER_POOL;
+img.src = shuffled(avatarPool)[0];
     img.alt = profile.name;
     img.loading = 'lazy';
     card.appendChild(img);
