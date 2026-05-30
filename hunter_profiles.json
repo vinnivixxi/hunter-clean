@@ -25,15 +25,15 @@
     "key": "b",
     "name": "Tarab",
     "narrative": true,
-    "avatar": "profile.images/tarab.jpg",
+    "avatar": "profile.images/tarab/real/tarab_0.png",
     "myAvatar": "profile.images/phalanx.potens.png",
     "realPhotos": [
-      "profile.images/tarab.jpg",
-      "profile.images/tarab_frenchie.png",
-      "profile.images/tarab_couch.png",
-      "profile.images/tarab_coffee.png",
-      "profile.images/tarab_walking.png",
-      "profile.images/tarab_jog.png"
+      "profile.images/tarab/real/tarab_0.png",
+      "profile.images/tarab/real/tarab_1.png",
+      "profile.images/tarab/real/tarab_2.png",
+      "profile.images/tarab/real/tarab_3.png",
+      "profile.images/tarab/real/tarab_4.png",
+      "profile.images/tarab/real/tarab_5.png"
     ],
     "naughtyPhotos": [
       "profile.images/placeholder.bear.png"
